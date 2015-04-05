@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en" target-language="en">
+    <body>
+      <trans-unit id="667379770041603912" datatype="html">
+        <source>There seem to be no available items on the thumbdrive. Please make sure the drive is attached properly and try again.</source>
+        <target/>
+        <note priority="1" from="description">error text</note>
+      </trans-unit>
+      <trans-unit id="1407560924967345762" datatype="html">
+        <source>Page</source>
+        <target/>
+        <note priority="1" from="description">The word page in the page N of number of X pages</note>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <target/>
+        <note priority="1" from="description">Cancel</note>
+      </trans-unit>
+      <trans-unit id="3571391964903695725" datatype="html">
+        <source>Repeat</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="3571787957077101820" datatype="html">
+        <source>All (No cam)</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="3797570084942068182" datatype="html">
+        <source>Select</source>
+        <target/>
+        <note priority="1" from="description">Select</note>
+      </trans-unit>
+      <trans-unit id="3798070165070620146" datatype="html">
+        <source>Guide</source>
+        <target/>
+        <note priority="1" from="description">Guide</note>
+      </trans-unit>
+      <trans-unit id="4284688382567695437" datatype="html">
+        <source>Add to queue</source>
+        <target/>
+        <note priority="1" from="description">Epg add label on button</note>
+      </trans-unit>
+      <trans-unit id="4764935748877100361" datatype="html">
+        <source>Shuffle all</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="4824839499745448810" datatype="html">
+        <source>Repeat all</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="5881876145178332550" datatype="html">
+        <source>of</source>
+        <target/>
+        <note priority="1" from="description">the word of in page N of X pages</note>
+      </trans-unit>
+      <trans-unit id="7316358832458965912" datatype="html">
+        <source>Unable to load the content, please try again later.</source>
+        <target/>
+        <note priority="1" from="description">error text</note>
+      </trans-unit>
+      <trans-unit id="7558413604919060916" datatype="html">
+        <source>Select item</source>
+        <target/>
+        <note priority="1" from="description">Select item</note>
+      </trans-unit>
+      <trans-unit id="7833044528021545549" datatype="html">
+        <source>Configure playback</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
+      <trans-unit id="8564202903947049539" datatype="html">
+        <source>Play</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="8795047040687500838" datatype="html">
+        <source>Error occured</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
+      <trans-unit id="8894377483833272091" datatype="html">
+        <source>Price</source>
+        <target/>
+        <note priority="1" from="description">Price label</note>
+      </trans-unit>
+      <trans-unit id="8998179362936748717" datatype="html">
+        <source>OK</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

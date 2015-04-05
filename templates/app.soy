@@ -1,0 +1,18 @@
+{namespace app.template}
+
+/** Test our theory about DTO */
+{template .Test}
+  {@param name: string}
+  {@param age: number}
+  {@param address: ?}
+  <div>
+    <div>{$name} - {$age}</div>
+    {call .Address data="$address" /}
+  </div>
+{/template}
+
+/** Another template */
+{template .Address}
+  {@param city: string}
+  <div>Lives in {$city}</div>
+{/template}

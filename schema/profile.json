@@ -1,0 +1,45 @@
+{
+  "$schema":"",
+  "$_extends": "user",
+  "title": "Profile",
+  "description": "Represents the user profile tokens",
+  "type": "object",
+  "properties": {
+    "run" : {
+      "type": "string",
+    },
+    "fname": {
+      "type": "string",
+      "$_name": "firstName"
+    },
+    "lname": {
+      "type": "string",
+      "$_name": "lastName"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "pp_email": {
+      "type": "string"
+    }
+  },
+  "required": "$_all"
+}

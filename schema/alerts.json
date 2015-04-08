@@ -1,0 +1,20 @@
+{
+  "$schema": "",
+  "title": "Alerts",
+  "description": "Describes a single alert for this user",
+  "type": "object",
+  "properties": {
+    "alert": {
+      "type": "array",
+      "$_name": "alerts",
+      "items" : {
+        "type": "object",
+        "$_reference": "alert"
+      }
+    },
+    "delay": {
+      "type": "number",
+    }
+  },
+  "required": "$_all"
+}

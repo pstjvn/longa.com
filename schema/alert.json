@@ -1,0 +1,38 @@
+{
+  "$schema": "",
+  "title": "Alert",
+  "description": "Describes a single alert for this user",
+  "type": "object",
+  "properties": {
+    "alert_id": {
+      "type": "number",
+      "$_name": "id"
+    },
+    "alert_text": {
+      "type": "string",
+      "$_name": "text"
+    },
+    "alert_type": {
+      "type": "string",
+      "$_name": "type"
+    },
+    "alert_date": {
+      "type": "string",
+      "$_type": "Date",
+      "$_name": "date"
+    },
+    "provider_acctid": {
+      "type": "string",
+      "$_type": "number",
+      "$_name": "accountid"
+    },
+    "username": {
+      "type": "string",
+    },
+    "read": {
+      "type": "number",
+      "$_type": "boolean"
+    }
+  },
+  "required": "$_all"
+}

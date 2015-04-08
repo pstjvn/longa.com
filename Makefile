@@ -1,6 +1,9 @@
 ns=app
 pstj_lib_dir = ../pstj
 smjs_lib_dir = ../smjs
+schema_dir = schema
+autogen_dir = js/gen
+dto_prefix = longa
 template_build_dir = tpl
 locale = en
 i18n_dir = i18n
@@ -39,6 +42,7 @@ public_source_files = $(shell find js/ -name '*.js')
 
 all: \
 libraries \
+$(autogen_dir) \
 $(lintfile) \
 $(build_dir)/$(ns).css \
 $(public_deps_file)
@@ -47,6 +51,9 @@ $(public_deps_file)
 build: $(build_dir)/$(ns).build.js
 
 debug: $(build_dir)/$(ns).debug.js
+
+$(autogen_dir): $(shell find $$schema_dir -name '*.json')
+	node $(pstj_lib_dir)/nodejs/dtogen.js $(dto_prefix).gen.dto $(schema_dir)/ $(autogen_dir)/
 
 libraries:
 	@cd $(pstj_lib_dir) && make

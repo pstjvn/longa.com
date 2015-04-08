@@ -1,0 +1,22 @@
+{
+  "$schema": "",
+  "title": "User",
+  "description": "DTO for user credentials",
+  "type": "object",
+  "properties": {
+    "username": {
+      "description": "The username as seen in the UI / as registered",
+      "type": "string"
+    },
+    "usertype": {
+      "type": "string",
+      "description": "The usertype, 0 is unknown, 1 is investor, 2 is seller"
+    },
+    "acctid": {
+      "$_name": "accountid",
+      "type": "number",
+      "description": "Unique identifier for user account id"
+    }
+  },
+  "required": "$_all"
+}

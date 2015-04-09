@@ -6,6 +6,9 @@ goog.require('goog.json');
 goog.require('goog.log');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
+goog.require('longa.staticdata');
+goog.require('pstj.ds.dto.SwipetileList');
+goog.require('pstj.widget.Swiper');
 
 goog.scope(function() {
 var rpc = longa.rpc.instance;
@@ -30,6 +33,7 @@ longa.App = goog.defineClass(null, {
    */
   init_: function() {
     goog.log.fine(this.logger_, 'Initializing the app');
+    this.showStartScreen_();
     rpc.configure({
       // The run variable name as in /cgi-bin/stock.cgi?{run}=...
       run: 'run',
@@ -39,6 +43,18 @@ longa.App = goog.defineClass(null, {
       // domain we are currently running under.
       crossdomain: false
     });
+  },
+
+  /**
+   * Potentially we need image preload for web app.
+   * @private
+   */
+  showStartScreen_: function() {
+    var tilelist = new pstj.ds.dto.SwipetileList();
+    tilelist.fromJSON(longa.staticdata.startPageTiles);
+    var sw = new pstj.widget.Swiper();
+    sw.setModel(tilelist);
+    sw.render(document.body);
   },
 
   /**

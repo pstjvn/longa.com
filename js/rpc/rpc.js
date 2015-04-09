@@ -3,15 +3,19 @@ goog.provide('longa.rpc.Main');
 
 goog.require('goog.Promise');
 goog.require('goog.debug');
+goog.require('goog.json');
 goog.require('goog.log');
-goog.require('longa.ds.Alerts');
-goog.require('longa.ds.Balance');
-goog.require('longa.ds.LoginDetails');
-goog.require('longa.ds.Profile');
-goog.require('longa.ds.User');
+goog.require('longa.gen.dto.Alerts');
+goog.require('longa.gen.dto.Profile');
+goog.require('longa.gen.dto.User');
+goog.require('longa.gen.dto.UserBalance');
 goog.require('pstj.resource');
 
 goog.scope(function() {
+var Alerts = longa.gen.dto.Alerts;
+var Profile = longa.gen.dto.Profile;
+var User = longa.gen.dto.User;
+var UserBalance = longa.gen.dto.UserBalance;
 
 
 /** Implements the RPC for the Longa.com project */
@@ -63,14 +67,14 @@ longa.rpc.Main = goog.defineClass(null, {
   /**
    * RPC call: /log implementation.
    *
-   * @param {longa.ds.LoginDetails} request
-   * @return {!goog.Promise<!longa.ds.User>}
+   * @param {longa.gen.dto.LoginDetails} request
+   * @return {!goog.Promise<!User>}
    */
   login: function(request) {
 
     goog.log.fine(this.logger_, 'Attemping log-in on server');
     goog.log.info(this.logger_, 'User credentials for request: ' +
-        goog.debug.expose(request));
+        goog.json.serialize(request));
 
     return new goog.Promise(function(resolve, reject) {
       this.resource_.get(
@@ -78,7 +82,7 @@ longa.rpc.Main = goog.defineClass(null, {
           goog.bind(function(err, result) {
 
             try {
-              var uc = this.handleLoginResult(err, result);
+              var user = this.handleLoginResult(err, result);
             } catch (e) {
               goog.log.warning(this.logger_, 'Log-in failed: ' + e.message);
               reject(e);
@@ -86,8 +90,8 @@ longa.rpc.Main = goog.defineClass(null, {
             }
 
             goog.log.info(this.logger_, 'Logged in on server: ' +
-                goog.debug.expose(uc));
-            resolve(uc);
+                goog.debug.expose(user));
+            resolve(user);
 
           }, this));
     }, this);
@@ -117,7 +121,7 @@ longa.rpc.Main = goog.defineClass(null, {
 
   /**
    * PRC call: /bal
-   * @return {!goog.Promise<!longa.ds.Balance>}
+   * @return {!goog.Promise<!UserBalance>}
    */
   getBalance: function() {
 
@@ -136,10 +140,6 @@ longa.rpc.Main = goog.defineClass(null, {
           reject(e);
           return;
         }
-
-        goog.log.info(this.logger_, 'Retrieved balance for account: ' +
-            balance.acctid);
-
         resolve(balance);
       }, this));
     }, this);
@@ -149,7 +149,7 @@ longa.rpc.Main = goog.defineClass(null, {
    * RPC call: /alert
    * @param {number=} opt_beginAfter The alert ID after which to begin the
    *    collection.
-   * @return {!goog.Promise<!longa.ds.Alerts>}
+   * @return {!goog.Promise<!longa.gen.dto.Alerts>}
    */
   getAlerts: function(opt_beginAfter) {
     if (!goog.isNumber(opt_beginAfter)) opt_beginAfter = 0;
@@ -177,7 +177,7 @@ longa.rpc.Main = goog.defineClass(null, {
 
   /**
    * RPC call: /profile
-   * @return {!goog.Promise<!longa.ds.Profile>}
+   * @return {!goog.Promise<!Profile>}
    */
   getProfile: function() {
     goog.log.fine(this.logger_, 'Retriving profile info');
@@ -206,11 +206,11 @@ longa.rpc.Main = goog.defineClass(null, {
    * @param {?} loginResult The login result if the call was successfully
    *    completed.
    * @protected
-   * @return {!longa.ds.User}
+   * @return {!User}
    */
   handleLoginResult: function(err, loginResult) {
     this.handleRawResponse_(err, loginResult);
-    var credentials = new longa.ds.User();
+    var credentials = new User();
     credentials.fromJSON(loginResult);
     return credentials;
   },
@@ -220,11 +220,11 @@ longa.rpc.Main = goog.defineClass(null, {
    * @param {Error?} err The error if there was any in the RPC link.
    * @param {?} balance The request's result from server.
    * @protected
-   * @return {!longa.ds.Balance}
+   * @return {!UserBalance}
    */
   handleBalanceResponse: function(err, balance) {
     this.handleRawResponse_(err, balance);
-    var b = new longa.ds.Balance();
+    var b = new UserBalance();
     b.fromJSON(balance);
     return b;
   },
@@ -235,13 +235,13 @@ longa.rpc.Main = goog.defineClass(null, {
    * @param {Error?} err The error if there was any in the RPC link.
    * @param {?} alerts The request's result from server.
    * @protected
-   * @return {!longa.ds.Alerts}
+   * @return {!Alerts}
    */
   handleAlertsResponse: function(err, alerts) {
     this.handleRawResponse_(err, alerts);
     // TODO: We need fix here, please contact server admin to fix it there.
     this.fixAlertsResponse_(alerts);
-    var a = new longa.ds.Alerts();
+    var a = new Alerts();
     a.fromJSON(alerts);
     return a;
   },
@@ -251,11 +251,11 @@ longa.rpc.Main = goog.defineClass(null, {
    * @param {Error?} err The error if one was creating by the network stack.
    * @param {?} profile The raw server response.
    * @protected
-   * @return {!longa.ds.Profile}
+   * @return {!Profile}
    */
   handleProfileResult: function(err, profile) {
     this.handleRawResponse_(err, profile);
-    var p = new longa.ds.Profile();
+    var p = new Profile();
     p.fromJSON(profile);
     return p;
   },

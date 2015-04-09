@@ -1,0 +1,22 @@
+{
+  "$schema": "",
+  "title": "LoginDetails",
+  "description": "DTO for user credentials when logging",
+  "type": "object",
+  "properties": {
+    "username": {
+      "description": "The username to submit to the login",
+      "type": "string"
+    },
+    "password": {
+      "description": "The password to use",
+      "type": "string",
+
+    },
+    "run": {
+      "description": "The run procedure to call on the server when logging",
+      "type": "string"
+    }
+  },
+  "required": "$_all"
+}

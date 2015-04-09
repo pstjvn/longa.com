@@ -1,0 +1,46 @@
+{
+  "$schema": "",
+  "title": "UserBalance",
+  "description": "DTO for User balance as seen for self user",
+  "$_extends": "balance",
+  "type": "object",
+  "properties": {
+    "balance": {
+      "description": "The current balance of the account",
+      "type": "number"
+    },
+    "credit": {
+      "description": "All time credit",
+      "type": "number"
+    },
+    "debit": {
+      "description": "All time debit",
+      "type": "number"
+    },
+    "withdrawal": {
+      "description": "All time widthrawal",
+      "type": "number"
+    },
+    "max_withdrawal": {
+      "description": "The maximum amout of withdrawal at once",
+      "type": "number",
+      "$_name": "maximumWithdrawal"
+    },
+    "pip_charge": {
+      "description": "How much was paied in PIP charges for all time",
+      "type": "number",
+      "$_name": "allTimeChargesForProfit"
+    },
+    "system_charge": {
+      "description": "???",
+      "type": "number",
+      "$_name": "systemCharges"
+    },
+    "service_charge": {
+      "description": "???",
+      "type": "number",
+      "$_name": "serviceCharges"
+    }
+  },
+  "required": "$_all"
+}

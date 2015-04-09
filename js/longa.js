@@ -4,14 +4,12 @@ goog.require('app.template');
 goog.require('goog.debug.Console');
 goog.require('goog.json');
 goog.require('goog.log');
-goog.require('longa.ds.LoginDetails');
-goog.require('longa.ds.User');
+goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
-goog.require('pstj.ds.dto.SwipetileList');
-goog.require('pstj.widget.Swiper');
 
 goog.scope(function() {
 var rpc = longa.rpc.instance;
+var LoginDetails = longa.gen.dto.LoginDetails;
 
 
 /** The main entry point for the application */
@@ -41,33 +39,6 @@ longa.App = goog.defineClass(null, {
       // domain we are currently running under.
       crossdomain: false
     });
-
-    // Test UI/UX initialization
-    var json = [
-      {
-        'src': 'http://longa.com/images/bull.jpg',
-        'text': 'The ultimate stock signal marketplace'
-      }, {
-        'src': 'http://longa.com/images/b.jpg',
-        'text': 'Where investors meet successful signal traders'
-      }, {
-        'src': 'http://longa.com/images/c.jpg',
-        'text': 'Make money from stock investments'
-      }, {
-        'src': 'http://longa.com/images/hands.jpg',
-        'text': 'Follow the best investment strategy'
-      }, {
-        'src': 'http://longa.com/images/d.jpg',
-        'text': 'Sell your trading ideas and make money'
-      }
-    ];
-
-    var sl = new pstj.ds.dto.SwipetileList();
-    sl.fromJSON(json);
-
-    var sw = new pstj.widget.Swiper();
-    sw.setModel(sl);
-    sw.render();
   },
 
   /**
@@ -77,9 +48,10 @@ longa.App = goog.defineClass(null, {
 
     goog.log.info(this.logger_, 'attempt login with rpc');
 
-    var credentaisl = new longa.ds.LoginDetails();
+    var credentaisl = new LoginDetails();
     credentaisl.username = 'aaa';
     credentaisl.password = '123456';
+    credentaisl.run = 'log';
     rpc.login(credentaisl).then(this.onLogin, this.onLoginFail, this);
   },
 
@@ -112,7 +84,7 @@ longa.App = goog.defineClass(null, {
   /**
    * Handles successfull login completion.
    * @protected
-   * @param {longa.ds.User} user
+   * @param {longa.gen.dto.User} user
    */
   onLogin: function(user) {
     goog.log.info(this.logger_, 'New user received: ' +
@@ -134,7 +106,7 @@ longa.App = goog.defineClass(null, {
 
   /**
    * Handles the successful retrieval of the user's balance.
-   * @param {longa.ds.Balance} balance
+   * @param {!longa.gen.dto.UserBalance} balance
    * @protected
    */
   onBalanceReceived: function(balance) {
@@ -151,8 +123,17 @@ longa.App = goog.defineClass(null, {
     this.handleError(e);
   },
 
+  /**
+   * Handles the loading of alerts. Note that alerts are constantly queried and
+   * only the new alert instances need to be added to the list and not
+   * to replace the whole Alerts instance. However the server will always return
+   * a new Alerts instance, thus you need to manually merge the alerts array.
+   *
+   * @protected
+   * @param {!longa.gen.dto.Alerts} alerts
+   */
   onAlertLoaded: function(alerts) {
-    goog.log.info(this.logger_, 'Retrieved ' + alerts.getCount() +
+    goog.log.info(this.logger_, 'Retrieved ' + alerts.alerts.length +
         ' new alerts');
   },
 
@@ -165,6 +146,11 @@ longa.App = goog.defineClass(null, {
     this.handleError(e);
   },
 
+  /**
+   * Handles the receiving of a profile update / get request.
+   * @param {!longa.gen.dto.Profile} profile
+   * @protected
+   */
   onProfileUpdate: function(profile) {
     goog.log.info(this.logger_, 'Retrieved the profile: ' +
         goog.debug.expose(profile));

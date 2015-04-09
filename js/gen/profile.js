@@ -74,7 +74,8 @@ longa.gen.dto.Profile = goog.defineClass(longa.gen.dto.User, {
       'phone': this.phone,
       'pp_email': this.pp_email
     };
-    return goog.object.extend(exports, goog.base(this, 'toJSON'));
+    return goog.object.extend(exports,
+        a.assertObject(goog.base(this, 'toJSON')));
   }
 });
 });  // goog.scope

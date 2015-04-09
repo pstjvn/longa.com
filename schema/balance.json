@@ -1,0 +1,79 @@
+{
+  "$schema": "",
+  "title": "Balance",
+  "description": "DTO for basic balance infomation, not to be used directly.",
+  "type": "object",
+  "properties": {
+    "first_signal_date": {
+      "description": "The date when the first signal was created/received",
+      "type": "string",
+      "$_name": "firstSignalDate"
+    },
+    "first_signal_time": {
+      "description": "The time of day when the first signal was created/received",
+      "type": "string",
+      "$_name": "firstSignalTime"
+    },
+    "last_signal_date": {
+      "description": "The date when the last signal was created/received",
+      "type": "string",
+      "$_name": "lastSignalDate"
+    },
+    "last_signal_time": {
+      "description": "The time of date when the first signal was created/received",
+      "type": "string",
+      "$_name": "lastSignalTime"
+    },
+    "member_count": {
+      "description": "Number of subscribers (seller) or number of providers the account is subscribed to (investor).",
+      "type": "number",
+      "$_name": "memberCount"
+    },
+    "signal_count": {
+      "description": "Total number of created/received signals",
+      "type": "number",
+      "$_name": "signalCount"
+    },
+    "loss_count": {
+      "description": "The number of signals that were on loss",
+      "type": "number",
+      "$_name": "lostSignalCount"
+    },
+    "profit_count": {
+      "description": "The number of signals that turned profit on close time",
+      "type": "number",
+      "$_name": "profitableSignalCount"
+    },
+    "open_count": {
+      "description": "The number of currently open signals",
+      "type": "number",
+      "$_name": "openSignalCount"
+    },
+    "pl_all_time": {
+      "description": "The profit/loss ratio for all time",
+      "type": "number",
+      "$_name": "profitLossRatio"
+    },
+    "pl_month": {
+      "description": "The profit/loss ratio for the current month (since 1st)",
+      "type": "number",
+      "$_name": "profitLossRatioMonth"
+    },
+    "pl_open": {
+      "description": "The profit/loss ratio for the currently open signals",
+      "type": "number",
+      "$_name": "profitLossRatioOpen"
+    },
+    "pl_year": {
+      "description": "The profit/loss ratio for the current calendar year",
+      "type": "number",
+      "$_name": "profitLossRatioYear"
+    },
+    "tran_duration": {
+      "description": "The average duration in days of an open/close cycle",
+      "type": "number",
+      "$_name": "averageTransactionDuration"
+    }
+  },
+  "required": "$_all"
+}

@@ -22,8 +22,7 @@
       "$_name": "date"
     },
     "provider_acctid": {
-      "type": "string",
-      "$_type": "number",
+      "type": "number",
       "$_name": "accountid"
     },
     "username": {

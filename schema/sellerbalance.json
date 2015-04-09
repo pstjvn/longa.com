@@ -1,0 +1,44 @@
+{
+  "$schema": "",
+  "title": "SellerBalance",
+  "description": "DTO for Provider Balance as seen by an Investor",
+  "$_extends": "balance",
+  "type": "object",
+  "properties": {
+    "target_acctid": {
+      "description": "The username of the Seller",
+      "type": "number",
+      "$_name": "accountid"
+    },
+    "seller_username": {
+      "description": "The username of the seller",
+      "type": "string",
+      "$_name": "username"
+    },
+    "pip_charge": {
+      "description": "The point per percent charge applied to investors who follow this seller",
+      "type": "number",
+      "$_name": "pipCharge"
+    },
+    "service_min_balance":  {
+      "description": "How much credit must an investor have to be able to subscribe to this seller",
+      "type": "number",
+      "$_name": "minimalCreditToSubscrbe"
+    },
+    "service_paid": {
+      "description": "If the seller's signals are paid (will charge for profit)",
+      "type": "boolean",
+      "$_name": "paidService"
+    },
+    "subscribed": {
+      "description": "If the currently logged in user is subscribed to this seller",
+      "type": "boolean"
+    },
+    "datail_url": {
+      "description": "The url for more detailed information",
+      "type": "string",
+      "$_name": "dataURL"
+    }
+  },
+  "required": "$_all"
+}

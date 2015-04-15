@@ -7,6 +7,12 @@
 @import "../../pstj/less/reset";
 
 @import "../../pstj/less/widgets/swiper";
+@import "../../pstj/less/material/input";
+@import "../../pstj/less/material/button";
+@import "../../pstj/less/material/checkbox";
+@import "../../pstj/less/material/typography";
+@import "../../pstj/less/material/shadow";
+@import "app/errormessage";
 
 // Disable focus outline (Android)
 *:focus {
@@ -22,4 +28,51 @@ html {
 body {
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
+  margin: 0;
+  height: 100vh;
+}
+
+.auth-container {
+  &:extend(.fit);
+  &:extend(.center);
+  &:extend(.center-justified);
+  &:extend(.vertical);
+
+  .linklike {
+    padding: 10px 0;
+    .typography(#00f, 87, 9px, @typography-weight-light);
+  }
+
+  .help-info {
+    .typography(#c5c5c5, 100, 12px);
+  }
+
+  input {
+    width: 250px;
+  }
+
+}
+
+.longa-login-form {
+  width: 280px;
+  position: relative;
+  padding: 15px;
+
+  .material-checkbox-content {
+    .caption(black);
+  }
+
+  .material-checkbox {
+    padding: 10px 0;
+  }
+
+  .material-input {
+    padding: 0;
+  }
+
+
+  .button-container {
+    &:extend(.horizontal);
+    &:extend(.end-justified);
+  }
 }

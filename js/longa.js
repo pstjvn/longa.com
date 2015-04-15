@@ -1,39 +1,42 @@
 goog.provide('longa.App');
 
-goog.require('app.template');
 goog.require('goog.debug.Console');
 goog.require('goog.json');
 goog.require('goog.log');
+goog.require('longa.control.Auth');
+goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
 goog.require('longa.staticdata');
+goog.require('longa.template');
+goog.require('pstj.control.Control');
 goog.require('pstj.ds.dto.SwipetileList');
 goog.require('pstj.widget.Swiper');
 
 goog.scope(function() {
 var rpc = longa.rpc.instance;
 var LoginDetails = longa.gen.dto.LoginDetails;
+var T = longa.ds.Topic;
 
 
-/** The main entry point for the application */
-longa.App = goog.defineClass(null, {
+/** @extends {pstj.control.Control} */
+longa.App = goog.defineClass(pstj.control.Control, {
   constructor: function() {
+    pstj.control.Control.call(this);
     /**
      * @type {goog.debug.Logger}
      * @private
      * @final
      */
     this.logger_ = goog.log.getLogger('longa.App');
-    this.init_();
+    this.auth = new longa.control.Auth();
+    this.init();
   },
 
-  /**
-   * Performs needed initialization and configuration.
-   * @private
-   */
-  init_: function() {
+  /** @override */
+  init: function() {
+    goog.base(this, 'init');
     goog.log.fine(this.logger_, 'Initializing the app');
-    this.showStartScreen_();
     rpc.configure({
       // The run variable name as in /cgi-bin/stock.cgi?{run}=...
       run: 'run',
@@ -43,6 +46,7 @@ longa.App = goog.defineClass(null, {
       // domain we are currently running under.
       crossdomain: false
     });
+    this.push(T.USER_REQUESTED_REGISTRATION);
   },
 
   /**

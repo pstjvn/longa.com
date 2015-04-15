@@ -21,5 +21,5 @@ if (goog.DEBUG) {
 
 
 // Init the app.
-(new longa.App()).performAuth();
+(new longa.App());
 

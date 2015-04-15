@@ -1,4 +1,5 @@
 goog.provide('longa.rpc');
+goog.provide('longa.rpc.Calls');
 goog.provide('longa.rpc.Main');
 
 goog.require('goog.Promise');
@@ -71,6 +72,8 @@ longa.rpc.Main = goog.defineClass(null, {
    * @return {!goog.Promise<!User>}
    */
   login: function(request) {
+
+    request.run = longa.rpc.Calls.LOGIN;
 
     goog.log.fine(this.logger_, 'Attemping log-in on server');
     goog.log.info(this.logger_, 'User credentials for request: ' +
@@ -317,6 +320,14 @@ longa.rpc.Main = goog.defineClass(null, {
     });
   }
 });
+
+
+/**
+ * @enum {string}
+ */
+longa.rpc.Calls = {
+  LOGIN: 'log'
+};
 
 
 /**

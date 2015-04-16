@@ -1,6 +1,5 @@
 {
   "$schema":"",
-  "$_extends": "user",
   "title": "Profile",
   "description": "Represents the user profile tokens",
   "type": "object",

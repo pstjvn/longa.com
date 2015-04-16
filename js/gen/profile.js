@@ -4,8 +4,7 @@
 goog.provide('longa.gen.dto.Profile');
 
 goog.require('goog.asserts');
-goog.require('goog.object');
-goog.require('longa.gen.dto.User');
+goog.require('pstj.ds.DtoBase');
 
 
 goog.scope(function() {
@@ -14,11 +13,11 @@ var a = goog.asserts;
 
 /**
  * Represents the user profile tokens
- * @extends {longa.gen.dto.User}
+ * @extends {pstj.ds.DtoBase}
  */
-longa.gen.dto.Profile = goog.defineClass(longa.gen.dto.User, {
+longa.gen.dto.Profile = goog.defineClass(pstj.ds.DtoBase, {
   constructor: function() {
-    longa.gen.dto.User.call(this);
+    pstj.ds.DtoBase.call(this);
     /**@type {!string} */
     this.run = '';
     /**@type {!string} */
@@ -61,7 +60,7 @@ longa.gen.dto.Profile = goog.defineClass(longa.gen.dto.User, {
 
   /**@override */
   toJSON: function() {
-    var exports = {
+    return {
       'run': this.run,
       'fname': this.firstName,
       'lname': this.lastName,
@@ -74,8 +73,6 @@ longa.gen.dto.Profile = goog.defineClass(longa.gen.dto.User, {
       'phone': this.phone,
       'pp_email': this.pp_email
     };
-    return goog.object.extend(exports,
-        a.assertObject(goog.base(this, 'toJSON')));
   }
 });
 });  // goog.scope

@@ -1,0 +1,22 @@
+{
+  "$schema":"",
+  "$_extends": "profile",
+  "title": "RegistrationDetails",
+  "description": "Represents registration details for a new user.",
+  "type": "object",
+  "properties": {
+    "password": {
+      "type": "string"
+    },
+
+    "rpassword": {
+      "type": "string"
+    },
+
+    "type": {
+      "type": "number",
+      "$_type": "string"
+    }
+  },
+  "required": "$_all"
+}

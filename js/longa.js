@@ -1,6 +1,6 @@
 goog.provide('longa.App');
 
-goog.require('goog.debug.Console');
+goog.require('goog.dom');
 goog.require('goog.json');
 goog.require('goog.log');
 goog.require('longa.control.Auth');
@@ -29,7 +29,11 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @final
      */
     this.logger_ = goog.log.getLogger('longa.App');
-    this.auth = new longa.control.Auth();
+    var div = goog.dom.createDom('div', goog.getCssName('auth-container'));
+    document.body.appendChild(div);
+    var div2 = goog.dom.createDom('div', goog.getCssName('longa-form-padding'));
+    div.appendChild(div2);
+    this.auth = new longa.control.Auth(div2);
     this.init();
   },
 
@@ -46,7 +50,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
       // domain we are currently running under.
       crossdomain: false
     });
-    this.push(T.USER_REQUESTED_REGISTRATION);
+    this.push(T.USER_REQUESTED_LOGIN);
   },
 
   /**

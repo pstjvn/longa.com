@@ -1,27 +1,22 @@
 goog.provide('longa.ui.LoginForm');
 
-goog.require('goog.events');
 goog.require('goog.style');
-goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
 goog.require('longa.template');
-goog.require('longa.ui.ErrorMessage');
+goog.require('longa.ui.Form');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Checkbox');
-goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
-goog.require('pstj.material.EventMap');
 goog.require('pstj.material.Input');
 goog.require('pstj.material.Shadow');
 
 goog.scope(function() {
-var E = pstj.material.Element;
+var F = longa.ui.Form;
 var ER = pstj.material.ElementRenderer;
-var UIET = goog.ui.Component.EventType;
 
 
-/** @extends {E} */
-longa.ui.LoginForm = goog.defineClass(E, {
+/** @extends {F} */
+longa.ui.LoginForm = goog.defineClass(F, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -31,40 +26,10 @@ longa.ui.LoginForm = goog.defineClass(E, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    E.call(this, opt_content, opt_renderer, opt_domHelper);
+    F.call(this, opt_content, opt_renderer, opt_domHelper);
+
+    // We need this because of internal links
     this.setUsePointerAgent(true);
-  },
-
-  /** @override */
-  enterDocument: function() {
-    goog.base(this, 'enterDocument');
-    this.getHandler().listen(this.getChildAt(4), UIET.ACTION,
-        this.handleSubmit);
-  },
-
-  /**
-   * Sets/shows the error message.
-   * @param {string} message
-   */
-  setError: function(message) {
-    this.getChildAt(0).showMessage(message);
-  },
-
-  /**
-   * Removes the currently displayed error.
-   */
-  removeError: function() {
-    this.getChildAt(0).hideMessage();
-  },
-
-  /**
-   * Handles the submit button activation.
-   * @param {goog.events.Event} e The synthetic action event.
-   * @protected
-   */
-  handleSubmit: function(e) {
-    this.setEnabled(false);
-    this.dispatchEvent(longa.ui.LoginForm.EventType.CALL_LOGIN);
   },
 
   /**
@@ -103,13 +68,10 @@ longa.ui.LoginForm = goog.defineClass(E, {
         pstj.material.Checkbox)).isChecked();
   },
 
-  /**
-   * Completely ignore the state machine and simply enable/disable the
-   * button.
-   * @override
-   */
-  setEnabled: function(enable) {
-    this.getChildAt(3).setEnabled(enable);
+  /** @override */
+  getActionButton: function() {
+    return goog.asserts.assertInstanceof(this.getChildAt(4),
+        pstj.material.Button);
   },
 
   /**
@@ -119,17 +81,6 @@ longa.ui.LoginForm = goog.defineClass(E, {
   showRecoveryLink: function(enable) {
     goog.style.setElementShown(
         this.getElementByClass(goog.getCssName('linklike')), enable);
-  },
-
-  statics: {
-    /**
-     * The events this component can emit.
-     * @enum {string}
-     * @final
-     */
-    EventType: {
-      CALL_LOGIN: goog.events.getUniqueId('request-login')
-    }
   }
 });
 

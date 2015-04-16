@@ -1,41 +1,67 @@
 goog.provide('longa.control.Auth');
 
+goog.require('goog.async.Delay');
 goog.require('goog.dom.classlist');
 goog.require('goog.dom.dataset');
-goog.require('goog.events');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
 goog.require('longa.ui.LoginForm');
+goog.require('longa.ui.RecoverForm');
 goog.require('longa.ui.RegistrationForm');
 goog.require('pstj.control.Control');
 
 goog.scope(function() {
-var events = goog.events;
 var T = longa.ds.Topic;
 var rpc = longa.rpc.instance;
 
 
 /** @extends {pstj.control.Control} */
 longa.control.Auth = goog.defineClass(pstj.control.Control, {
-  constructor: function() {
+  /**
+   * @param {Element} container Where should the element be rendered.
+   */
+  constructor: function(container) {
     pstj.control.Control.call(this);
+    /**
+     * The element we are goping to use to render in.
+     *
+     * TODO: replace this with animated pages.
+     *
+     * @type {Element}
+     * @private
+     */
+    this.container_ = container;
     this.login = new longa.ui.LoginForm();
     this.reg = new longa.ui.RegistrationForm();
-    this.recover = null;
+    this.recover = new longa.ui.RecoverForm();
+    this.delayShowLogin_ = new goog.async.Delay(function() {
+      this.push(T.USER_REQUESTED_LOGIN);
+    }, 3000, this);
     this.init();
   },
 
   /** @override */
   init: function() {
     goog.base(this, 'init');
-    // handle the login form component.
-    events.listen(this.login,
-        longa.ui.LoginForm.EventType.CALL_LOGIN, this.handleLoginPressed,
-        undefined, this);
 
-    events.listen(this.login, pstj.agent.Pointer.EventType.TAP,
-        this.handleTapsOnElements, undefined, this);
+    // handle the form submitions
+    this.getHandler()
+        .listen(this.login, goog.ui.Component.EventType.ACTION,
+            this.handleLoginPressed)
+        .listen(this.recover, goog.ui.Component.EventType.ACTION,
+            this.handleRecoveryPressed)
+        .listen(this.reg, goog.ui.Component.EventType.ACTION,
+            this.handleRegisterPressed);
+
+    // handle the taps on link elements.
+    this.getHandler()
+        .listen(this.login, pstj.agent.Pointer.EventType.TAP,
+            this.handleTapsOnElements)
+        .listen(this.recover, pstj.agent.Pointer.EventType.TAP,
+            this.handleTapsOnElements)
+        .listen(this.reg, pstj.agent.Pointer.EventType.TAP,
+            this.handleTapsOnElements);
 
     // Listen to global request for login.
     this.listen(T.USER_REQUESTED_LOGIN, this.handleShowLogin);
@@ -43,6 +69,11 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
     this.listen(T.USER_REQUESTED_ACCOUNT_RECOVERY, this.handleShowRecovery);
   },
 
+  /**
+   * Supports moving between auth states internally (via links in the forms).
+   * @param {goog.events.Event} e The tap event.
+   * @protected
+   */
   handleTapsOnElements: function(e) {
     e.stopPropagation();
     var el = e.getSourceElement();
@@ -67,19 +98,15 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
    * Shows the corresponding procedure on the screen.
    */
   handleShowLogin: function() {
-    var div = goog.dom.createDom('div', goog.getCssName('auth-container'));
-    document.body.appendChild(div);
-    this.login.render(div);
+    this.login.render(this.container_);
   },
 
   handleShowRegistration: function() {
-    var div = goog.dom.createDom('div', goog.getCssName('auth-container'));
-    document.body.appendChild(div);
-    this.reg.render(div);
+    this.reg.render(this.container_);
   },
 
   handleShowRecovery: function() {
-    console.log('Show recovery');
+    this.recover.render(this.container_);
   },
 
 
@@ -90,6 +117,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
   handleLoginPressed: function(e) {
     if (this.login.isValid()) {
 
+      this.login.setEnabled(false);
       this.login.showRecoveryLink(false);
       this.login.removeError();
 
@@ -117,6 +145,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
    * @param {longa.gen.dto.User} result
    */
   handleLoginSuccess: function(result) {
+    this.push(T.USER_AUTHENTICATED);
     console.log('We have been logged in!', result);
   },
 
@@ -135,7 +164,41 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
    */
   handleLoginEnd: function() {
     this.login.setEnabled(true);
+  },
+
+  /**
+   * Handles the pressing of the recovery button on recovery form.
+   * @param {goog.events.Event} e
+   * @protected
+   */
+  handleRecoveryPressed: function(e) {
+    if (this.recover.isValid()) {
+      this.recover.setEnabled(false);
+      rpc.recover(this.recover.getEmail())
+          .then(this.handleRecoverySuccess, this.handleRecoveryFailure, this)
+          .thenAlways(this.handleRecoveryEnd, this);
+    }
+  },
+
+  handleRecoverySuccess: function(success) {
+    this.recover.setError('Please, check your e-mail!');
+    this.delayShowLogin_.start();
+  },
+
+  handleRecoveryFailure: function(error) {
+    goog.asserts.assertInstanceof(error, Error);
+    this.recover.setError(error.message);
+  },
+
+  handleRecoveryEnd: function() {
+    this.recover.setEnabled(true);
+  },
+
+  handleRegisterPressed: function(e) {
+    e.stopPropagation();
+    this.reg.setEnabled(false);
   }
 });
+goog.addSingletonGetter(longa.control.Auth);
 
 });  // goog.scope

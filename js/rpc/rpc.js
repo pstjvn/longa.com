@@ -203,6 +203,55 @@ longa.rpc.Main = goog.defineClass(null, {
   },
 
   /**
+   * RPC call: /profile (POST)
+   * Update the user profile on the server.
+   * @param {!Profile} profile
+   * @return {!goog.Promise<!Profile>}
+   */
+  updateProfile: function(profile) {
+    goog.log.info(this.logger_, 'Updating profile');
+
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.post(/** @type {Object<string, *>} */(profile.toJSON()),
+          goog.bind(function(err, result) {
+            try {
+              var profile = this.handleProfileResult(err, result);
+            } catch (e) {
+              goog.log.error(this.logger_, 'Cannot update profile: ' +
+                  e.message);
+              reject(e);
+              return;
+            }
+            goog.log.info(this.logger_, 'Profile updated');
+            resolve(profile);
+          }, this));
+    }, this);
+  },
+
+  /**
+   * Recovers the account.
+   * @param {string} email
+   * @return {!goog.Promise<boolean>}
+   */
+  recover: function(email) {
+    goog.log.info(this.logger_, 'Attempt to recover account: ' + email);
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': longa.rpc.Calls.RECOVER,
+        'email': email
+      }, goog.bind(function(err, result) {
+        if (!goog.isNull(err)) {
+          reject(err);
+        } else if (!this.wasSuccessful_(result)) {
+          reject(new Error(result['msg']));
+        } else {
+          resolve(true);
+        }
+      }, this));
+    }, this);
+  },
+
+  /**
    * Default RPC handler for login attempts.
    *
    * @param {Error?} err The error if there was any in the RPC link.
@@ -326,7 +375,8 @@ longa.rpc.Main = goog.defineClass(null, {
  * @enum {string}
  */
 longa.rpc.Calls = {
-  LOGIN: 'log'
+  LOGIN: 'log',
+  RECOVER: 'forgot'
 };
 
 

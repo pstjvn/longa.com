@@ -79,6 +79,21 @@
 {template .RegistrationForm}
   <div is class="{css longa-registration-form}" use-pointer>
     <div>
+      <span class="{css linklike}" data-request="login">Go back to login</span>
+    </div>
+    <div is class="{css material-radio-group}" value="1">
+      {call pstj.material.template.RadioButton}
+        {param name: 'type' /}
+        {param value: '1' /}
+        {param content: 'Investor' /}
+      {/call}
+      {call pstj.material.template.RadioButton}
+        {param name: 'type' /}
+        {param value: '2' /}
+        {param content: 'Signal Provider' /}
+      {/call}
+    </div>
+    <div>
       {call pstj.material.template.Input}
         {param error: 'Username is required' /}
         {param required: true /}
@@ -181,6 +196,7 @@
       {/call}
     </div>
     <div>
+      <label>State:</label>
       <select name="state">
         <option value="Non-US/Other">Non-US/Other</option>
         <option value="Alabama">Alabama</option>
@@ -238,6 +254,7 @@
       </select>
     </div>
     <div>
+      <label>Country:</label>
       <select name="country">
         <option value="United States">United States</option>
         <option value="Afghanistan">Afghanistan</option>
@@ -485,6 +502,51 @@
     </div>
     <div>
       {call .ErrorMessage /}
+    </div>
+    <div class="{css button-container}">
+      {call pstj.material.template.Button}
+        {param content: 'Register' /}
+        {param icon: 'none' /}
+        {param ink: true /}
+      {/call}
+    </div>
+    <div is class="{css material-shadow} {css material-shadow-2}">
+      <div class="{css material-shadow-bottom}"></div>
+      <div class="{css material-shadow-top}"></div>
+    </div>
+  </div>
+{/template}
+
+
+/** Template for the recovery of an account */
+{template .RecoverForm}
+  <div is class="{css longa-recover-form}" use-pointer>
+    <div>
+      {call .ErrorMessage /}
+    </div>
+    <div>
+      {call pstj.material.template.Input}
+        {param error: 'Valid email is required' /}
+        {param required: true /}
+        {param label: 'E-mail' /}
+        {param name: 'email' /}
+        {param type: 'email' /}
+        {param value: '' /}
+      {/call}
+    </div>
+    <div class="{css button-container}">
+      {call pstj.material.template.Button}
+        {param content: 'request password' /}
+        {param icon: 'none' /}
+        {param ink: true /}
+      {/call}
+    </div>
+    <div>
+      <span class="{css linklike}" data-request="login">Go back to login</span>
+    </div>
+    <div is class="{css material-shadow} {css material-shadow-2}">
+      <div class="{css material-shadow-bottom}"></div>
+      <div class="{css material-shadow-top}"></div>
     </div>
   </div>
 {/template}

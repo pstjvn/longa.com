@@ -1,23 +1,20 @@
 goog.provide('longa.ui.RegistrationForm');
 
-goog.require('goog.events');
-goog.require('goog.style');
-goog.require('goog.ui.Component.EventType');
+goog.require('goog.events.EventType');
 goog.require('goog.ui.registry');
 goog.require('longa.template');
 goog.require('longa.ui.ErrorMessage');
+goog.require('longa.ui.Form');
 goog.require('pstj.material.Button');
-goog.require('pstj.material.Checkbox');
-goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
-goog.require('pstj.material.EventMap');
 goog.require('pstj.material.Input');
+goog.require('pstj.material.RadioButton');
+goog.require('pstj.material.RadioGroup');
 goog.require('pstj.material.Shadow');
 
 goog.scope(function() {
-var E = pstj.material.Element;
+var E = longa.ui.Form;
 var ER = pstj.material.ElementRenderer;
-var UIET = goog.ui.Component.EventType;
 
 
 /** @extends {E} */
@@ -32,13 +29,14 @@ longa.ui.RegistrationForm = goog.defineClass(E, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     E.call(this, opt_content, opt_renderer, opt_domHelper);
+
+    // Used for internal links
     this.setUsePointerAgent(true);
   },
 
   /** @override */
   enterDocument: function() {
     goog.base(this, 'enterDocument');
-    this.getHandler().listen(this, UIET.ACTION, this.handleSubmit);
     this.getHandler().listen(this.querySelector('[name="country"]'),
         goog.events.EventType.CHANGE, this.handleCountryChange_);
   },
@@ -59,49 +57,18 @@ longa.ui.RegistrationForm = goog.defineClass(E, {
     }
   },
 
-  /**
-   * Sets/shows the error message.
-   * @param {string} message
-   */
-  setError: function(message) {
-    this.getChildAt(0).showMessage(message);
+  /** @override */
+  getActionButton: function() {
+    return goog.asserts.assertInstanceof(
+        this.getChildAt(this.getChildCount() - 2),
+        pstj.material.Button);
   },
 
-  /**
-   * Removes the currently displayed error.
-   */
-  removeError: function() {
-    this.getChildAt(0).hideMessage();
-  },
-
-  /**
-   * Handles the submit button activation.
-   * @param {goog.events.Event} e The synthetic action event.
-   * @protected
-   */
-  handleSubmit: function(e) {
-    this.setEnabled(false);
-    this.dispatchEvent(longa.ui.RegistrationForm.EventType.CALL_REGISTER);
-  },
-
-  /**
-   * Completely ignore the state machine and simply enable/disable the
-   * button.
-   * @override
-   */
-  setEnabled: function(enable) {
-    this.getChildAt(3).setEnabled(enable);
-  },
-
-  statics: {
-    /**
-     * The events this component can emit.
-     * @enum {string}
-     * @final
-     */
-    EventType: {
-      CALL_REGISTER: goog.events.getUniqueId('request-registration')
-    }
+  /** @override */
+  getErrorMessageChild: function() {
+    return goog.asserts.assertInstanceof(
+        this.getChildAt(this.getChildCount() - 3),
+        longa.ui.ErrorMessage);
   }
 });
 

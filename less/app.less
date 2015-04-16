@@ -12,6 +12,8 @@
 @import "../../pstj/less/material/checkbox";
 @import "../../pstj/less/material/typography";
 @import "../../pstj/less/material/shadow";
+@import "../../pstj/less/material/radiobutton";
+@import "../../pstj/less/material/radiogroup";
 @import "app/errormessage";
 
 // Disable focus outline (Android)
@@ -32,15 +34,25 @@ body {
   height: 100vh;
 }
 
+select {
+  height: 35px;
+  margin: 5px 0 5px auto;
+  width: 70%;
+  display: table;
+}
+
+label {
+  padding: 9px 0;
+  float: left;
+}
+
 .auth-container {
   &:extend(.fit);
-  &:extend(.center);
-  &:extend(.center-justified);
-  &:extend(.vertical);
+  min-height: 100%;
 
   .linklike {
     padding: 10px 0;
-    .typography(#00f, 87, 9px, @typography-weight-light);
+    .typography(#00f, 87, 11px, @typography-weight-light);
   }
 
   .help-info {
@@ -48,13 +60,23 @@ body {
   }
 
   input {
-    width: 250px;
+    width: 280px;
   }
 
 }
 
-.longa-login-form {
-  width: 280px;
+.longa-form-padding {
+  &:extend(.center);
+  &:extend(.center-justified);
+  &:extend(.vertical);
+  padding: 15px;
+  min-height: 100%;
+}
+
+.longa-login-form,
+.longa-recover-form,
+.longa-registration-form {
+  width: 310px;
   position: relative;
   padding: 15px;
 

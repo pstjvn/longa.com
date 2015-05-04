@@ -550,3 +550,65 @@
     </div>
   </div>
 {/template}
+
+
+/** The start screen of the app */
+{template .StartScreen}
+{@param items: list<?>}
+<div class="{css longa-start-screen}" fit>
+  {call pstj.templates.Swiper data="all" /}
+  <div class="{css longa-start-screen-top}">
+    <div class="{css longa-start-screen-logo}">
+      <svg version="1.1" id="logo_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="40px" viewBox="0 0 156.481 43.654" style="enable-background:new 0 0 156.481 43.654;" xml:space="preserve">
+        <polygon style="fill:white;" points="4.216,10.665 0.338,10.665 0.338,34.058 13.019,34.058 13.019,31.084 4.216,31.084 "/>
+        <path style="fill:white;" d="M39.121,10.144c-3.373,0-6.254,1.194-8.646,3.583c-2.392,2.389-3.587,5.257-3.587,8.604
+            c0,3.389,1.196,6.277,3.587,8.665c2.391,2.389,5.273,3.583,8.646,3.583c3.393,0,6.28-1.199,8.661-3.598
+            c2.381-2.398,3.572-5.282,3.572-8.65c0-3.348-1.196-6.216-3.587-8.604C45.375,11.338,42.493,10.144,39.121,10.144z M45.161,28.391
+            c-1.676,1.673-3.69,2.509-6.04,2.509c-2.371,0-4.395-0.836-6.07-2.509c-1.676-1.673-2.514-3.693-2.514-6.06
+            c0-2.347,0.838-4.356,2.514-6.029c1.676-1.673,3.699-2.51,6.07-2.51c2.35,0,4.364,0.837,6.04,2.51
+            c1.675,1.673,2.514,3.683,2.514,6.029C47.674,24.697,46.836,26.718,45.161,28.391z"/>
+        <polygon style="fill:white;" points="80.11,27.313 68.645,10.665 64.781,10.665 64.781,34.058 68.307,34.058 68.307,16.767
+            80.417,34.058 83.637,34.058 83.637,10.665 80.11,10.665 "/>
+        <path style="fill:white;" d="M106.845,22.224v3.587h10.7c-0.695,1.544-1.748,2.778-3.158,3.703
+            c-1.41,0.924-2.974,1.386-4.69,1.386c-2.372,0-4.396-0.836-6.071-2.509s-2.514-3.693-2.514-6.06c0-2.347,0.838-4.356,2.514-6.029
+            s3.699-2.51,6.071-2.51c1.205,0,2.345,0.23,3.418,0.69s1.998,1.108,2.774,1.946h4.507c-1.063-1.941-2.54-3.475-4.43-4.599
+            c-1.891-1.124-3.981-1.687-6.27-1.687c-3.373,0-6.255,1.194-8.646,3.583c-2.391,2.389-3.587,5.257-3.587,8.604
+            c0,3.389,1.196,6.277,3.587,8.665c2.392,2.389,5.273,3.583,8.646,3.583c3.331,0,6.203-1.162,8.614-3.486
+            c2.412-2.325,3.618-5.128,3.618-8.41v-0.429L106.845,22.224z"/>
+        <polygon style="fill-rule:evenodd;clip-rule:evenodd;fill:white;" points="146.762,10.737 143.821,10.737 133.981,34.077
+            137.762,34.077 140.702,27.058 145.142,15.657 149.462,27.058 152.521,34.138 156.481,34.138 "/>
+        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff9d1d;" d="M20.779,22.512C20.544,14.438,24.607,5.945,34.772,0
+            c-11.056,2.703-15.93,12.483-15.718,22.132c-1.844-0.442-3.421-0.94-4.612-1.484c0.025,1.434,1.833,2.612,4.729,3.511
+            c0.886,9.216,6.399,17.844,15.602,19.496c-7.621-3.601-12.833-10.958-13.828-19.009c12.673,3.054,39.612,1.894,41.518-4.871
+            C53.944,25.111,32.853,24.957,20.779,22.512z"/>
+      </svg>
+    </div>
+    <div class="{css longa-start-screen-up-button}">
+      {call pstj.material.template.Button}
+        {param ink: true /}
+        {param content: 'Skip' /}
+        {param icon: 'none' /}
+      {/call}
+    </div>
+  </div>
+  <div class="{css longa-start-screen-rotation-indicator}">
+    <div is class="{css material-radio-group}">
+      {foreach $item in $items}
+        {call pstj.material.template.RadioButton /}
+      {/foreach}
+    </div>
+  </div>
+  <div class="{css longa-start-screen-buttons}">
+    {call pstj.material.template.Button}
+      {param ink: true /}
+      {param content: 'Sign up' /}
+      {param icon: 'none' /}
+    {/call}
+    {call pstj.material.template.Button}
+      {param ink: true /}
+      {param content: 'Log in' /}
+      {param icon: 'none' /}
+    {/call}
+  </div>
+</div>
+{/template}

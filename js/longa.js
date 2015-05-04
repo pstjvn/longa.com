@@ -9,6 +9,7 @@ goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
 goog.require('longa.staticdata');
 goog.require('longa.template');
+goog.require('longa.ui.StartScreen');
 goog.require('pstj.control.Control');
 goog.require('pstj.ds.dto.SwipetileList');
 goog.require('pstj.widget.Swiper');
@@ -35,6 +36,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
     div.appendChild(div2);
     this.auth = new longa.control.Auth(div2);
     this.init();
+    this.startScreen_ = new longa.ui.StartScreen();
+    this.startScreen_.render(document.body);
   },
 
   /** @override */
@@ -51,18 +54,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
       crossdomain: false
     });
     this.push(T.USER_REQUESTED_LOGIN);
-  },
-
-  /**
-   * Potentially we need image preload for web app.
-   * @private
-   */
-  showStartScreen_: function() {
-    var tilelist = new pstj.ds.dto.SwipetileList();
-    tilelist.fromJSON(longa.staticdata.startPageTiles);
-    var sw = new pstj.widget.Swiper();
-    sw.setModel(tilelist);
-    sw.render(document.body);
   },
 
   /**

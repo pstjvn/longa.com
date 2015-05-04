@@ -1,0 +1,58 @@
+@import "colors.less";
+@import "../../../pstj/less/material/button";
+@import "../../../pstj/less/material/layout";
+@import "../../../pstj/less/material/radiobutton";
+@import "../../../pstj/less/material/radiogroup";
+
+.longa-start-screen {
+
+  &:extend(.fit);
+
+  & .material-button, & .material-button-label {
+    color: white;
+  }
+
+  &-top {
+    position: absolute;
+    top:0;
+    width: 100%;
+    &:extend(.flex);
+    &:extend(.horizontal);
+    &:extend(.justified);
+  }
+
+  &-up-button, &-buttons {
+    background-color: @longa-accent-color;
+  }
+
+  &-buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    &:extend(.flex);
+    &:extend(.horizontal);
+    &:extend(.center);
+
+    & .material-button {
+      &:extend(.flex);
+    }
+  }
+
+  &-rotation-indicator {
+    position: absolute;
+    bottom: 60px;
+    left:0;
+    width: 100%;
+    &:extend(.flex);
+    &:extend(.center);
+    &:extend(.center-justified);
+
+    & .material-radio-button {
+      display: inline-block;
+    }
+  }
+
+  &-logo {
+    padding-left: 10px;
+  }
+}

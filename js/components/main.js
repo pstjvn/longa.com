@@ -46,6 +46,10 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.faq = new longa.ui.Faq();
 
     this.refreshButton = new pstj.material.Fab();
+    this.refreshButton.addClassName(
+        goog.getCssName('longa-app-refresh-button'));
+    this.refreshButton.setTransitioning(true);
+    this.refreshButton.setUseInk(true);
     this.refreshButton.setIcon(pstj.material.icon.Name.MENU);
 
   },

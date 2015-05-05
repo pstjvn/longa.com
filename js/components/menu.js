@@ -72,7 +72,9 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
    */
   handleSelectionEvent: function(e) {
     if (e.target != this.selectedChild_) {
-      this.selectedChild_.setSelected(false);
+      if (!goog.isNull(this.selectedChild_)) {
+        this.selectedChild_.setSelected(false);
+      }
       this.selectedChild_ = goog.asserts.assertInstanceof(e.target,
           goog.ui.Component);
       this.control_.push(longa.ds.Topic.SHOW_SCREEN,

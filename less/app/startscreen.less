@@ -43,12 +43,25 @@
     bottom: 60px;
     left:0;
     width: 100%;
-    &:extend(.flex);
+    &:extend(.core-flex-display);
     &:extend(.center);
     &:extend(.center-justified);
 
+    & .material-radio-group {
+      // &:extend(.flex);
+    }
+
     & .material-radio-button {
       display: inline-block;
+    }
+    
+    & .material-radio-button-disabled .material-radio-button-off {
+      opacity: 0.7;
+      border-color: #FFF;
+    }
+    
+    & .material-radio-button-disabled.material-radio-button-checked .material-radio-button-off {
+      background-color: #FFF;
     }
   }
 
@@ -56,3 +69,5 @@
     padding-left: 10px;
   }
 }
+
+

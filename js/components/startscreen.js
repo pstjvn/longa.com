@@ -134,6 +134,7 @@ longa.ui.StartScreenRenderer = goog.defineClass(pstj.material.ElementRenderer, {
     CSS_CLASS: goog.getCssName('longa-start-screen')
   }
 });
+goog.addSingletonGetter(longa.ui.StartScreenRenderer);
 
 // Register for default renderer.
 goog.ui.registry.setDefaultRenderer(longa.ui.StartScreen,

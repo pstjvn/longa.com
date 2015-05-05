@@ -3,7 +3,9 @@ goog.provide('longa.App');
 goog.require('goog.dom');
 goog.require('goog.json');
 goog.require('goog.log');
+goog.require('goog.ui.Component.EventType');
 goog.require('longa.control.Auth');
+goog.require('longa.control.Main');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
@@ -13,6 +15,7 @@ goog.require('longa.ui.StartScreen');
 goog.require('pstj.control.Control');
 goog.require('pstj.ds.dto.SwipetileList');
 goog.require('pstj.widget.Swiper');
+
 
 goog.scope(function() {
 var rpc = longa.rpc.instance;
@@ -30,14 +33,16 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @final
      */
     this.logger_ = goog.log.getLogger('longa.App');
-    var div = goog.dom.createDom('div', goog.getCssName('auth-container'));
-    document.body.appendChild(div);
-    var div2 = goog.dom.createDom('div', goog.getCssName('longa-form-padding'));
-    div.appendChild(div2);
-    this.auth = new longa.control.Auth(div2);
-    this.init();
+    this.mainApp_ = new longa.control.Main();
     this.startScreen_ = new longa.ui.StartScreen();
-    this.startScreen_.render(document.body);
+
+    // var div = goog.dom.createDom('div', goog.getCssName('auth-container'));
+    // document.body.appendChild(div);
+    // var div2 = goog.dom.createDom('div',
+    //  goog.getCssName('longa-form-padding'));
+    // div.appendChild(div2);
+    // this.auth = new longa.control.Auth(div2);
+    this.init();
   },
 
   /** @override */
@@ -53,7 +58,33 @@ longa.App = goog.defineClass(pstj.control.Control, {
       // domain we are currently running under.
       crossdomain: false
     });
-    this.push(T.USER_REQUESTED_LOGIN);
+
+
+    // Initially - show start screen
+    this.startScreen_.render(document.body);
+    // Init listeners, this one will be called only once anyway so we
+    // inline it here - it will hide the start screen and we cannot go
+    // back to it until reload.
+    this.getHandler().listenOnce(this.startScreen_,
+        goog.ui.Component.EventType.ACTION,
+        function(e) {
+          var idx = this.startScreen_.indexOfChild(e.target);
+          // after it is handled / showed with animation...
+          setTimeout(goog.bind(function() {
+            this.mainApp_.show();
+            this.startScreen_.dispose();
+            if (idx == 1) {
+              // skip
+              this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
+            } else if (idx == 3) {
+              // sign up
+              this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
+            } else if (idx == 4) {
+              // log in
+              this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+            }
+          }, this), 200);
+        });
   },
 
   /**

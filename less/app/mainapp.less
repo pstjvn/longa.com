@@ -1,0 +1,54 @@
+@import "../../../pstj/less/material/drawerpanel";
+@import "../../../pstj/less/material/headerpanel";
+@import "../../../pstj/less/material/layout";
+@import "../../../pstj/less/material/fab";
+@import "colors";
+
+.material-panel {
+  background-color: white;
+}
+
+.material-drawer-panel-sidebar .material-panel {
+  background-color: white;
+}
+
+.material-header-panel-header {
+  background-color:@longa-accent-color;
+  display: flex;
+  align-items: center;
+}
+
+
+// Sidebar header panel header
+//
+.longa-side-header {
+  &:extend(.flex);
+  &:extend(.horizontal);
+}
+.longa-side-header-inner {
+  &:extend(.flex);
+  &:extend(.horizontal);
+  &:extend(.center);
+  &:extend(.center-justified);
+}
+
+
+.longa-main-header-labels {
+  position: relative;
+  &:extend(.flex);
+  & .animatable-item {
+    // animation settings
+  }
+}
+
+
+.animation-top-down {
+  position: absolute;
+  top: 0;
+  left: 0;
+  .transform(translateY(-100%));
+
+  &.selected {
+    .transform(translateY(0));
+  }
+}

@@ -1,0 +1,104 @@
+goog.provide('longa.ui.Main');
+
+goog.require('goog.ui.registry');
+goog.require('longa.ui.Faq');
+goog.require('longa.ui.MainHeader');
+goog.require('longa.ui.Menu');
+goog.require('longa.ui.SideHeader');
+goog.require('longa.ui.Terms');
+goog.require('pstj.material.DrawerPanel');
+goog.require('pstj.material.Element');
+goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.Fab');
+goog.require('pstj.material.HeaderPanel');
+goog.require('pstj.material.icon');
+
+
+/** @extends {pstj.material.Element} */
+longa.ui.Main = goog.defineClass(pstj.material.Element, {
+  /**
+   * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
+   *     to display as the content of the control (if any).
+   * @param {pstj.material.DrawerPanelRenderer=} opt_renderer Renderer used to
+   *     render or  decorate the component; defaults to {@link
+   *     pstj.material.DrawerPanelRenderer}.
+   * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+   *     document interaction.
+   */
+  constructor: function(opt_content, opt_renderer, opt_domHelper) {
+    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    this.drawer_ = new pstj.material.DrawerPanel();
+
+    this.sidePanel = null;
+    this.mainPanel = null;
+
+    this.sideHeaderPanel = new pstj.material.HeaderPanel();
+
+    this.mainHeaderPanel = new pstj.material.HeaderPanel();
+    this.mainHeaderPanel.setType('waterfall');
+
+    this.sideHeader = new longa.ui.SideHeader();
+    this.mainHeader = new longa.ui.MainHeader();
+
+    this.menu = new longa.ui.Menu();
+
+    this.terms = new longa.ui.Terms();
+    this.faq = new longa.ui.Faq();
+
+    this.refreshButton = new pstj.material.Fab();
+    this.refreshButton.setIcon(pstj.material.icon.Name.MENU);
+
+  },
+
+  /** @override */
+  addMaterialChildren: function() {
+    goog.base(this, 'addMaterialChildren');
+    // Once we have the children we want to start building the tree.
+    this.addChild(this.drawer_, true);
+    this.drawer_.getDrawerPanel().addChild(this.sideHeaderPanel, true);
+    this.drawer_.getMainPanel().addChild(this.mainHeaderPanel, true);
+
+    this.mainHeaderPanel.getHeader().addChild(this.mainHeader, true);
+    this.sideHeaderPanel.getHeader().addChild(this.sideHeader, true);
+
+    this.sideHeaderPanel.getMain().addChild(this.menu, true);
+    this.mainHeaderPanel.getMain().addChild(this.faq, true);
+    this.sideHeaderPanel.getMain().addChild(this.refreshButton, true);
+  }
+});
+
+
+/** @extends {pstj.material.ElementRenderer} */
+longa.ui.MainRenderer = goog.defineClass(pstj.material.ElementRenderer, {
+  constructor: function() {
+    pstj.material.ElementRenderer.call(this);
+  },
+
+  /** @override */
+  getCssClass: function() {
+    return longa.ui.MainRenderer.CSS_CLASS;
+  },
+
+  /** @override */
+  getTemplate: function(m) {
+    return longa.template.MainApp(m);
+  },
+
+  statics: {
+    /**
+     * @final
+     * @type {string}
+     */
+    CSS_CLASS: goog.getCssName('longa-main-app')
+  }
+});
+goog.addSingletonGetter(longa.ui.MainRenderer);
+
+goog.ui.registry.setDefaultRenderer(longa.ui.Main,
+    longa.ui.MainRenderer);
+
+
+goog.ui.registry.setDecoratorByClassName(
+    longa.ui.MainRenderer.CSS_CLASS, function() {
+      return new longa.ui.Main(null);
+    });

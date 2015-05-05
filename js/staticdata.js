@@ -34,4 +34,21 @@ _.startPageTiles = [
   }
 ];
 
+
+/**
+ * The tiles in the main header
+ * @const
+ * @type {!Array<!string>}
+ */
+_.HeaderTiles = [
+  'Login',
+  'Balance',
+  'Signal Feed',
+  'My Signals',
+  'Alerts',
+  'Profile',
+  'FAQ',
+  'Terms of Service'
+];
+
 });  // goog.scope

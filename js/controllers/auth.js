@@ -64,6 +64,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
             this.handleTapsOnElements);
 
     // Listen to global request for login.
+    // TODO: fix this to work with the new SCREEN signalling.
     this.listen(T.USER_REQUESTED_LOGIN, this.handleShowLogin);
     this.listen(T.USER_REQUESTED_REGISTRATION, this.handleShowRegistration);
     this.listen(T.USER_REQUESTED_ACCOUNT_RECOVERY, this.handleShowRecovery);
@@ -80,13 +81,13 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
     if (goog.dom.classlist.contains(el, goog.getCssName('linklike'))) {
       switch (goog.dom.dataset.get(el, 'request')) {
         case 'register':
-          this.push(T.USER_REQUESTED_REGISTRATION);
+          this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
           break;
         case 'recovery':
-          this.push(T.USER_REQUESTED_ACCOUNT_RECOVERY);
+          this.push(T.SHOW_SCREEN, longa.ds.Screen.RECOVER);
           break;
         case 'login':
-          this.push(T.USER_REQUESTED_LOGIN);
+          this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
           break;
         default: throw new Error(
             'You must have forgot to set request attribute');

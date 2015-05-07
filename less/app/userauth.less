@@ -1,0 +1,27 @@
+@import "../../../pstj/less/material/button";
+@import "../../../pstj/less/material/icon";
+@import "../../../pstj/less/material/iconbutton";
+@import "../../../pstj/less/material/layout";
+
+
+.longa-app-userauth {
+  height: 64px;
+
+  & > section {
+    height: 64px;
+    &:extend(.horizontal);
+    &:extend(.center);
+    &:extend(.center-justified);
+  }
+
+
+
+  .material-icon-button:hover {
+    box-shadow: 0 1px 0 0 rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.1);
+  }
+
+  .material-icon-button-active {
+    background-color: rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 0 0 rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.12);
+  }
+}

@@ -52,6 +52,24 @@ _.getCurrentUserType = function() {
 
 
 /**
+ * Checks if the current user is an investor.
+ * @return {boolean}
+ */
+_.isInvestor = function() {
+  return _.getCurrentUserType() == UserType.INVESTOR;
+};
+
+
+/**
+ * Returns true if the user is currently logged in.
+ * @return {boolean}
+ */
+_.isKnownUser = function() {
+  return _.getCurrentUserType() != UserType.UNKNONW;
+};
+
+
+/**
  * Sorts the alerts list so that the newest alerts are first.
  * @param {!Array<longa.gen.dto.Alert>} alertlist
  */

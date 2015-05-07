@@ -4,8 +4,11 @@ goog.require('goog.ui.registry');
 goog.require('longa.ui.Faq');
 goog.require('longa.ui.MainHeader');
 goog.require('longa.ui.Menu');
+goog.require('longa.ui.Page');
+goog.require('longa.ui.Pages');
 goog.require('longa.ui.SideHeader');
 goog.require('longa.ui.Terms');
+goog.require('longa.ui.UserAuth');
 goog.require('pstj.material.DrawerPanel');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
@@ -40,10 +43,12 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.sideHeader = new longa.ui.SideHeader();
     this.mainHeader = new longa.ui.MainHeader();
 
-    this.menu = new longa.ui.Menu();
-
     this.terms = new longa.ui.Terms();
     this.faq = new longa.ui.Faq();
+
+    // Sidebar config
+    this.userAuth = new longa.ui.UserAuth();
+    this.menu = new longa.ui.Menu();
 
     this.refreshButton = new pstj.material.Fab();
     this.refreshButton.addClassName(
@@ -51,6 +56,14 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.refreshButton.setTransitioning(true);
     this.refreshButton.setUseInk(true);
     this.refreshButton.setIcon(pstj.material.icon.Name.MENU);
+
+    this.mainPages = new longa.ui.Pages();
+
+    this.faqWrapper = new longa.ui.Page();
+    this.faqWrapper.addChild(this.faq, true);
+
+    this.termsWrapper = new longa.ui.Page();
+    this.termsWrapper.addChild(this.terms, true);
 
   },
 
@@ -65,9 +78,14 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.mainHeaderPanel.getHeader().addChild(this.mainHeader, true);
     this.sideHeaderPanel.getHeader().addChild(this.sideHeader, true);
 
+    this.mainPages.addChild(this.faqWrapper, true);
+    this.mainPages.addChild(this.termsWrapper, true);
+
+    this.sideHeaderPanel.getMain().addChild(this.userAuth, true);
     this.sideHeaderPanel.getMain().addChild(this.menu, true);
-    this.mainHeaderPanel.getMain().addChild(this.faq, true);
     this.sideHeaderPanel.getMain().addChild(this.refreshButton, true);
+
+    this.mainHeaderPanel.getMain().addChild(this.mainPages, true);
   }
 });
 

@@ -616,7 +616,7 @@
 
 /** The main app template */
 {template .MainApp}
-  <div class="{css longa-main-app}"></div>
+  <div is class="{css longa-main-app}"></div>
 {/template}
 
 /** The live main header item */
@@ -645,7 +645,7 @@
 
 /** The side header */
 {template .SideHeader}
-<div class="{css longa-side-header}">
+<div is class="{css longa-side-header}">
   <div class="{css longa-side-header-inner}">
     <svg version="1.1" id="logo_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="40px" viewBox="0 0 156.481 43.654" style="enable-background:new 0 0 156.481 43.654;" xml:space="preserve">
       <polygon style="fill:white;" points="4.216,10.665 0.338,10.665 0.338,34.058 13.019,34.058 13.019,31.084 4.216,31.084 "></polygon>
@@ -677,7 +677,7 @@
 
 /** Template for the sidebar menu */
 {template .Menu}
-<div class="{css longa-app-menu}">
+<div is class="{css longa-app-menu}">
   <div class="{css longa-app-menu-separator}"></div>
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
@@ -708,17 +708,10 @@
     {param content: 'Profile' /}
   {/call}
   <div class="{css longa-app-menu-separator}"></div>
-  <!-- Inline this so we can set it as default -->
-  <div is class="{css material-menu-item} {css material-menu-item-selected} {css core-tap}" use-pointer>
-    {call pstj.material.template.IconContainer}
-      {param type: 'none' /}
-    {/call}
-    <div class="{css material-menu-item-content}">
-      {call pstj.material.template.Item}
-        {param content: 'FAQ' /}
-      {/call}
-    </div>
-  </div>
+  {call pstj.material.template.MenuItem}
+    {param icon: 'none' /}
+    {param content: 'FAQ' /}
+  {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
     {param content: 'Terms of service' /}
@@ -729,7 +722,7 @@
 
 /** Tersm of service as a template */
 {template .Terms}
-<div class="{css longa-app-terms}">
+<div is class="{css longa-app-terms}">
   <ul class="{css longa-app-terms-answers}">
     <li>For  purposes of these Terms of Use, the following terms shall have the meanings as  specified below:<br><br>
         Intelsoft  EOOD means the company Intelsoft EOOD which is the copyright owner of the  website <a href="http://www.longa.com/">www.longa.com</a>. <br><br>
@@ -945,4 +938,46 @@
     <li>If you have additional questions you can always send an email to: <a href="mailto:support@longa.com">support@longa.com</a></li>
   </ul>
 </div>
+{/template}
+
+
+/** Themplate for the Pages component. */
+{template .Pages}
+  <div is class="{css longa-app-pages}"></div>
+{/template}
+
+/** Template for the paged item */
+{template .Page}
+  <div is class="{css longa-app-page}"></div>
+{/template}
+
+/** Templat for the user auth section */
+{template .UserAuth}
+	<div is class="{css longa-app-userauth}">
+    <section>
+      <div is class="{css material-button} {css material-button-raised}" ink use-pointer icon="menu">
+        {call pstj.material.template.Shadow /}
+        {call pstj.material.template.IconContainer}
+          {param type: 'none' /}
+        {/call}
+        {call pstj.material.template.ButtonContent}
+          {param content: 'Login' /}
+        {/call}
+        {call pstj.material.template.Ripple}
+          {param recenter: false /}
+          {param opacity: 0.30 /}
+        {/call}
+      </div>
+    </section>
+    <section style="display: none">
+      {call pstj.material.template.IconContainer}
+        {param type: 'menu' /}
+      {/call}
+      <div class="{css longa-app-userauth-username}">Username</div>
+      <div class="{css longa-app-userauth-usertype}">(Investor)</div>
+      {call pstj.material.template.IconButton}
+        {param icon: 'menu' /}
+      {/call}
+    </section>
+	</div>
 {/template}

@@ -6,6 +6,7 @@ goog.provide('longa.ds.UserType');
  * @enum {number}
  */
 longa.ds.UserType = {
+  UNKNONW: 0,
   INVESTOR: 1,
   SELLER: 2
 };

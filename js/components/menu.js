@@ -3,6 +3,8 @@ goog.provide('longa.ui.Menu');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
+goog.require('longa.ds.UserType');
+goog.require('longa.ds.utils');
 goog.require('pstj.control.Control');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
@@ -40,22 +42,69 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
           }
           this.getChildAt(goog.asserts.assertNumber(screen)).setSelected(true);
         }, this));
+
+
+    // Force update of menus visible to match the current user when AUTH
+    // is changed.
+    this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED, goog.bind(
+        function() {
+          this.updateVisibleMenusPerUsertype();
+        }, this));
   },
 
   /** @override */
   addMaterialChildren: function() {
     goog.base(this, 'addMaterialChildren');
-    var len = this.getChildCount() - 2;
-    this.forEachChild(function(child, i) {
-      if (i < len) {
-        child.setEnabled(false);
-      } else if (i == len) {
-        child.setSelected(true);
-        this.selectedChild_ = child;
-      }
-    }, this);
-    this.getChildAt(2).setEnabled(true);
+    // Hide the login
     this.getChildAt(0).setVisible(false);
+    // Find the default selected child
+    for (var i = 0; i < this.getChildCount(); i++) {
+      if (this.getChildAt(i).isSelected()) {
+        this.selectedChild_ = this.getChildAt(i);
+        break;
+      }
+    }
+    this.updateVisibleMenusPerUsertype();
+  },
+
+  /**
+   * Grabs the global user currently set and updates the menus to match the
+   * user type.
+   */
+  updateVisibleMenusPerUsertype: function() {
+    var usertype = longa.ds.utils.getCurrentUserType();
+    // enable all menus first and then disable the ones we need.
+    if (usertype == longa.ds.UserType.UNKNONW) {
+      this.disableAuthedMenus(true);
+      this.setMenusForInvestor(true);
+    } else if (usertype == longa.ds.UserType.INVESTOR) {
+      this.disableAuthedMenus(false);
+      this.setMenusForInvestor(true);
+    } else {
+      this.disableAuthedMenus(false);
+      this.setMenusForInvestor(false);
+    }
+  },
+
+  /**
+   * Disables the menus that should be accerssible only to authenticated users.
+   * @protected
+   * @param {boolean} disabled If true the menus should be disabled
+   */
+  disableAuthedMenus: function(disabled) {
+    goog.array.forEach([1, 2, 4, 5, 6], function(idx) {
+      this.getChildAt(idx).setEnabled(!disabled);
+    }, this);
+  },
+
+  /**
+   * Shows / hides the menus according to the user type.
+   * @protected
+   * @param {boolean} isInvestor If true the user is assumed to be investor.
+   */
+  setMenusForInvestor: function(isInvestor) {
+    this.getChildAt(2).setVisible(!isInvestor);
+    this.getChildAt(3).setVisible(isInvestor);
   },
 
   /** @override */

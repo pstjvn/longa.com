@@ -703,10 +703,17 @@
     {param content: 'Profile' /}
   {/call}
   <div class="{css longa-app-menu-separator}"></div>
-  {call pstj.material.template.MenuItem}
-    {param icon: 'none' /}
-    {param content: 'FAQ' /}
-  {/call}
+  <!-- Inline this so we can set it as default -->
+  <div is class="{css material-menu-item} {css material-menu-item-selected} {css core-tap}" use-pointer>
+    {call pstj.material.template.IconContainer}
+      {param type: 'none' /}
+    {/call}
+    <div class="{css material-menu-item-content}">
+      {call pstj.material.template.Item}
+        {param content: 'FAQ' /}
+      {/call}
+    </div>
+  </div>
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
     {param content: 'Terms of service' /}

@@ -1,5 +1,6 @@
 goog.provide('longa.ds.utils');
 
+goog.require('longa.data');
 goog.require('longa.ds.AlertType');
 goog.require('longa.ds.UserType');
 goog.require('longa.gen.dto.Alert');
@@ -32,10 +33,21 @@ _.getAlertType = function(alert) {
  */
 _.getUserType = function(user) {
   switch (user.usertype) {
+    // User is not logged in
+    case '': return UserType.UNKNONW;
     case '1': return UserType.INVESTOR;
     case '2': return UserType.SELLER;
     default: throw new Error('Unknown user type: ' + user.usertype);
   }
+};
+
+
+/**
+ * Returns the user type for the currently authenticated user.
+ * @return {UserType}
+ */
+_.getCurrentUserType = function() {
+  return _.getUserType(longa.data.user);
 };
 
 
@@ -67,8 +79,8 @@ _.sortUserAlerts = function(alerts) {
  */
 _.defaultAlertSortFn_ = function(a1, a2) {
   // Note that this differs from the default sort implementation, reverse order!
-  if (a1.id < a2.id) res = 1;
-  if (a1.id > a2.id) res = -1;
+  if (a1.id < a2.id) return 1;
+  if (a1.id > a2.id) return -1;
   return 0;
 };
 

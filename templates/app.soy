@@ -621,8 +621,7 @@
 
 /** The live main header item */
 {template .MainHeader}
-  {@param tiles: list<string>}
-  <div class="{css longa-main-header}">
+  <div is class="{css longa-main-header}">
     <div class="{css longa-main-header-button}">
       {call pstj.material.template.Button}
         {param icon: 'menu' /}
@@ -630,10 +629,16 @@
         {param ink: true /}
       {/call}
     </div>
-    <div class="{css longa-main-header-labels}">
-      {foreach $item in $tiles}
-        <div class="{css animatable-item} {css animation-top-down}">{$item}</div>
-      {/foreach}
+    <div is class="{css longa-app-pages}">
+      <div is class="{css longa-app-page}">Login</div>
+      <div is class="{css longa-app-page}">Balance</div>
+      <div is class="{css longa-app-page}">Define service</div>
+      <div is class="{css longa-app-page}">Signal feed</div>
+      <div is class="{css longa-app-page}">My signals</div>
+      <div is class="{css longa-app-page}">Alerts</div>
+      <div is class="{css longa-app-page}">Profile</div>
+      <div is class="{css longa-app-page}">FAQ</div>
+      <div is class="{css longa-app-page}">Terms of service</div>
     </div>
   </div>
 {/template}

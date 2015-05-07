@@ -1,8 +1,12 @@
 goog.provide('longa.ui.MainHeader');
 
 goog.require('goog.ui.registry');
+goog.require('longa.ds.Topic');
 goog.require('longa.staticdata');
 goog.require('longa.template');
+goog.require('longa.ui.Page');
+goog.require('longa.ui.Pages');
+goog.require('pstj.control.Control');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
@@ -20,10 +24,29 @@ longa.ui.MainHeader = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
-  },
-
-  selectItem: function(idx) {
-
+    /**
+     * @private
+     * @const
+     * @type {pstj.control.Control}
+     */
+    this.control_ = new pstj.control.Control();
+    this.control_.init();
+    // Handle the screen changes - basically figure out which main screen it is
+    // and update the header.
+    this.control_.listen(longa.ds.Topic.SHOW_SCREEN, goog.bind(
+        function(screen) {
+          if (screen > 99) {
+            // This is login -> select the first
+            this.getChildAt(1).setSelectedIndex(0);
+          } else if (screen > 9) {
+            // This is one of the inner screens
+            screen = parseInt(screen.toString()[0], 10);
+            this.getChildAt(1).setSelectedIndex(screen);
+          } else {
+            this.getChildAt(1).setSelectedIndex(
+                goog.asserts.assertNumber(screen));
+          }
+        }, this));
   }
 });
 
@@ -37,13 +60,6 @@ longa.ui.MainHeaderRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   /** @override */
   getTemplate: function(m) {
     return longa.template.MainHeader(m);
-  },
-
-  /** @override */
-  generateTemplateData: function(instance) {
-    return {
-      tiles: longa.staticdata.HeaderTiles
-    };
   },
 
   /** @override */

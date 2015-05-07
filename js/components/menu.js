@@ -135,8 +135,10 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
    * Clear the selection, used when a view that is not in the menu is displayed.
    */
   clearSelection: function() {
-    this.selectedChild_.setSelected(false);
-    this.selectedChild_ = null;
+    if (!goog.isNull(this.selectedChild_)) {
+      this.selectedChild_.setSelected(false);
+      this.selectedChild_ = null;
+    }
   }
 });
 

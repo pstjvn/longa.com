@@ -1,7 +1,9 @@
 @import "../../../pstj/less/material/drawerpanel";
+@import "../../../pstj/less/material/fab";
 @import "../../../pstj/less/material/headerpanel";
 @import "../../../pstj/less/material/layout";
-@import "../../../pstj/less/material/fab";
+@import "../../../pstj/less/material/typography";
+@import "../../../pstj/less/translation";
 @import "colors";
 
 .material-panel {
@@ -10,6 +12,10 @@
 
 .material-drawer-panel-sidebar .material-panel {
   background-color: white;
+}
+
+.material-drawer-panel:not(.material-drawer-panel-narrow) .longa-main-header-button {
+  visibility: hidden;
 }
 
 .material-header-panel-header {
@@ -37,31 +43,74 @@
   &:extend(.center-justified);
 }
 
+// The main view header and its contents
 .longa-main-header {
-  height: 100%;
+  height: 60px;
   width: 100%;
-}
-
-
-.longa-main-header-labels {
-  position: relative;
-  &:extend(.flex);
   &:extend(.horizontal);
-  &:extend(.center);
-  &:extend(.center-justified);
-  & .animatable-item {
-    // animation settings
+
+  & > &-button {
+    &:extend(.horizontal);
+    &:extend(.center);
+  }
+
+  & > &-tiles {
+    &:extend(.flex);
+    position: relative;
+    height: 60px;
+
+    & > .longa-app-pages > .longa-app-page {
+      color: white;
+      height: 100%;
+      display: block;
+      & > div {
+        .title(white);
+        &:extend(.center);
+        &:extend(.horizontal);
+        height: 100%;
+      }
+    }
+
+  }
+
+
+
+  & .material-button {
+    color: white;
+    min-width: 0;
+
+    & > .material-icon-container {
+      margin-right: 0;
+    }
+
+    & > .material-icon-container > svg {
+      fill: white;
+    }
+  }
+
+  & > .longa-app-pages {
+    &:extend(.flex);
   }
 }
 
 
-.animation-top-down {
-  position: absolute;
-  top: 0;
-  left: 0;
-  .transform(translateY(-100%));
+/// Defines the animations for the pages...
+.longa-app-page.animation-top-down {
+  .translation(0, -100%);
+  opacity: 0;
 
-  &.selected {
-    .transform(translateY(0));
+  &.longa-app-page-selected {
+    .translation();
+    opacity: 1;
+  }
+}
+
+.longa-app-page.animation-down-top {
+  .translation(0, 1000px);
+  opacity: 0;
+
+  &.longa-app-page-selected {
+    .translation();
+    opacity: 1;
   }
 }

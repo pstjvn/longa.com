@@ -25,5 +25,6 @@ longa.ds.Topic = {
   MENU_SELECTED: 'ms',
 
   // Direct access to secrtain screen - could be user action or server action.
-  SHOW_SCREEN: 'ss'
+  SHOW_SCREEN: 'ss',
+  SHOW_MENU: 'sm'
 };

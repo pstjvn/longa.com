@@ -984,3 +984,56 @@
     </section>
 	</div>
 {/template}
+
+/** Provides the auth panels */
+{template .Auth}
+  <div is class="{css longa-app-auth}">
+    <div is class="{css longa-app-pages}">
+      <div is class="{css longa-app-page} {css animation-top-down}">
+        <div class="{css longa-app-page-wrapper}">
+          {call .LoginForm /}
+        </div>
+      </div>
+      <div is class="{css longa-app-page} {css animation-down-top}">
+        <div class="{css longa-app-page-wrapper}">
+          {call .RegistrationForm /}
+        </div>
+      </div>
+      <div is class="{css longa-app-page} {css animation-down-top}">
+        <div class="{css longa-app-page-wrapper}">
+          {call .RecoverForm /}
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/** Balance */
+{template .Balance}
+  <div class="{css longa-app-balance}"></div>
+{/template}
+
+/** SignalFeed */
+{template .Service}
+  <div class="{css longa-app-service}"></div>
+{/template}
+
+/** Balance */
+{template .SignalFeed}
+  <div class="{css longa-app-feed}"></div>
+{/template}
+
+/** Balance */
+{template .Signals}
+  <div class="{css longa-app-signals}"></div>
+{/template}
+
+/** Balance */
+{template .Alerts}
+  <div class="{css longa-app-alerts}"></div>
+{/template}
+
+/** Balance */
+{template .Profile}
+  <div class="{css longa-app-profile}"></div>
+{/template}

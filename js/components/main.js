@@ -1,6 +1,9 @@
 goog.provide('longa.ui.Main');
 
+goog.require('goog.async.Delay');
+goog.require('goog.log');
 goog.require('goog.ui.registry');
+goog.require('longa.ui.Auth');
 goog.require('longa.ui.Faq');
 goog.require('longa.ui.MainHeader');
 goog.require('longa.ui.Menu');
@@ -9,6 +12,7 @@ goog.require('longa.ui.Pages');
 goog.require('longa.ui.SideHeader');
 goog.require('longa.ui.Terms');
 goog.require('longa.ui.UserAuth');
+goog.require('pstj.control.Control');
 goog.require('pstj.material.DrawerPanel');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
@@ -30,6 +34,54 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    /**
+     * @type {goog.debug.Logger}
+     * @private
+     * @final
+     */
+    this.logger_ = goog.log.getLogger('longa.ui.Main');
+
+    /**
+     * Delays the toggling of the sidebar in order to create more smooth
+     * user experience.
+     * @private
+     * @type {goog.async.Delay}
+     */
+    this.delayShowSidebar_ = new goog.async.Delay(function() {
+      this.drawer_.open();
+    }, 200, this);
+
+    this.delayHideSidebar_ = new goog.async.Delay(function() {
+      this.drawer_.close();
+    }, 200, this);
+
+    // Configure the main with a main controller.
+    this.control = new pstj.control.Control(this);
+    this.control.init();
+
+
+    // Handle screen switches on top level (screens).
+    this.control.listen(longa.ds.Topic.SHOW_SCREEN, function(s) {
+      // Whenever we show a new screen we need to close the drawer
+      this.delayHideSidebar_.start();
+
+      // We should be able to switch screens from here.
+      if (s > 99 && s < 103) {
+        goog.log.info(this.logger_, 'Switching to login view');
+        this.mainPages.setSelectedIndex(0);
+      }
+    });
+
+
+    // handle presses on the MENU button on top of main header.
+    this.control.listen(longa.ds.Topic.SHOW_MENU, function() {
+      goog.log.info(this.logger_, 'Show the menu by request');
+      this.delayShowSidebar_.start();
+    });
+
+
+    // CONSTRUCTS THE UI, for now we prefer this way as it allows for
+    // faster access to the subcomponents.
     this.drawer_ = new pstj.material.DrawerPanel();
 
     this.sidePanel = null;
@@ -43,13 +95,9 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.sideHeader = new longa.ui.SideHeader();
     this.mainHeader = new longa.ui.MainHeader();
 
-    this.terms = new longa.ui.Terms();
-    this.faq = new longa.ui.Faq();
-
     // Sidebar config
     this.userAuth = new longa.ui.UserAuth();
     this.menu = new longa.ui.Menu();
-
     this.refreshButton = new pstj.material.Fab();
     this.refreshButton.addClassName(
         goog.getCssName('longa-app-refresh-button'));
@@ -57,6 +105,12 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.refreshButton.setUseInk(true);
     this.refreshButton.setIcon(pstj.material.icon.Name.MENU);
 
+    // Main screens
+    this.auth = new longa.ui.Auth();
+    this.terms = new longa.ui.Terms();
+    this.faq = new longa.ui.Faq();
+
+    // Main UX pages, wrap the main screens
     this.mainPages = new longa.ui.Pages();
 
     this.faqWrapper = new longa.ui.Page();
@@ -64,6 +118,9 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
 
     this.termsWrapper = new longa.ui.Page();
     this.termsWrapper.addChild(this.terms, true);
+
+    this.authWrapper = new longa.ui.Page();
+    this.authWrapper.addChild(this.auth, true);
 
   },
 
@@ -78,9 +135,12 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.mainHeaderPanel.getHeader().addChild(this.mainHeader, true);
     this.sideHeaderPanel.getHeader().addChild(this.sideHeader, true);
 
+    // Add main screens
+    this.mainPages.addChild(this.authWrapper, true);
     this.mainPages.addChild(this.faqWrapper, true);
     this.mainPages.addChild(this.termsWrapper, true);
 
+    // Add sidebar itesm.
     this.sideHeaderPanel.getMain().addChild(this.userAuth, true);
     this.sideHeaderPanel.getMain().addChild(this.menu, true);
     this.sideHeaderPanel.getMain().addChild(this.refreshButton, true);

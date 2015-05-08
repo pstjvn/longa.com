@@ -1,0 +1,143 @@
+goog.provide('longa.ui.Auth');
+
+goog.require('goog.dom.classlist');
+goog.require('goog.dom.dataset');
+goog.require('goog.ui.registry');
+goog.require('longa.control.Auth');
+goog.require('longa.ds.Topic');
+goog.require('longa.template');
+goog.require('longa.ui.LoginForm');
+goog.require('longa.ui.Page');
+goog.require('longa.ui.Pages');
+goog.require('longa.ui.RecoverForm');
+goog.require('longa.ui.RegistrationForm');
+goog.require('pstj.material.Element');
+goog.require('pstj.material.ElementRenderer');
+
+
+/** @extends {pstj.material.Element} */
+longa.ui.Auth = goog.defineClass(pstj.material.Element, {
+  /**
+   * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
+   *     to display as the content of the control (if any).
+   * @param {goog.ui.ControlRenderer=} opt_renderer Renderer used to render or
+   *     decorate the component; defaults to {@link goog.ui.ControlRenderer}.
+   * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+   *     document interaction.
+   */
+  constructor: function(opt_content, opt_renderer, opt_domHelper) {
+    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    /** @type {longa.ui.Page} */
+    this.loginPage = null;
+    /** @type {longa.ui.Page} */
+    this.registrationPage = null;
+    /** @type {longa.ui.Page} */
+    this.recoverPage = null;
+    /**
+     * The controller for this widget.
+     * @type {longa.control.Auth}
+     * @protected
+     */
+    this.control = new longa.control.Auth(this);
+
+    this.control.listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
+      goog.asserts.assertNumber(screen);
+      if (screen > 99 && screen < 103) {
+        var s = screen - 100;
+        this.getPages().setSelectedIndex(s);
+      }
+    });
+  },
+
+  /** @override */
+  addMaterialChildren: function() {
+    goog.base(this, 'addMaterialChildren');
+    // this.loginPage = goog.asserts.assertInstanceof(
+    //     this.getChildAt(0).getChildAt(0), longa.ui.Page);
+    // this.registrationPage = goog.asserts.assertInstanceof(
+    //     this.getChildAt(0).getChildAt(1), longa.ui.Page);
+    // this.recoverPage = goog.asserts.assertInstanceof(
+    //     this.getChildAt(0).getChildAt(2), longa.ui.Page);
+  },
+
+  /** @override */
+  enterDocument: function() {
+    goog.base(this, 'enterDocument');
+    this.getHandler()
+      .listen(this, pstj.agent.Pointer.EventType.TAP, this.handleTaps_);
+  },
+
+  /**
+   * @private
+   * @param {pstj.agent.PointerEvent} e The pointer event.
+   */
+  handleTaps_: function(e) {
+    e.stopPropagation();
+    var el = e.getSourceElement();
+    if (goog.dom.classlist.contains(el, goog.getCssName('linklike'))) {
+      switch (goog.dom.dataset.get(el, 'request')) {
+        case 'register':
+          this.control.push(longa.ds.Topic.SHOW_SCREEN,
+              longa.ds.Screen.REGISTER);
+          break;
+        case 'recovery':
+          this.control.push(longa.ds.Topic.SHOW_SCREEN,
+              longa.ds.Screen.RECOVER);
+          break;
+        case 'login':
+          this.control.push(longa.ds.Topic.SHOW_SCREEN,
+              longa.ds.Screen.LOGIN);
+          break;
+        default: throw new Error(
+            'You must have forgot to set request attribute');
+      }
+    }
+  },
+
+  /**
+   * Getter for the pages widget.
+   * @protected
+   * @return {longa.ui.Pages}
+   */
+  getPages: function() {
+    return goog.asserts.assertInstanceof(this.getChildAt(0), longa.ui.Pages);
+  }
+});
+
+
+/** @extends {pstj.material.ElementRenderer} */
+longa.ui.AuthRenderer = goog.defineClass(pstj.material.ElementRenderer, {
+  constructor: function() {
+    pstj.material.ElementRenderer.call(this);
+  },
+
+  /** @override */
+  getCssClass: function() {
+    return longa.ui.AuthRenderer.CSS_CLASS;
+  },
+
+  /** @override */
+  getTemplate: function(model) {
+    return longa.template.Auth(model);
+  },
+
+  statics: {
+    /**
+     * @final
+     * @type {string}
+     */
+    CSS_CLASS: goog.getCssName('longa-app-auth')
+  }
+});
+goog.addSingletonGetter(longa.ui.AuthRenderer);
+
+// Register for default renderer.
+goog.ui.registry.setDefaultRenderer(longa.ui.Auth,
+    longa.ui.AuthRenderer);
+
+
+// Register decorator factory function.
+goog.ui.registry.setDecoratorByClassName(
+    longa.ui.AuthRenderer.CSS_CLASS, function() {
+      return new longa.ui.Auth(null);
+    });

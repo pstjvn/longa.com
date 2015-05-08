@@ -62,7 +62,9 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
         goog.log.warning(this.logger_,
             'Cannot use animation, no parent size set');
       }
+      this.getChildAt(this.selectedIndex).setSelected(false);
       this.selectedIndex = idx;
+      this.getChildAt(this.selectedIndex).setSelected(true);
       // TODO: Handle the index switching.
     }
   },
@@ -73,6 +75,14 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
    */
   getSelectedIndex: function() {
     return this.selectedIndex;
+  },
+
+  /** @override */
+  addMaterialChildren: function() {
+    goog.base(this, 'addMaterialChildren');
+    if (!this.getChildAt(this.selectedIndex).isSelected()) {
+      this.getChildAt(this.selectedIndex).setSelected(true);
+    }
   }
 });
 

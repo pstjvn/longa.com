@@ -4,13 +4,12 @@ goog.require('goog.dom');
 goog.require('goog.json');
 goog.require('goog.log');
 goog.require('goog.ui.Component.EventType');
-goog.require('longa.control.Auth');
-goog.require('longa.control.Main');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
 goog.require('longa.staticdata');
 goog.require('longa.template');
+goog.require('longa.ui.Main');
 goog.require('longa.ui.StartScreen');
 goog.require('pstj.control.Control');
 goog.require('pstj.ds.dto.SwipetileList');
@@ -33,22 +32,25 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @final
      */
     this.logger_ = goog.log.getLogger('longa.App');
-    this.mainApp_ = new longa.control.Main();
+    /**
+     * The main view (app)
+     * @type {longa.ui.Main}
+     * @private
+     */
+    this.mainApp_ = new longa.ui.Main();
+    /**
+     * The start screen we need to show on each launch.
+     * @type {longa.ui.StartScreen}
+     * @private
+     */
     this.startScreen_ = new longa.ui.StartScreen();
-
-    // var div = goog.dom.createDom('div', goog.getCssName('auth-container'));
-    // document.body.appendChild(div);
-    // var div2 = goog.dom.createDom('div',
-    //  goog.getCssName('longa-form-padding'));
-    // div.appendChild(div2);
-    // this.auth = new longa.control.Auth(div2);
     this.init();
   },
 
   /** @override */
   init: function() {
     goog.base(this, 'init');
-    goog.log.fine(this.logger_, 'Initializing the app');
+    goog.log.fine(this.logger_, 'Initializing the Longa contrtoller');
     rpc.configure({
       // The run variable name as in /cgi-bin/stock.cgi?{run}=...
       run: 'run',
@@ -62,6 +64,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
 
     // Initially - show start screen
     this.startScreen_.render(document.body);
+
     // Init listeners, this one will be called only once anyway so we
     // inline it here - it will hide the start screen and we cannot go
     // back to it until reload.
@@ -71,8 +74,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
           var idx = this.startScreen_.indexOfChild(e.target);
           // after it is handled / showed with animation...
           setTimeout(goog.bind(function() {
-            this.mainApp_.show();
             this.startScreen_.dispose();
+            this.mainApp_.render(document.body);
             if (idx == 1) {
               // skip
               this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);

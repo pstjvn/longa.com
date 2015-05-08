@@ -89,7 +89,7 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
   /**
    * Disables the menus that should be accerssible only to authenticated users.
    * @protected
-   * @param {boolean} disabled If true the menus should be disabled
+   * @param {boolean} disabled If true the menus should be disabled.
    */
   disableAuthedMenus: function(disabled) {
     goog.array.forEach([1, 2, 4, 5, 6], function(idx) {

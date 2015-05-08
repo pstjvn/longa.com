@@ -1,5 +1,5 @@
 /**
- * @fileoverview Provides common utilities for the forms in Longa.com
+ * @fileoverview Provides common utilities for the forms in Longa.com.
  */
 
 goog.provide('longa.ui.Form');

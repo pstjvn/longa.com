@@ -74,6 +74,11 @@ longa.ui.LoginForm = goog.defineClass(F, {
         pstj.material.Button);
   },
 
+  /** @override */
+  setEnabled: function(enable) {
+    this.getActionButton().setEnabled(enable);
+  },
+
   /**
    * Shows/hides the account recovery link.
    * @param {boolean} enable If true the link will be shown.

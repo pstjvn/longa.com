@@ -5,6 +5,7 @@ goog.require('goog.dom.dataset');
 goog.require('goog.ui.registry');
 goog.require('longa.control.Auth');
 goog.require('longa.ds.Topic');
+goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.template');
 goog.require('longa.ui.LoginForm');
 goog.require('longa.ui.Page');
@@ -27,12 +28,6 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
-    /** @type {longa.ui.Page} */
-    this.loginPage = null;
-    /** @type {longa.ui.Page} */
-    this.registrationPage = null;
-    /** @type {longa.ui.Page} */
-    this.recoverPage = null;
     /**
      * The controller for this widget.
      * @type {longa.control.Auth}
@@ -46,6 +41,17 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
         var s = screen - 100;
         this.getPages().setSelectedIndex(s);
       }
+    });
+
+    this.control.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+      // Basically - reenable login screen action button once we complete.
+      this.getLoginForm_().setEnabled(true);
+    });
+
+    this.control.listen(longa.ds.Topic.USER_AUTH_FAILED, function(err) {
+      goog.asserts.assertInstanceof(err, Error);
+      this.getLoginForm_().showRecoveryLink(true);
+      this.setError(err.message);
     });
   },
 
@@ -64,7 +70,27 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
   enterDocument: function() {
     goog.base(this, 'enterDocument');
     this.getHandler()
-      .listen(this, pstj.agent.Pointer.EventType.TAP, this.handleTaps_);
+      .listen(this, pstj.agent.Pointer.EventType.TAP, this.handleTaps_)
+      .listen(this.getLoginForm_(), goog.ui.Component.EventType.ACTION,
+        this.handleLoginFormSubmit_);
+  },
+
+  /**
+   * @private
+   * @param {goog.events.Event} e The action event object.
+   */
+  handleLoginFormSubmit_: function(e) {
+    var login = goog.asserts.assertInstanceof(e.target, longa.ui.LoginForm);
+    login.removeError();
+    if (login.isValid()) {
+      login.setEnabled(false);
+      var detail = new longa.gen.dto.LoginDetails();
+      detail.username = login.getUsername();
+      detail.password = login.getPassword();
+      this.control.login(detail, login.isKeepCredentials());
+    } else {
+      login.setError('Username/password must be valid');
+    }
   },
 
   /**
@@ -101,6 +127,38 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
    */
   getPages: function() {
     return goog.asserts.assertInstanceof(this.getChildAt(0), longa.ui.Pages);
+  },
+
+  /**
+   * Provides seamless access to the login form.
+   * @return {!longa.ui.LoginForm}
+   * @private
+   */
+  getLoginForm_: function() {
+    return goog.asserts.assertInstanceof(
+        this.getPages().getChildAt(0).getChildAt(0),
+        longa.ui.LoginForm);
+  },
+
+  /**
+   * Access to the registration form.
+   * @return {!longa.ui.RegistrationForm}
+   * @private
+   */
+  getRegistrationForm_: function() {
+    return goog.asserts.assertInstanceof(
+        this.getPages().getChildAt(1).getChildAt(0),
+        longa.ui.RegistrationForm);
+  },
+
+  /**
+   * @return {!longa.ui.RecoverForm}
+   * @private
+   */
+  getRecoverForm_: function() {
+    return goog.asserts.assertInstanceof(
+        this.getPages().getChildAt(2).getChildAt(0),
+        longa.ui.RecoverForm);
   }
 });
 

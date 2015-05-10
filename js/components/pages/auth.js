@@ -51,7 +51,13 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
     this.control.listen(longa.ds.Topic.USER_AUTH_FAILED, function(err) {
       goog.asserts.assertInstanceof(err, Error);
       this.getLoginForm_().showRecoveryLink(true);
-      this.setError(err.message);
+      this.getLoginForm_().setError(err.message);
+    });
+
+    // Configure for logging out automatically.
+    this.control.listen(longa.ds.Topic.USER_AUTH_FORGET, function() {
+      this.getLoginForm_().clear();
+      this.control.logout();
     });
   },
 
@@ -80,7 +86,7 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
    * @param {goog.events.Event} e The action event object.
    */
   handleLoginFormSubmit_: function(e) {
-    var login = goog.asserts.assertInstanceof(e.target, longa.ui.LoginForm);
+    var login = this.getLoginForm_();
     login.removeError();
     if (login.isValid()) {
       login.setEnabled(false);

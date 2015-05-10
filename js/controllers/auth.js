@@ -33,9 +33,11 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
      * @type {longa.gen.dto.LoginDetails}
      */
     this.lastLoginDetails_ = null;
-    // this.delayShowLogin_ = new goog.async.Delay(function() {
-    //   this.push(T.USER_REQUESTED_LOGIN);
-    // }, 3000, this);
+    /**
+     * @private
+     * @type {goog.debug.Logger}
+     */
+    this.logger_ = goog.log.getLogger('longa.control.Auth');
   },
 
   /**
@@ -48,11 +50,29 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
    * time the application is started until the user requests a logout.
    */
   login: function(login_details, keep_details) {
+
     this.keepLoginDetails_ = keep_details;
     this.lastLoginDetails_ = login_details;
+    goog.log.info(this.logger_, 'Should keep login details: ' +
+        keep_details.toString());
+    goog.log.info(this.logger_, login_details.username + ':' +
+        login_details.password);
     rpc.login(login_details)
       .then(this.onLogin_, this.onLoginFail_, this)
       .thenAlways(this.onLoginComplete_, this);
+  },
+
+  /**
+   * Performs the log-out procedures.
+   */
+  logout: function() {
+    rpc.logout().then(
+        function() {
+          longa.data.user = new longa.gen.dto.User();
+          this.push(longa.ds.Topic.USER_AUTH_CHANGED);
+        }, function() {
+          // generic error handler.
+        }, this);
   },
 
   /**
@@ -61,6 +81,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
    * @private
    */
   onLogin_: function(user) {
+    goog.log.info(this.logger_, 'Login successed');
     longa.data.user = user;
     if (this.keepLoginDetails_) {
       console.log(this.lastLoginDetails_);
@@ -74,6 +95,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
    * @private
    */
   onLoginFail_: function(error) {
+    goog.log.info(this.logger_, 'Login failed');
     goog.asserts.assertInstanceof(error, Error);
     longa.data.user = new longa.gen.dto.User();
     this.push(longa.ds.Topic.USER_AUTH_FAILED, error);
@@ -84,6 +106,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
    * @private
    */
   onLoginComplete_: function() {
+    goog.log.info(this.logger_, 'Login completed');
     // Clear the reference as we do not need it anymore.
     this.lastLoginDetails_ = null;
     this.push(longa.ds.Topic.USER_AUTH_CHANGED);

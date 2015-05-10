@@ -82,6 +82,17 @@ longa.ui.Form = goog.defineClass(E, {
     return goog.asserts.assertInstanceof(
         this.getChildAt(this.getChildCount() - 1),
         pstj.material.Button);
+  },
+
+  /**
+   * Clears the value from the inputs.
+   */
+  clear: function() {
+    this.forEachChild(function(child) {
+      if (child instanceof pstj.material.InputBase) {
+        child.setValue('');
+      }
+    }, this);
   }
 });
 });  // goog.scope

@@ -7,7 +7,6 @@ goog.require('goog.ui.Component.EventType');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
-goog.require('longa.staticdata');
 goog.require('longa.template');
 goog.require('longa.ui.Main');
 goog.require('longa.ui.StartScreen');

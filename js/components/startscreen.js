@@ -2,7 +2,6 @@ goog.provide('longa.ui.StartScreen');
 
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
-goog.require('longa.staticdata');
 goog.require('pstj.ds.dto.SwipetileList');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
@@ -34,18 +33,6 @@ longa.ui.StartScreen = goog.defineClass(pstj.material.Element, {
      * @type {pstj.material.RadioGroup}
      */
     this.radiogroup_ = null;
-    this.init_();
-  },
-
-  /**
-   * Automates the creation an initialization so we do not do this in the main
-   * app logic.
-   * @private
-   */
-  init_: function() {
-    var tilelist = new pstj.ds.dto.SwipetileList();
-    tilelist.fromJSON(longa.staticdata.startPageTiles);
-    this.setModel(tilelist);
   },
 
   /** @override */
@@ -99,15 +86,6 @@ longa.ui.StartScreenRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   /** @override */
   getTemplate: function(model) {
     return longa.template.StartScreen(model);
-  },
-
-  /** @override */
-  generateTemplateData: function(i) {
-    var model = goog.asserts.assertInstanceof(i.getModel(),
-        pstj.ds.dto.SwipetileList);
-    return {
-      items: model.tiles
-    };
   },
 
   /**

@@ -2,7 +2,6 @@ goog.provide('longa.ui.MainHeader');
 
 goog.require('goog.ui.registry');
 goog.require('longa.ds.Topic');
-goog.require('longa.staticdata');
 goog.require('longa.template');
 goog.require('longa.ui.Page');
 goog.require('longa.ui.Pages');

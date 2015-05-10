@@ -554,9 +554,29 @@
 
 /** The start screen of the app */
 {template .StartScreen}
-{@param items: list<?>}
 <div class="{css longa-start-screen}" fit>
-  {call pstj.templates.Swiper data="all" /}
+  <div is class="{css pstj-swiper} {css core-swipe}" use-pointer>
+    {call pstj.templates.Swipetile}
+      {param src: 'assets/images/bull.jpg' /}
+      {param text: 'The ultimate stock signal marketplace' /}
+    {/call}
+    {call pstj.templates.Swipetile}
+      {param src: 'assets/images/b.jpg' /}
+      {param text: 'Where investors meet successful signal traders' /}
+    {/call}
+    {call pstj.templates.Swipetile}
+      {param src: 'assets/images/c.jpg' /}
+      {param text: 'Make money from stock investments' /}
+    {/call}
+    {call pstj.templates.Swipetile}
+      {param src: 'assets/images/hands.jpg' /}
+      {param text: 'Follow the best investment strategy' /}
+    {/call}
+    {call pstj.templates.Swipetile}
+      {param src: 'assets/images/d.jpg' /}
+      {param text: 'Sell your trading ideas and make money' /}
+    {/call}
+  </div>
   <div class="{css longa-start-screen-top}">
     <div class="{css longa-start-screen-logo}">
       <svg version="1.1" id="logo_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="40px" viewBox="0 0 156.481 43.654" style="enable-background:new 0 0 156.481 43.654;" xml:space="preserve">
@@ -593,9 +613,11 @@
   </div>
   <div class="{css longa-start-screen-rotation-indicator}">
     <div is class="{css material-radio-group} {css material-radio-group-disabled}">
-      {foreach $item in $items}
-        {call pstj.material.template.RadioButton /}
-      {/foreach}
+      {call pstj.material.template.RadioButton /}
+      {call pstj.material.template.RadioButton /}
+      {call pstj.material.template.RadioButton /}
+      {call pstj.material.template.RadioButton /}
+      {call pstj.material.template.RadioButton /}
     </div>
   </div>
   <div class="{css longa-start-screen-buttons}">

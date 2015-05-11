@@ -3,6 +3,7 @@
 @import "../../pstj/less/material/input";
 @import "../../pstj/less/material/radiobutton";
 @import "../../pstj/less/material/radiogroup";
+@import "../../pstj/less/material/colors/orange";
 @import "../../pstj/less/material/shadow";
 @import "../../pstj/less/material/typography";
 @import "../../pstj/less/ng-cloak";
@@ -18,6 +19,9 @@
 @import "app/terms";
 @import "app/userauth";
 
+@input-accent-color: @orangeA400;
+@fab-color: white;
+@fab-background-color: @orangeA400;
 
 // Disable focus outline (Android)
 *:focus {
@@ -49,12 +53,13 @@ label {
   float: left;
 }
 
-.auth-container {
+.longa-app-auth {
   &:extend(.fit);
   min-height: 100%;
 
   .linklike {
     padding: 10px 0;
+    cursor: pointer;
     .typography(#00f, 87, 11px, @typography-weight-light);
   }
 
@@ -82,6 +87,7 @@ label {
   width: 310px;
   position: relative;
   padding: 15px;
+  margin: 10px;
 
   .material-checkbox-content {
     .caption(black);

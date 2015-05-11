@@ -1,11 +1,20 @@
 .longa-app-auth {
+  
+  &:extend(.fit);
+  
   & > .longa-app-pages > .longa-app-page {
-    display: block;
+    display: none;
+    
 
     & > .longa-app-page-wrapper {
-      &:extend(.horizontal);
+      min-height: 100%;
+      &:extend(.vertical);
       &:extend(.center);
       &:extend(.center-justified);
     }
+  }
+  
+  & > .longa-app-pages > .longa-app-page.longa-app-page-selected {
+    display: block;
   }
 }

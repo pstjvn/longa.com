@@ -38,7 +38,27 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
      * @type {goog.log.Logger}
      */
     this.logger_ = goog.log.getLogger('longa.ui.Pages');
-
+    /**
+     * If we should use animation when switching between pages.
+     *
+     * When animation is used the developer should use CSS animations to set
+     * things up, here we only assure that:
+     * a) the display flag is set and layout is forced
+     * b) the display flag is set to none after the end of the transition
+     *
+     * This means that is your transition does not end (i.e. you do not have
+     * CSS transition applied to the element it will not be hidden as expected)
+     *
+     * @private
+     * @type {boolean}
+     */
+    this.useAnimation_ = false;
+    /**
+     * Cahce for the index to apply with animation.
+     * @private
+     * @type {number}
+     */
+    this.nextIndexToApply_ = this.selectedIndex;
     // Basic configuration.
     this.setSupportedState(goog.ui.Component.State.TRANSITIONING, true);
   },
@@ -62,11 +82,36 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
         goog.log.warning(this.logger_,
             'Cannot use animation, no parent size set');
       }
-      this.getChildAt(this.selectedIndex).setSelected(false);
-      this.selectedIndex = idx;
-      this.getChildAt(this.selectedIndex).setSelected(true);
-      // TODO: Handle the index switching.
+      this.nextIndexToApply_ = idx;
+      if (this.useAnimation_) {
+        this.setTransitioning(true);
+        this.getHandler().listenOnce(
+            this.getChildAt(this.selectedIndex).getElementStrict(),
+            goog.events.EventType.TRANSITIONEND,
+            this.removeTransitionState_);
+        this.getRaf().start();
+      } else {
+        this.getRaf().fire();
+      }
     }
+  },
+
+  /** @inheritDoc */
+  onRaf: function(ts) {
+    this.getChildAt(this.selectedIndex).setSelected(false);
+    this.selectedIndex = this.nextIndexToApply_;
+    this.getChildAt(this.selectedIndex).setSelected(true);
+  },
+
+  /** @override */
+  decorateInternal: function(el) {
+    goog.base(this, 'decorateInternal', el);
+    if (el.hasAttribute('animate')) this.useAnimation_ = true;
+  },
+
+  /** @private */
+  removeTransitionState_: function() {
+    this.setTransitioning(false);
   },
 
   /**

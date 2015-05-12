@@ -11,6 +11,7 @@ goog.require('pstj.material.Input');
 goog.require('pstj.material.RadioButton');
 goog.require('pstj.material.RadioGroup');
 goog.require('pstj.material.Shadow');
+goog.require('pstj.select');
 
 goog.scope(function() {
 var E = longa.ui.Form;
@@ -86,7 +87,9 @@ longa.ui.RegistrationFormRenderer = goog.defineClass(ER, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.RegistrationForm(model);
+    return longa.template.RegistrationForm({
+      registration: true
+    });
   },
 
   statics: {

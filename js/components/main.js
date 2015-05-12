@@ -3,6 +3,8 @@ goog.provide('longa.ui.Main');
 goog.require('goog.async.Delay');
 goog.require('goog.log');
 goog.require('goog.ui.registry');
+goog.require('longa.ds.Screen');
+goog.require('longa.ds.Topic');
 goog.require('longa.ui.Auth');
 goog.require('longa.ui.Faq');
 goog.require('longa.ui.MainHeader');
@@ -78,6 +80,14 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.control.listen(longa.ds.Topic.SHOW_MENU, function() {
       goog.log.info(this.logger_, 'Show the menu by request');
       this.delayShowSidebar_.start();
+    });
+
+    this.control.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+      if (longa.ds.utils.isKnownUser()) {
+        this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+      } else {
+        this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+      }
     });
 
 

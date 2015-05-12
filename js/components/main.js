@@ -59,7 +59,6 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.control = new pstj.control.Control(this);
     this.control.init();
 
-
     // Handle screen switches on top level (screens).
     this.control.listen(longa.ds.Topic.SHOW_SCREEN, function(s) {
       // Whenever we show a new screen we need to close the drawer
@@ -69,6 +68,8 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
       if (s > 99 && s < 103) {
         goog.log.info(this.logger_, 'Switching to login view');
         this.mainPages.setSelectedIndex(0);
+      } else if (s >= 0 && s < 10) {
+        this.mainPages.setSelectedIndex(s);
       }
     });
 
@@ -113,14 +114,28 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     // Main UX pages, wrap the main screens
     this.mainPages = new longa.ui.Pages();
 
+    // 0
+    this.authWrapper = new longa.ui.Page();
+    this.authWrapper.addChild(this.auth, true);
+    // 1
+    this.balanceWrapper = new longa.ui.Page();
+    // 2
+    this.serviceWrapper = new longa.ui.Page();
+    // 3
+    this.signalFeedWrapper = new longa.ui.Page();
+    // 4
+    this.signalsWrapper = new longa.ui.Page();
+    // 5
+    this.alertsWrapper = new longa.ui.Page();
+    // 6
+    this.profileWrapper = new longa.ui.Page();
+    // 7
     this.faqWrapper = new longa.ui.Page();
     this.faqWrapper.addChild(this.faq, true);
-
+    // 8
     this.termsWrapper = new longa.ui.Page();
     this.termsWrapper.addChild(this.terms, true);
 
-    this.authWrapper = new longa.ui.Page();
-    this.authWrapper.addChild(this.auth, true);
 
   },
 
@@ -137,6 +152,12 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
 
     // Add main screens
     this.mainPages.addChild(this.authWrapper, true);
+    this.mainPages.addChild(this.balanceWrapper, true);
+    this.mainPages.addChild(this.serviceWrapper, true);
+    this.mainPages.addChild(this.signalFeedWrapper, true);
+    this.mainPages.addChild(this.signalsWrapper, true);
+    this.mainPages.addChild(this.alertsWrapper, true);
+    this.mainPages.addChild(this.profileWrapper, true);
     this.mainPages.addChild(this.faqWrapper, true);
     this.mainPages.addChild(this.termsWrapper, true);
 

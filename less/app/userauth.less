@@ -1,4 +1,5 @@
 @import "../../../pstj/less/material/button";
+@import "../../../pstj/less/material/colors/orange";
 @import "../../../pstj/less/material/icon";
 @import "../../../pstj/less/material/iconbutton";
 @import "../../../pstj/less/material/layout";
@@ -7,11 +8,41 @@
 .longa-app-userauth {
   height: 64px;
 
+  .longa-app-userauth-usertype {
+    color: rgba(0,0,0,.54);
+  }
+
+  .longa-app-userauth-usertype.investor {
+    & .investor {
+      display: inline-block;
+    }
+    & .seller {
+      display: none;
+    }
+  }
+
+  .longa-app-userauth-usertype.seller {
+    & .investor {
+      display: none;
+    }
+    & .seller {
+      display: inline-block;
+    }
+  }
+
+  .longa-app-userauth-username {
+    width: 100px;
+  }
+
   & > section {
     height: 64px;
     &:extend(.horizontal);
     &:extend(.center);
     &:extend(.center-justified);
+
+    & > .material-icon-container {
+      margin: 7px;
+    }
   }
   .material-button {
     background-color: @orangeA400;
@@ -22,6 +53,10 @@
     & .material-icon-container svg {
       fill: white;
     }
+  }
+
+  .material-icon-button > .material-icon-container > svg {
+    fill: @orangeA400;
   }
 
   .material-icon-button:hover {

@@ -29,13 +29,13 @@
       {call .ErrorMessage /}
     </div>
     <div class="{css linklike}" style="display: none;" data-request="recovery">
-      Forgot your password?
+      {msg desc="Error displayed to user in form"}Forgot your password?{/msg}
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Username is required' /}
+        {param error kind="text"}{msg desc="Error on input"}Username is required{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Username{/msg}{/param}
         {param required: true /}
-        {param label: 'Username' /}
         {param name: 'username' /}
         {param type: 'text' /}
         {param value: '' /}
@@ -43,9 +43,9 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Password is required' /}
+        {param error kind="text"}{msg desc="Error on input"}Password is required{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Password{/msg}{/param}
         {param required: true /}
-        {param label: 'Password' /}
         {param name: 'password' /}
         {param type: 'password' /}
         {param value: '' /}
@@ -53,19 +53,25 @@
     </div>
     <div>
       {call pstj.material.template.Checkbox}
-        {param content: 'remember me' /}
+        {param content kind="text"}
+          {msg desc="label on checkbox"}remember me{/msg}
+        {/param}
       {/call}
     </div>
-    <div class="{css help-info}">Stay logged in</div>
+    <div class="{css help-info}">{msg desc="hint for checkbox"}Stay logged in{/msg}</div>
     <div class="{css button-container}">
       {call pstj.material.template.Button}
-        {param content: 'login' /}
+        {param content kind="text"}
+          {msg desc="button label"}login{/msg}
+        {/param}
         {param icon: 'none' /}
         {param ink: true /}
       {/call}
     </div>
     <div>
-      <span class="{css linklike}" data-request="register">Or register a new account</span>
+      <span class="{css linklike}" data-request="register">
+        {msg desc="Link-like clickable hint in form"}Or register a new account{/msg}
+      </span>
     </div>
     <div is class="{css material-shadow} {css material-shadow-2}">
       <div class="{css material-shadow-bottom}"></div>
@@ -104,9 +110,11 @@
       </div>
       <div>
         {call pstj.material.template.Input}
-          {param error: 'Username is required' /}
+          {param label kind="text"}{msg desc="input hint/placeholder"}Username{/msg}{/param}
+          {param error kind="text"}
+            {msg desc="Error when username is not filled in"}Username is required' {/msg}
+          {/param}
           {param required: true /}
-          {param label: 'Username' /}
           {param name: 'username' /}
           {param type: 'text' /}
           {param value: '' /}
@@ -115,9 +123,9 @@
     {/if}
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Minimum 6 symbols' /}
+        {param error kind="text"}{msg desc="Error on input"}Minimum 6 symbols{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Password{/msg}{/param}
         {{param pattern: '^.{6,50}$'/}}
-        {param label: 'Password' /}
         {param name: 'password' /}
         {param type: 'password' /}
         {param value: '' /}
@@ -125,9 +133,9 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Minimum 6 symbols' /}
+        {param error kind="text"}{msg desc="Error on input"}Minimum 6 symbols{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Repeat password{/msg}{/param}
         {{param pattern: '^.{6,50}$' /}}
-        {param label: 'Repeat password' /}
         {param name: 'rpassword' /}
         {param type: 'password' /}
         {param value: '' /}
@@ -135,9 +143,9 @@
     </div>
         <div>
       {call pstj.material.template.Input}
-        {param error: 'Minimum 4, letters only' /}
+        {param error kind="text"}{msg desc="Error on input"}Minimum 4, letters only{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}First name{/msg}{/param}
         {{param pattern: '^[A-Za-z ]{4,50}$' /}}
-        {param label: 'First name' /}
         {param name: 'fname' /}
         {param type: 'text' /}
         {param value: '' /}
@@ -145,9 +153,9 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Minimum 4, letters only' /}
+        {param error kind="text"}{msg desc="Error on input"}Minimum 4, letters only{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Last name{/msg}{/param}
         {{param pattern: '^[A-Za-z ]{4,50}$' /}}
-        {param label: 'Last name' /}
         {param name: 'lname' /}
         {param type: 'text' /}
         {param value: '' /}
@@ -155,7 +163,7 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param label: 'Company' /}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Company{/msg}{/param}
         {param name: 'company' /}
         {param type: 'text' /}
         {param value: '' /}
@@ -163,9 +171,9 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Valid email is required' /}
+        {param error kind="text"}{msg desc="Error on input"}Valid email is required{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}E-main{/msg}{/param}
         {param required: true /}
-        {param label: 'E-mail' /}
         {param name: 'email' /}
         {param type: 'email' /}
         {param value: '' /}
@@ -173,8 +181,8 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Valid email only' /}
-        {param label: 'PayPal E-mail' /}
+        {param error kind="text"}{msg desc="Error on input"}Valid email only{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}PayPal E-main{/msg}{/param}
         {param name: 'pp_email' /}
         {param type: 'email' /}
         {param value: '' /}
@@ -182,8 +190,8 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Please use this format: +0000000..' /}
-        {param label: 'Phone' /}
+        {param error kind="text"}{msg desc="Error on input"}Please use this format: +0000000..{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Phone{/msg}{/param}
         {param name: 'phone' /}
         {param type: 'tel' /}
         {param value: '' /}
@@ -191,7 +199,7 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param label: 'Address' /}
+        {param label kind="text"}{msg desc="input hint/placeholder"}Address{/msg}{/param}
         {param name: 'address' /}
         {param type: 'text' /}
         {param value: '' /}
@@ -199,20 +207,20 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param label: 'City' /}
+        {param label kind="text"}{msg desc="input hint/placeholder"}City{/msg}{/param}
         {param name: 'city' /}
         {param type: 'text' /}
         {param value: '' /}
       {/call}
     </div>
     <div>
-      <label>State:</label>
+      <label>{msg desc=""}State{/msg}:</label>
       <select name="state">
         {call pstj.select.USAStates /}
       </select>
     </div>
     <div>
-      <label>Country:</label>
+      <label>{msg desc=""}Country{/msg}:</label>
       <select name="country">
         {call pstj.select.Countries /}
       </select>
@@ -255,9 +263,9 @@
     </div>
     <div>
       {call pstj.material.template.Input}
-        {param error: 'Valid email is required' /}
+        {param error kind="text"}{msg desc="Error on input"}Valid email is required{/msg}{/param}
+        {param label kind="text"}{msg desc="input hint/placeholder"}E-main{/msg}{/param}
         {param required: true /}
-        {param label: 'E-mail' /}
         {param name: 'email' /}
         {param type: 'email' /}
         {param value: '' /}
@@ -265,13 +273,17 @@
     </div>
     <div class="{css button-container}">
       {call pstj.material.template.Button}
-        {param content: 'request password' /}
+        {param content kind="text"}
+          {msg desc="button label"}request password{/msg}
+        {/param}
         {param icon: 'none' /}
         {param ink: true /}
       {/call}
     </div>
     <div>
-      <span class="{css linklike}" data-request="login">Go back to login</span>
+      <span class="{css linklike}" data-request="login">
+        {msg desc="Link-like clickable hint in form"}Go back to login{/msg}
+      </span>
     </div>
     <div is class="{css material-shadow} {css material-shadow-2}">
       <div class="{css material-shadow-bottom}"></div>
@@ -287,23 +299,33 @@
   <div is class="{css pstj-swiper} {css core-swipe}" use-pointer>
     {call pstj.templates.Swipetile}
       {param src: 'assets/images/bull.jpg' /}
-      {param text: 'The ultimate stock signal marketplace' /}
+      {param text kind="text"}
+        {msg desc="swiper tile title"}The ultimate stock signal marketplace{/msg}
+      {/param}
     {/call}
     {call pstj.templates.Swipetile}
       {param src: 'assets/images/b.jpg' /}
-      {param text: 'Where investors meet successful signal traders' /}
+      {param text kind="text"}
+        {msg desc="swiper tile title"}Where investors meet successful signal traders{/msg}
+      {/param}
     {/call}
     {call pstj.templates.Swipetile}
       {param src: 'assets/images/c.jpg' /}
-      {param text: 'Make money from stock investments' /}
+      {param text kind="text"}
+        {msg desc="swiper tile title"}Make money from stock investments{/msg}
+      {/param}
     {/call}
     {call pstj.templates.Swipetile}
       {param src: 'assets/images/hands.jpg' /}
-      {param text: 'Follow the best investment strategy' /}
+      {param text kind="text"}
+        {msg desc="swiper tile title"}Follow the best investment strategy{/msg}
+      {/param}
     {/call}
     {call pstj.templates.Swipetile}
       {param src: 'assets/images/d.jpg' /}
-      {param text: 'Sell your trading ideas and make money' /}
+      {param text kind="text"}
+        {msg desc="swiper tile title"}Sell your trading ideas and make money{/msg}
+      {/param}
     {/call}
   </div>
   <div class="{css longa-start-screen-top}">
@@ -335,7 +357,7 @@
     <div class="{css longa-start-screen-up-button}">
       {call pstj.material.template.Button}
         {param ink: true /}
-        {param content: 'Skip' /}
+        {param content kind="text"}{msg desc="button label"}Skip{/msg}{/param}
         {param icon: 'none' /}
       {/call}
     </div>
@@ -352,12 +374,12 @@
   <div class="{css longa-start-screen-buttons}">
     {call pstj.material.template.Button}
       {param ink: true /}
-      {param content: 'Sign up' /}
+      {param content kind="text"}{msg desc="button label"}Sign up{/msg}{/param}
       {param icon: 'none' /}
     {/call}
     {call pstj.material.template.Button}
       {param ink: true /}
-      {param content: 'Log in' /}
+      {param content kind="text"}{msg desc="button label"}Log in{/msg}{/param}
       {param icon: 'none' /}
     {/call}
   </div>
@@ -383,15 +405,15 @@
     </div>
     <div class="{css longa-main-header-tiles}">
       <div is class="{css longa-app-pages}">
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>Login</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>Balance</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>Define service</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>Signal feed</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>My signals</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>Alerts</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>Profile</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>FAQ</div></div>
-        <div is class="{css longa-app-page} {css animation-top-down}"><div>Terms of service</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Login{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Balance{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Define service{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Signal feed{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}My signals{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Alerts{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Profile{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}FAQ{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Terms of service{/msg}</div></div>
       </div>
     </div>
   </div>
@@ -435,40 +457,40 @@
   <div class="{css longa-app-menu-separator}"></div>
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'Login' /}
+    {param content kind="text"}{msg desc="menu item label"}Login{/msg}{/param}
   {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'Balance' /}
+    {param content kind="text"}{msg desc="menu item label"}Balance{/msg}{/param}
   {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'Define service' /}
+    {param content kind="text"}{msg desc="menu item label"}Define service{/msg}{/param}
   {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'Signal feed' /}
+    {param content kind="text"}{msg desc="menu item label"}Signal feed{/msg}{/param}
   {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'My signals' /}
+    {param content kind="text"}{msg desc="menu item label"}My signals{/msg}{/param}
   {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'Alerts' /}
+    {param content kind="text"}{msg desc="menu item label"}Alerts{/msg}{/param}
   {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'Profile' /}
+    {param content kind="text"}{msg desc="menu item label"}Profile{/msg}{/param}
   {/call}
   <div class="{css longa-app-menu-separator}"></div>
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'FAQ' /}
+    {param content kind="text"}{msg desc="menu item label"}FAQ{/msg}{/param}
   {/call}
   {call pstj.material.template.MenuItem}
     {param icon: 'none' /}
-    {param content: 'Terms of service' /}
+    {param content kind="text"}{msg desc="menu item label"}Terms of service{/msg}{/param}
   {/call}
 </div>
 {/template}
@@ -478,7 +500,7 @@
 {template .Terms}
 <div is class="{css longa-app-terms}">
   <ul class="{css longa-app-terms-answers}">
-    <li>For  purposes of these Terms of Use, the following terms shall have the meanings as  specified below:<br><br>
+    <li>{msg desc=""}For  purposes of these Terms of Use, the following terms shall have the meanings as  specified below:{/msg}<br><br>
         Intelsoft  EOOD means the company Intelsoft EOOD which is the copyright owner of the  website <a href="http://www.longa.com/">www.longa.com</a>. <br><br>
         "Longa  Services" means services, including, but not limited to, Longa website and  Longa App.<br><br>
         "User"  means You or any person or entity that is registered on www.longa.com and given  a permission to use www.longa.com in accordance with these Terms of Use. <br><br>
@@ -501,9 +523,9 @@
       1.3  Any words following the terms (in any form) "including", "among  other things", "in particular" and similar expression shall be  construed as illustrative and not limiting the meaning of the words preceding  those terms.
     </li>
   </ul>
-  <p class="{css longa-app-terms-question}">General</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}General{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>These  Terms of Use, as well as updates hereof, constitute the entire agreement  between You and Intelsoft EOOD and govern the terms on which You can use the  website www.longa.com.<br><br>
+    <li>{msg desc=""}These  Terms of Use, as well as updates hereof, constitute the entire agreement  between You and Intelsoft EOOD and govern the terms on which You can use the  website www.longa.com.{/msg}<br><br>
         By  clicking on the "Continue", "Accept" or a similar button or  an appropriate link, You agree to these Terms of Use.<br><br>
             You  agree that Intelsoft EOOD is not responsible for the materials, software,  products or third party services that may be published or distributed on  www.longa.com.<br><br>
             The  User who has not agreed to be bound by these Terms of Use shall have no right  to use the website www.longa.com.<br><br>
@@ -519,10 +541,10 @@
             Use  of the website www.longa.com requires compatible devices (computer, mobile  phone, etc.) and Internet access. The website www.longa.com may use Your  computer (or other device) resources, including, but not limited to, CPU,  memory and network connectivity to ensure the functionality of the website  www.longa.com. Intelsoft EOOD will make commercially reasonable efforts to  protect the privacy and integrity of Your computer resources and Your  communications. However, You acknowledge and agree that Intelsoft EOOD cannot  give any warranties in this respect.
     </li>
   </ul>
-  <p class="{css longa-app-terms-question}">Use of the Website www.longa.com</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}Use of the Website www.longa.com{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>
-          You  agree to provide accurate and complete information when You register on, and as  You use, the website www.longa.com, and You agree to update Your registration  data to keep it accurate and complete. You agree that Intelsoft EOOD may store  and use the registration data You provide for maintaining Your Account and  performing its obligations under these Terms of Use.<br><br>
+    <li>{msg desc=""}
+          You  agree to provide accurate and complete information when You register on, and as  You use, the website www.longa.com, and You agree to update Your registration  data to keep it accurate and complete. You agree that Intelsoft EOOD may store  and use the registration data You provide for maintaining Your Account and  performing its obligations under these Terms of Use.{/msg}<br><br>
             You  agree that Intelsoft EOOD may, in its sole discretion and without prior notice,  suspend or terminate the provision of any Longa Service or access to the  website www.longa.com (or its functions) to You personally or all Users.<br><br>
             Intelsoft  EOOD may engage the services of consultants and other contractors in connection  with the performance of obligations and exercise of rights under these Terms of  Use, provided that such consultants and contractors will be bound by the same  obligations as Intelsoft EOOD.<br><br>
             Intelsoft  EOOD may make available to You various payment processing methods. You agree to  abide by any relevant terms and conditions or other legal agreement, whether  with Intelsoft EOOD or a third party, that governs Your use of a given payment  processing method. You agree that Intelsoft EOOD may add or remove payment  processing methods in its sole discretion and without notice to You.<br><br>
@@ -540,47 +562,47 @@
             You  shall not access or attempt to access an Account that You are not authorized to  access. You agree not to modify the software in any manner or form, or to use  modified versions of the software, for any purposes including obtaining  unauthorized access to the website www.longa.com or Longa Services. Violations  of system or network security may result in civil or criminal liability.
     </li>
   </ul>
-  <p class="{css longa-app-terms-question}">Privacy and Information</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}Privacy and Information{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>To continuously improve and update the website www.longa.com, Intelsoft EOOD may keep statistical information on the website usage, including, but not limited to, gathering information on how exactly the website www.longa.com is used.<br><br>
+    <li>{msg desc=""}To continuously improve and update the website www.longa.com, Intelsoft EOOD may keep statistical information on the website usage, including, but not limited to, gathering information on how exactly the website www.longa.com is used.{/msg}<br><br>
   The collected data is analyzed in order to maximize user-friendliness of the website www.longa.com and is processed in accordance with the Intelsoft EOOD Privacy Policy. For purposes of improving the website www.longa.com, a part of statistical information can be provided to You upon written request.</li>
   </ul>
-  <p class="{css longa-app-terms-question}">Termination</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}Termination{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>
-      These  Terms of Use shall be effective until terminated by either You or Intelsoft  EOOD, as described below.<br><br>
+    <li>{msg desc=""}
+      These  Terms of Use shall be effective until terminated by either You or Intelsoft  EOOD, as described below.{/msg}<br><br>
         You  may terminate these Terms of Use by discontinuing Your access to and use of the  website www.longa.com and all materials, products and services obtained or  downloaded from the website www.longa.com.<br><br>
         Upon  termination of these Terms of Use, all legal rights and obligations to be  executed or performed by You or Intelsoft EOOD (or accrued during the term of  these Terms of Use) or perpetual rights and obligations, shall not be modified  due to termination of these Terms of Use.<br><br>
         Intelsoft  EOOD may at any time terminate these Terms of Use if: <br><br>
         You fail to comply with any provision of these Terms of Use;  Intelsoft EOOD will be forced to do so pursuant to the law; You cease to be the  User; Intelsoft EOOD decides to terminate the operation of the website  <a href="http://www.longa.com/">www.longa.com</a>.
     </li>
   </ul>
-  <p class="{css longa-app-terms-question}">DISCLAIMER OF WARRANTIES</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}DISCLAIMER OF WARRANTIES{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>YOU  UNDERSTAND AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR SOLE  RISK AND THAT THE WEBSITE WWW.LONGA.COM IS PROVIDED ON AN "AS IS" AND  "AS AVAILABLE" BASIS WITHOUT WARRANTY OF ANY KIND. YOU EXPRESSLY  ACKNOWLEDGE AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR  SOLE RISK AND THAT THE ENTIRE RISK AS TO SATISFACTORY QUALITY, PERFORMANCE,  ACCURACY AND EFFORT IS WITH YOU. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE  LAW, THE MATERIALS, PRODUCTS AND ANY SERVICES OFFERED OR RENDERED ON  WWW.LONGA.COM ARE PROVIDED “AS IS” AND "AS AVAILABLE", WITH ALL  FAULTS AND WITHOUT WARRANTY OF ANY KIND, AND INTELSOFT EOOD HEREBY DISCLAIMS  ALL WARRANTIES AND CONDITIONS WITH RESPECT TO THE PRODUCTS AND ANY SERVICES,  EITHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, THE  IMPLIED WARRANTIES AND/OR CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY  QUALITY, OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET ENJOYMENT,  AND NON-INFRINGEMENT OF THIRD PARTY RIGHTS.<br><br>
+    <li>{msg desc=""}YOU  UNDERSTAND AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR SOLE  RISK AND THAT THE WEBSITE WWW.LONGA.COM IS PROVIDED ON AN "AS IS" AND  "AS AVAILABLE" BASIS WITHOUT WARRANTY OF ANY KIND. YOU EXPRESSLY  ACKNOWLEDGE AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR  SOLE RISK AND THAT THE ENTIRE RISK AS TO SATISFACTORY QUALITY, PERFORMANCE,  ACCURACY AND EFFORT IS WITH YOU. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE  LAW, THE MATERIALS, PRODUCTS AND ANY SERVICES OFFERED OR RENDERED ON  WWW.LONGA.COM ARE PROVIDED “AS IS” AND "AS AVAILABLE", WITH ALL  FAULTS AND WITHOUT WARRANTY OF ANY KIND, AND INTELSOFT EOOD HEREBY DISCLAIMS  ALL WARRANTIES AND CONDITIONS WITH RESPECT TO THE PRODUCTS AND ANY SERVICES,  EITHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, THE  IMPLIED WARRANTIES AND/OR CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY  QUALITY, OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET ENJOYMENT,  AND NON-INFRINGEMENT OF THIRD PARTY RIGHTS.{/msg}<br><br>
         YOU  AGREE TO USE THE WEBSITE WWW.LONGA.COM AND ANY MATERIALS DOWNLOADED OR  OTHERWISE OBTAINED THROUGH THE USE OF THE WEBSITE WWW.LONGA.COM AT YOUR OWN  DISCRETION AND RISK AND YOU WILL BE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR  COMPUTER SYSTEM OR OTHER DEVICE OR LOSS OF DATA AS A RESULT OF SUCH USE.<br><br>
         INTELSOFT  EOOD FURTHER EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND,  WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED  WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE  AND NON-INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS.<br><br>
         TRADE  SIGNAL HISTORICAL DATA DOES NOT GUARANTEE FUTURE PERFORMANCE AND HENCE CANNOT  BE USED AS AN INDICATOR FOR FUTURE INVESTMENT RESULTS. <br><br>
         THE  COMPANY DOES NOT LICENSE OR VALIDATE THE LICENSES FOR ANY OF THE SUBSCRIBERS OF  THE WEB SITE.
         THE  SUBSCRIBERS OF THE WEB SITE ARE NON PROFESSIONALS AND DO NOT REQUIRE LICENSES  TO PROVIDE FINANCIAL SERVICES. ALL TRADE SIGNAL FEEDS ARE SUGEGSTIONS THAT DO  NOT REQUIRE LICENSES OR ACCURACY VALIDATION AND ALL PEOPLE THAT ACT OR INVEST  UPON THESE SIGNALS DO SO AT THEIR OWN RISK.</li>
   </ul>
-  <p class="{css longa-app-terms-question}">LIMITATION OF LIABILITY</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}LIMITATION OF LIABILITY{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>TO THE EXTENT NOT PROHIBITED BY LAW, IN NO EVENT SHALL INTELSOFT EOOD BE LIABLE FOR PERSONAL INJURY, OR ANY INCIDENTAL, SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES WHATSOEVER, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION OR ANY OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE WEBSITE WWW.LONGA.COM, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF LIABILITY (CONTRACT, TORT OR OTHERWISE) AND EVEN IF INTELSOFT EOOD HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.<br><br>
+    <li>{msg desc=""}TO THE EXTENT NOT PROHIBITED BY LAW, IN NO EVENT SHALL INTELSOFT EOOD BE LIABLE FOR PERSONAL INJURY, OR ANY INCIDENTAL, SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES WHATSOEVER, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION OR ANY OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE WEBSITE WWW.LONGA.COM, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF LIABILITY (CONTRACT, TORT OR OTHERWISE) AND EVEN IF INTELSOFT EOOD HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.{/msg}<br><br>
   THE COMPANY IS NOT RESPONSIBLE FOR ANY TRADE SIGNALS OR INVESTMENTS THAT ARE BASED ON TRAE SIGNAL FEEDS. THE COMPANY IS NOT A LICENSED FINANCIAL SERVICE AND HENCE CANNOT GUARANTEE THE ACCURACY OF THE TRADE SIGNAL DATA. THE COMPANY DOES NOT TAKE ANY REPONSIBILITY (DIRECT OR INDIRECT) IN CASES WHERE TRADE SIGNALS HAVE BEEN USED FOR INVESTMENT PURPOSES AND HAVE NOT DELIVERED THE EXPECTED RESULTS.</li>
   </ul>
-  <p class="{css longa-app-terms-question}">Indemnification</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}Indemnification{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>You  hereby agree, to the fullest extent permitted by law, to indemnify, defend, and  hold Intelsoft EOOD, its Affiliated Entities and each of their respective  directors, managers, employees and agents, as well as Authorized operators,  harmless from and against any and all third party claims, demands, causes of  action, suits or proceedings, as well as any and all losses, liabilities,  damage, costs or expenses (including any reasonable attorneys' fees), arising  from or relating to: <br><br>
+    <li>{msg desc=""}You  hereby agree, to the fullest extent permitted by law, to indemnify, defend, and  hold Intelsoft EOOD, its Affiliated Entities and each of their respective  directors, managers, employees and agents, as well as Authorized operators,  harmless from and against any and all third party claims, demands, causes of  action, suits or proceedings, as well as any and all losses, liabilities,  damage, costs or expenses (including any reasonable attorneys' fees), arising  from or relating to: {/msg}<br><br>
       Your violation of these Terms of Use when using the website <a href="http://www.longa.com/">www.longa.com</a>; infringement of any copyright,  trademark right, trade secret, vendibility, patent or other intellectual  property right of any third party, damage of any third party's reputation or  violation of publicity or privacy right of any third party, in connection with  any material posted by the User on the website www.longa.com.</li>
   </ul>
-  <p class="{css longa-app-terms-question}">Changes to These Terms of Use</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}Changes to These Terms of Use{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>Intelsoft EOOD reserves the right to change and revise these Terms of Use. Each time changes are made to these Terms of Use, Intelsoft EOOD will publish a revised version of the Terms of Use on www.longa.com. The revised version of the Terms of Use shall be effective immediately upon publication. Your use of the website www.longa.com following any change to these Terms of Use will constitute Your assent to and acceptance of the revised Terms of Use.</li>
+    <li>{msg desc=""}Intelsoft EOOD reserves the right to change and revise these Terms of Use. Each time changes are made to these Terms of Use, Intelsoft EOOD will publish a revised version of the Terms of Use on www.longa.com. The revised version of the Terms of Use shall be effective immediately upon publication. Your use of the website www.longa.com following any change to these Terms of Use will constitute Your assent to and acceptance of the revised Terms of Use.{/msg}</li>
   </ul>
-  <p class="{css longa-app-terms-question}">General Legal Terms</p>
+  <p class="{css longa-app-terms-question}">{msg desc=""}General Legal Terms{/msg}</p>
   <ul class="{css longa-app-terms-answers}">
-    <li>These  Terms of Use constitute the entire legal agreement between You and Intelsoft  EOOD, govern Your access to and use of the website www.longa.com and can  complement any prior agreements between You and Intelsoft EOOD in relation to  the website www.longa.com.<br><br>
+    <li>{msg desc=""}These  Terms of Use constitute the entire legal agreement between You and Intelsoft  EOOD, govern Your access to and use of the website www.longa.com and can  complement any prior agreements between You and Intelsoft EOOD in relation to  the website www.longa.com.{/msg}<br><br>
         You  acknowledge that the failure of Intelsoft EOOD to exercise or enforce or delay  of Intelsoft EOOD in exercising or enforcing any legal rights or remedies  provided hereunder (or by any applicable law) shall not constitute a waiver of  such rights or remedies on part of Intelsoft EOOD and that such rights and  remedies will continue to be available to Intelsoft EOOD.<br><br>
         If  any provision of these Terms of Use is found by a court of competent  jurisdiction to be invalid, then that provision will be removed from these  Terms of Use without affecting the rest of these Terms of Use. The remaining  provisions of these Terms of Use will continue to be valid and enforceable.<br><br>
         These  Terms of Use, as well as Your relationship with Intelsoft EOOD hereunder shall  be governed by and construed in accordance with the laws of the Republic of Bulgaria,  without regard to its conflict of laws provisions. You and Intelsoft EOOD.  agree that the courts of the Republic of Bulgaria shall have exclusive  jurisdiction over any dispute arising out of these Terms of Use.  Notwithstanding this, You agree that Longa shall still be allowed to apply for  injunctive remedies (or an equivalent type of urgent legal relief) in any  jurisdiction.</li>
@@ -617,79 +639,79 @@
   <div class="{css longa-app-faq-button-container}">
     {call pstj.material.template.Button}
       {param ink: true /}
-      {param content: 'Go to signal feed' /}
+      {param content kind="text"}{msg desc="button label"}Go to signal feed{/msg}{/param}
       {param icon: 'none' /}
     {/call}
   </div>
-  <p class="{css longa-app-faq-question}">What are the Marketplace Principles?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What are the Marketplace Principles?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>These  are the basic Longa Marketplace Principles.</li>
-    <li>All  provider stock trading signals are tracked and audited in real-time. All signal  performance data is accurate and easy to examine and understand.</li>
-    <li>Longa  utilizes real-time market data quote information and does not manipulate signal  performance. The marketplace collects all trade signals, calculates their  performance, and displays the results on the web site.</li>
-    <li>Longa  marketplace uses L-Credit (LC) as payment currency for signal services. Each  L-Credit is worth $1 USD (1 LC = 1 US dollar).</li>
-    <li>Longa  is a pay-for-performance service. Only profitable signals are charged for.  Investors will not be charged for signals that have resulted in losses. The  charge is done upon closing of the transaction (BUY-&gt;SELL or SELL-&gt;BUY).  Open transaction signals are not charged until Close transaction signal is not  received.</li>
-    <li>Longa  supports both BUY-&gt;SELL or SELL-&gt;BUY (Short Sell) transactions. Both  transaction types are charged upon transaction completion if the transaction is  profitable.</li>
-    <li>Analysts  and traders decide what is the L-Credit service charge they will request for  each signal transaction. The service charge is defined as Profit Charge based  on 1% profit (e.g. 2% profit with Profit Charge of 1 LC will result in 2 LC  service charge).</li>
-    <li>Longa  investors need to have at least 10 L-Credits in their account to be able to  subscribe for paid trade signals. All free trade signals do not require  L-Credit balance.</li>
-    <li>Investors  can only see: free signals, signals that they have subscribed for, or signals  that represent closed transactions. To take advantage of new, open transaction  signals that require payment, investors need to have L-Credit balance in their  accounts.</li>
-    <li>L-Credits  can be converted in USD at any time. The payment is made to the designated  PayPal or Google wallet account of the subscriber. The withdrawal payment is  done in full less transaction fees (4%).</li>
-    <li>Longa  marketplace charges 40% of all fees that investors pay for trade signals. The  rest of the charges are collected by the stock signal providers.</li>
+    <li>{msg desc=""}These  are the basic Longa Marketplace Principles.{/msg}</li>
+    <li>{msg desc=""}All  provider stock trading signals are tracked and audited in real-time. All signal  performance data is accurate and easy to examine and understand.{/msg}</li>
+    <li>{msg desc=""}Longa  utilizes real-time market data quote information and does not manipulate signal  performance. The marketplace collects all trade signals, calculates their  performance, and displays the results on the web site.{/msg}</li>
+    <li>{msg desc=""}Longa  marketplace uses L-Credit (LC) as payment currency for signal services. Each  L-Credit is worth $1 USD (1 LC = 1 US dollar).{/msg}</li>
+    <li>{msg desc=""}Longa  is a pay-for-performance service. Only profitable signals are charged for.  Investors will not be charged for signals that have resulted in losses. The  charge is done upon closing of the transaction (BUY-&gt;SELL or SELL-&gt;BUY).  Open transaction signals are not charged until Close transaction signal is not  received.{/msg}</li>
+    <li>{msg desc=""}Longa  supports both BUY-&gt;SELL or SELL-&gt;BUY (Short Sell) transactions. Both  transaction types are charged upon transaction completion if the transaction is  profitable.{/msg}</li>
+    <li>{msg desc=""}Analysts  and traders decide what is the L-Credit service charge they will request for  each signal transaction. The service charge is defined as Profit Charge based  on 1% profit (e.g. 2% profit with Profit Charge of 1 LC will result in 2 LC  service charge).{/msg}</li>
+    <li>{msg desc=""}Longa  investors need to have at least 10 L-Credits in their account to be able to  subscribe for paid trade signals. All free trade signals do not require  L-Credit balance.{/msg}</li>
+    <li>{msg desc=""}Investors  can only see: free signals, signals that they have subscribed for, or signals  that represent closed transactions. To take advantage of new, open transaction  signals that require payment, investors need to have L-Credit balance in their  accounts.{/msg}</li>
+    <li>{msg desc=""}L-Credits  can be converted in USD at any time. The payment is made to the designated  PayPal or Google wallet account of the subscriber. The withdrawal payment is  done in full less transaction fees (4%).{/msg}</li>
+    <li>{msg desc=""}Longa  marketplace charges 40% of all fees that investors pay for trade signals. The  rest of the charges are collected by the stock signal providers.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">How does the service work?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}How does the service work?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Stock  analysts and traders have expert stock market knowledge that they want to sell.  They setup accounts with Longa marketplace and start submitting trade signals.</li>
-    <li>The  trade signals are tracked in real-time. Once each transaction is complete  (BUY-&gt;SELL and SELL-&gt;BUY) the Longa marketplace calculates the signal  performance and displays in the marketplace.</li>
-    <li>Investors  that have interest to purchase or use trade signals subscribe to these signals  and use them for investment purposes. If the transaction is profitable they pay  service fees to the signal provider based on the provider defined Profit  Charge. If the transaction is not profitable - no service fees are paid. This  is a pay-for-performance type of service.</li>
-    <li>Service  fees are charged after the transaction is complete. No service fees are charged  while the transaction is open. Based on the transaction status some balanced  may be partially locked to ensure that providers get paid when the transaction  closes.</li>
-    <li>If  the investors do not have sufficient L-Credit balance in their accounts they  will not receive paid signals in real-time. That is the reason all investors  that have subscribed to paid trade signals should maintain L-Credit balance of  at least 10 L-Credits.</li>
+    <li>{msg desc=""}Stock  analysts and traders have expert stock market knowledge that they want to sell.  They setup accounts with Longa marketplace and start submitting trade signals.{/msg}</li>
+    <li>{msg desc=""}The  trade signals are tracked in real-time. Once each transaction is complete  (BUY-&gt;SELL and SELL-&gt;BUY) the Longa marketplace calculates the signal  performance and displays in the marketplace.{/msg}</li>
+    <li>{msg desc=""}Investors  that have interest to purchase or use trade signals subscribe to these signals  and use them for investment purposes. If the transaction is profitable they pay  service fees to the signal provider based on the provider defined Profit  Charge. If the transaction is not profitable - no service fees are paid. This  is a pay-for-performance type of service.{/msg}</li>
+    <li>{msg desc=""}Service  fees are charged after the transaction is complete. No service fees are charged  while the transaction is open. Based on the transaction status some balanced  may be partially locked to ensure that providers get paid when the transaction  closes.{/msg}</li>
+    <li>{msg desc=""}If  the investors do not have sufficient L-Credit balance in their accounts they  will not receive paid signals in real-time. That is the reason all investors  that have subscribed to paid trade signals should maintain L-Credit balance of  at least 10 L-Credits.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">Why is Longa marketplace unique?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}Why is Longa marketplace unique?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Longa is a unique marketplace because it provides performance information about trade signal feeds that are audited. In other words, investors can be assured that they follow signal feeds that provide the listed return on investment, instead of “trusting” a web site that makes unaudited performance claims. In addition, all investors can verify the signal transaction history on all signal feeds and thus perform a self-audit.</li>
+    <li>{msg desc=""}Longa is a unique marketplace because it provides performance information about trade signal feeds that are audited. In other words, investors can be assured that they follow signal feeds that provide the listed return on investment, instead of “trusting” a web site that makes unaudited performance claims. In addition, all investors can verify the signal transaction history on all signal feeds and thus perform a self-audit.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">What are the fees for the service?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What are the fees for the service?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Each signal provider may select the service type. It can be paid or free service based on their preferences. If the service is free then no fees are due for the signals and all trade signals will be freely available to all investors that have subscribed to the free signal feeds. If the trade signal service is paid, then the provider may select the Profit service charge for the service in L-Credits (1 L-Credit = $1 USD). Charges are rounded up to the nearest upward LC credit. </li>
+    <li>{msg desc=""}Each signal provider may select the service type. It can be paid or free service based on their preferences. If the service is free then no fees are due for the signals and all trade signals will be freely available to all investors that have subscribed to the free signal feeds. If the trade signal service is paid, then the provider may select the Profit service charge for the service in L-Credits (1 L-Credit = $1 USD). Charges are rounded up to the nearest upward LC credit. {/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">How are the service fees calculated?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}How are the service fees calculated?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Longa uses pay-for-performance service model. The service charges are only applied upon profitable transactions. Longa allows signal providers to charge fees (L-Credits) for each 1% of the profit (Profit Charge). Each signal provider can select a different fee model that corresponds to their signal feed quality and expertise. For example: The signal provider selects to charge 1 L-Credit for each 1% profit (Profit Charge). He provides a buy trade signal when the stock is $100 USD and a sell trade signal when the stock is $110. The calculated profit is 10%. Based on the Profit Charge of 1 LC, the service charge will be 10 L-Credits (1 L-Credits = $1 USD) for every subscriber that has subscribed to the signal feed. If there are 100 subscribers subscribed to this signal feed then the Profit Charge will be 1000 LC less the system charges that amount to 40%, so the total will be 600 LC that can be converted to $600 USD. Please, note that signal providers can define higher Profit Charge to increase their income on profitable signal feeds.</li>
+    <li>{msg desc=""}Longa uses pay-for-performance service model. The service charges are only applied upon profitable transactions. Longa allows signal providers to charge fees (L-Credits) for each 1% of the profit (Profit Charge). Each signal provider can select a different fee model that corresponds to their signal feed quality and expertise. For example: The signal provider selects to charge 1 L-Credit for each 1% profit (Profit Charge). He provides a buy trade signal when the stock is $100 USD and a sell trade signal when the stock is $110. The calculated profit is 10%. Based on the Profit Charge of 1 LC, the service charge will be 10 L-Credits (1 L-Credits = $1 USD) for every subscriber that has subscribed to the signal feed. If there are 100 subscribers subscribed to this signal feed then the Profit Charge will be 1000 LC less the system charges that amount to 40%, so the total will be 600 LC that can be converted to $600 USD. Please, note that signal providers can define higher Profit Charge to increase their income on profitable signal feeds.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">What is a pay-for-performance model?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What is a pay-for-performance model?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Longa uses pay-for-performance model. No fees will be charged for transactions that are not profitable.</li>
+    <li>{msg desc=""}Longa uses pay-for-performance model. No fees will be charged for transactions that are not profitable.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">What is a trade signal provider?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What is a trade signal provider?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Trade signal provider is a stock analyst or stock trader that have knowledge of the stock market and have good investment ideas that provides to the investment community. These ideas are realized using 'trade signal feeds'. These providers may select to provide the trade signals for free or charge for them. Please, note that the signal provider is not a licensed professional, and the trade signals are provided as an investment suggestion and not as a professional investment advise.</li>
+    <li>{msg desc=""}Trade signal provider is a stock analyst or stock trader that have knowledge of the stock market and have good investment ideas that provides to the investment community. These ideas are realized using 'trade signal feeds'. These providers may select to provide the trade signals for free or charge for them. Please, note that the signal provider is not a licensed professional, and the trade signals are provided as an investment suggestion and not as a professional investment advise.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">Do Signal Providers require licenses?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}Do Signal Providers require licenses?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Longa is a marketplace for exchanging stock trading ideas. Longa does not verify the professional or licensing status of the signal providers. The Longa marketplace does not represent stock brokerage and does not require a specific license to allow signal providers to offer trade ideas to investors. Both signal providers and investors participate in the marketplace voluntarily and should accept all trade signals as suggestions only. Longa or the signal providers do not offer professional portfolio management services.</li>
+    <li>{msg desc=""}Longa is a marketplace for exchanging stock trading ideas. Longa does not verify the professional or licensing status of the signal providers. The Longa marketplace does not represent stock brokerage and does not require a specific license to allow signal providers to offer trade ideas to investors. Both signal providers and investors participate in the marketplace voluntarily and should accept all trade signals as suggestions only. Longa or the signal providers do not offer professional portfolio management services.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">What is a investor?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What is a investor?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Investor is a subscriber that wishes to optimize his investment in the US stock market by following a successful investment signal feed. Investors can select among all listed paid or free trade signals feeds. Once they subscribe to the trade signal feeds, they will receive signal notifications in real-time that they may select to pursue by buying or selling stocks.</li>
+    <li>{msg desc=""}Investor is a subscriber that wishes to optimize his investment in the US stock market by following a successful investment signal feed. Investors can select among all listed paid or free trade signals feeds. Once they subscribe to the trade signal feeds, they will receive signal notifications in real-time that they may select to pursue by buying or selling stocks.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">What is a trade signal?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What is a trade signal?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Trade signal is a notification in real-time to buy or sell a stock. Currently, Longa only supports the US stock market.</li>
+    <li>{msg desc=""}Trade signal is a notification in real-time to buy or sell a stock. Currently, Longa only supports the US stock market.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">What is a transaction?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What is a transaction?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Each pair of trade signals (BUY signal->SELL signal or SELL signal->BUY signal) constitutes a transaction. “Open transaction” is a transaction which only has one signal. The value of the open transaction may fluctuate with the price of the underlying stock. “Closed transaction” is a transaction that has both (open and close) signals and its value does not change because it is complete. All Profits and Losses are calculated for both open and closed transactions.</li>
+    <li>{msg desc=""}Each pair of trade signals (BUY signal&rarr;SELL signal or SELL signal&rarr;BUY signal) constitutes a transaction. “Open transaction” is a transaction which only has one signal. The value of the open transaction may fluctuate with the price of the underlying stock. “Closed transaction” is a transaction that has both (open and close) signals and its value does not change because it is complete. All Profits and Losses are calculated for both open and closed transactions.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">How to subscribe for a signal?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}How to subscribe for a signal?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>To subscribe for a signal you need to create an 'Investor” account. Once you create the account you can subscribe to any free trade signal. To subscribe for paid trade signals you will need to purchase L-Credits. Once these L-Credits become available in your account, you can subscribe to the selected paid signal feed.</li>
+    <li>{msg desc=""}To subscribe for a signal you need to create an 'Investor” account. Once you create the account you can subscribe to any free trade signal. To subscribe for paid trade signals you will need to purchase L-Credits. Once these L-Credits become available in your account, you can subscribe to the selected paid signal feed.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">What is “Signal Feed”?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}What is “Signal Feed”?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>Signal Feed is a feed that is created by signal providers to allow investors to follow their signal trade ideas. The signal feeds is managed in real-time and allows investors to act on each signal (buy or sell signal stock or stock option). All data is collected in real-time and is audited to provide the best available performance benchmark. Please, note that historical performance does not guarantee future results.</li>
+    <li>{msg desc=""}Signal Feed is a feed that is created by signal providers to allow investors to follow their signal trade ideas. The signal feeds is managed in real-time and allows investors to act on each signal (buy or sell signal stock or stock option). All data is collected in real-time and is audited to provide the best available performance benchmark. Please, note that historical performance does not guarantee future results.{/msg}</li>
   </ul>
-  <p class="{css longa-app-faq-question}">More questions?</p>
+  <p class="{css longa-app-faq-question}">{msg desc=""}More questions?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
-    <li>If you have additional questions you can always send an email to: <a href="mailto:support@longa.com">support@longa.com</a></li>
+    <li>{msg desc=""}If you have additional questions you can always send an email to: {/msg}<a href="mailto:support@longa.com">support@longa.com</a></li>
   </ul>
 </div>
 {/template}
@@ -715,7 +737,7 @@
           {param type: 'none' /}
         {/call}
         {call pstj.material.template.ButtonContent}
-          {param content: 'Login' /}
+          {param content kind="text"}{msg desc="button label"}Login{/msg}{/param}
         {/call}
         {call pstj.material.template.Ripple}
           {param recenter: false /}
@@ -725,10 +747,13 @@
     </section>
     <section style="display: none">
       {call pstj.material.template.IconContainer}
-        {param type: 'menu' /}
+        {param type: 'user' /}
       {/call}
-      <div class="{css longa-app-userauth-username}">Username</div>
-      <div class="{css longa-app-userauth-usertype}">(Investor)</div>
+      <div class="{css longa-app-userauth-username}"></div>
+      <div class="{css longa-app-userauth-usertype} {css investor}">
+        <span class="{css investor}">{msg desc=""}(Investor){/msg}</span>
+        <span class="{css seller}">{msg desc=""}(Provider){/msg}</span>
+      </div>
       {call pstj.material.template.IconButton}
         {param icon: 'menu' /}
       {/call}

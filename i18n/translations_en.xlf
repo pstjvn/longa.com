@@ -12,6 +12,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="45761918950825319" datatype="html">
+        <source>Longa  marketplace uses L-Credit (LC) as payment currency for signal services. Each  L-Credit is worth $1 USD (1 LC = 1 US dollar).</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="53893825252139188" datatype="html">
         <source>Jersey</source>
         <target/>
@@ -47,6 +51,16 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="174465106029438224" datatype="html">
+        <source>remember me</source>
+        <target/>
+        <note priority="1" from="description">label on checkbox</note>
+      </trans-unit>
+      <trans-unit id="205044832662301680" datatype="html">
+        <source>Password is required</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
+      </trans-unit>
       <trans-unit id="212820117866187249" datatype="html">
         <source>India</source>
         <target/>
@@ -80,6 +94,22 @@
         <source>Colorado</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="393024983390971969" datatype="html">
+        <source>To continuously improve and update the website www.longa.com, Intelsoft EOOD may keep statistical information on the website usage, including, but not limited to, gathering information on how exactly the website www.longa.com is used.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="439964769454809740" datatype="html">
+        <source>Why is Longa marketplace unique?</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="516176798986294299" datatype="html">
+        <source>Country</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="533695704331142149" datatype="html">
+        <source>Signal Feed is a feed that is created by signal providers to allow investors to follow their signal trade ideas. The signal feeds is managed in real-time and allows investors to act on each signal (buy or sell signal stock or stock option). All data is collected in real-time and is audited to provide the best available performance benchmark. Please, note that historical performance does not guarantee future results.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="536132288864070221" datatype="html">
         <source>Turkey</source>
@@ -161,15 +191,27 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="907894439218793559" datatype="html">
+        <source>How are the service fees calculated?</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="956678847762152494" datatype="html">
         <source>France</source>
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="965799709853242060" datatype="html">
+        <source>These  are the basic Longa Marketplace Principles.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="976142842851961456" datatype="html">
         <source>Uruguay</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="1030353017011027428" datatype="html">
+        <source>Trade signal provider is a stock analyst or stock trader that have knowledge of the stock market and have good investment ideas that provides to the investment community. These ideas are realized using 'trade signal feeds'. These providers may select to provide the trade signals for free or charge for them. Please, note that the signal provider is not a licensed professional, and the trade signals are provided as an investment suggestion and not as a professional investment advise.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="1030476891035559598" datatype="html">
         <source>Mauritius</source>
@@ -241,6 +283,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1359743481807955647" datatype="html">
+        <source>All  provider stock trading signals are tracked and audited in real-time. All signal  performance data is accurate and easy to examine and understand.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1368100063883641774" datatype="html">
         <source>Mongolia</source>
         <target/>
@@ -266,6 +312,24 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1431416938026210429" datatype="html">
+        <source>Password</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
+      <trans-unit id="1441408152385525127" datatype="html">
+        <source>Intelsoft EOOD reserves the right to change and revise these Terms of Use. Each time changes are made to these Terms of Use, Intelsoft EOOD will publish a revised version of the Terms of Use on www.longa.com. The revised version of the Terms of Use shall be effective immediately upon publication. Your use of the website www.longa.com following any change to these Terms of Use will constitute Your assent to and acceptance of the revised Terms of Use.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="1445577260070741725" datatype="html">
+        <source>Define service</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
+      </trans-unit>
+      <trans-unit id="1450640206523939950" datatype="html">
+        <source>Longa  investors need to have at least 10 L-Credits in their account to be able to  subscribe for paid trade signals. All free trade signals do not require  L-Credit balance.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1452514123394852388" datatype="html">
         <source>Rhode Island</source>
         <target/>
@@ -286,6 +350,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1569035919718612589" datatype="html">
+        <source>TO THE EXTENT NOT PROHIBITED BY LAW, IN NO EVENT SHALL INTELSOFT EOOD BE LIABLE FOR PERSONAL INJURY, OR ANY INCIDENTAL, SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES WHATSOEVER, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION OR ANY OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE WEBSITE WWW.LONGA.COM, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF LIABILITY (CONTRACT, TORT OR OTHERWISE) AND EVEN IF INTELSOFT EOOD HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1578496123749550538" datatype="html">
         <source>Chad</source>
         <target/>
@@ -301,6 +369,14 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1591209120631389753" datatype="html">
+        <source>What is a trade signal provider?</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="1593889135673560394" datatype="html">
+        <source>How to subscribe for a signal?</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1607948888041177087" datatype="html">
         <source>Montana</source>
         <target/>
@@ -310,6 +386,11 @@
         <source>New York</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="1624350809517894534" datatype="html">
+        <source>The ultimate stock signal marketplace</source>
+        <target/>
+        <note priority="1" from="description">swiper tile title</note>
       </trans-unit>
       <trans-unit id="1684303595047907341" datatype="html">
         <source>California</source>
@@ -336,10 +417,23 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1826215573205981970" datatype="html">
+        <source>Company</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="1826925740451482221" datatype="html">
         <source>Lesotho</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="1841975808744683385" datatype="html">
+        <source>Investors  that have interest to purchase or use trade signals subscribe to these signals  and use them for investment purposes. If the transaction is profitable they pay  service fees to the signal provider based on the provider defined Profit  Charge. If the transaction is not profitable - no service fees are paid. This  is a pay-for-performance type of service.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="1864231065026308794" datatype="html">
+        <source>Longa  utilizes real-time market data quote information and does not manipulate signal  performance. The marketplace collects all trade signals, calculates their  performance, and displays the results on the web site.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="1902685080273086420" datatype="html">
         <source>District of Columbia</source>
@@ -355,6 +449,11 @@
         <source>Delaware</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="1927773965220484989" datatype="html">
+        <source>Signal feed</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
       </trans-unit>
       <trans-unit id="1945455710397155994" datatype="html">
         <source>Montserrat</source>
@@ -376,6 +475,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2012659005494284050" datatype="html">
+        <source>Forgot your password?</source>
+        <target/>
+        <note priority="1" from="description">Error displayed to user in form</note>
+      </trans-unit>
       <trans-unit id="2036677760731944610" datatype="html">
         <source>Azerbaijan</source>
         <target/>
@@ -385,6 +489,11 @@
         <source>Thailand</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="2075170650254067845" datatype="html">
+        <source>E-main</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
       <trans-unit id="2081005790479585868" datatype="html">
         <source>Norfolk Island</source>
@@ -421,6 +530,14 @@
         <target/>
         <note priority="1" from="description">Cancel</note>
       </trans-unit>
+      <trans-unit id="2172785779908850195" datatype="html">
+        <source>You  agree to provide accurate and complete information when You register on, and as  You use, the website www.longa.com, and You agree to update Your registration  data to keep it accurate and complete. You agree that Intelsoft EOOD may store  and use the registration data You provide for maintaining Your Account and  performing its obligations under these Terms of Use.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2182829806811483130" datatype="html">
+        <source>Stock  analysts and traders have expert stock market knowledge that they want to sell.  They setup accounts with Longa marketplace and start submitting trade signals.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2234013645418722908" datatype="html">
         <source>Antigua and Barbuda</source>
         <target/>
@@ -446,6 +563,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2285556334260589781" datatype="html">
+        <source>What is a transaction?</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2288988587742829877" datatype="html">
         <source>Northern Mariana Islands</source>
         <target/>
@@ -461,10 +582,20 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2314075913167237221" datatype="html">
+        <source>City</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="2329624899413840617" datatype="html">
         <source>Vermont</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="2336550011721758066" datatype="html">
+        <source>Log in</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
       </trans-unit>
       <trans-unit id="2356316679035829946" datatype="html">
         <source>Poland</source>
@@ -476,10 +607,19 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2430995269183383113" datatype="html">
+        <source>These  Terms of Use constitute the entire legal agreement between You and Intelsoft  EOOD, govern Your access to and use of the website www.longa.com and can  complement any prior agreements between You and Intelsoft EOOD in relation to  the website www.longa.com.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2444515862101250781" datatype="html">
         <source>Niue</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="2454050363478003966" datatype="html">
+        <source>Login</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
       </trans-unit>
       <trans-unit id="2455596870847664546" datatype="html">
         <source>French Polynesia</source>
@@ -496,6 +636,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2588907727381132347" datatype="html">
+        <source>Longa  supports both BUY-&amp;gt;SELL or SELL-&amp;gt;BUY (Short Sell) transactions. Both  transaction types are charged upon transaction completion if the transaction is  profitable.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2592002115951925734" datatype="html">
         <source>Marshall Islands</source>
         <target/>
@@ -506,10 +650,25 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2658914181957293925" datatype="html">
+        <source>PayPal E-main</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="2686294869399748405" datatype="html">
         <source>Alaska</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="2714604464530471830" datatype="html">
+        <source>Minimum 6 symbols</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
+      </trans-unit>
+      <trans-unit id="2748434989225518032" datatype="html">
+        <source>Where investors meet successful signal traders</source>
+        <target/>
+        <note priority="1" from="description">swiper tile title</note>
       </trans-unit>
       <trans-unit id="2757820189950683014" datatype="html">
         <source>North Dakota</source>
@@ -525,6 +684,11 @@
         <source>Minnesota</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="2806917038528218276" datatype="html">
+        <source>FAQ</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
       </trans-unit>
       <trans-unit id="2814748664821337658" datatype="html">
         <source>Wyoming</source>
@@ -545,6 +709,10 @@
         <source>Burkina Faso</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="2859431882653187843" datatype="html">
+        <source>If you have additional questions you can always send an email to: </source>
+        <target/>
       </trans-unit>
       <trans-unit id="2869766744074512908" datatype="html">
         <source>Micronesia</source>
@@ -586,6 +754,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="3089118602567605209" datatype="html">
+        <source>Go to signal feed</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
       <trans-unit id="3102823133461101412" datatype="html">
         <source>Oregon</source>
         <target/>
@@ -595,6 +768,11 @@
         <source>Investor</source>
         <target/>
         <note priority="1" from="description">label on radio button - investor</note>
+      </trans-unit>
+      <trans-unit id="3262236020277300799" datatype="html">
+        <source>Phone</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
       <trans-unit id="3280635276421664253" datatype="html">
         <source>Virgin Islands (US)</source>
@@ -620,6 +798,10 @@
         <source>Jamaica</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="3338545815579822485" datatype="html">
+        <source>Longa  marketplace charges 40% of all fees that investors pay for trade signals. The  rest of the charges are collected by the stock signal providers.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="3400120958419159727" datatype="html">
         <source>Congo</source>
@@ -656,10 +838,19 @@
         <target/>
         <note priority="1" from="description">Player playback option</note>
       </trans-unit>
+      <trans-unit id="3586674587150281199" datatype="html">
+        <source>Last name</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="3591085113786124083" datatype="html">
         <source>New Zealand</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="3595774703417458347" datatype="html">
+        <source>What is a investor?</source>
+        <target/>
       </trans-unit>
       <trans-unit id="3638180913636323138" datatype="html">
         <source>Signal provider</source>
@@ -670,6 +861,11 @@
         <source>Wisconsin</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="3702338872876040900" datatype="html">
+        <source>Username is required</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
       </trans-unit>
       <trans-unit id="3710133024160860873" datatype="html">
         <source>Sierra Leone</source>
@@ -700,6 +896,15 @@
         <source>Guide</source>
         <target/>
         <note priority="1" from="description">Guide</note>
+      </trans-unit>
+      <trans-unit id="3799738179224219438" datatype="html">
+        <source>What is a trade signal?</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="3801896974809779804" datatype="html">
+        <source>Valid email only</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
       </trans-unit>
       <trans-unit id="3831314565285490528" datatype="html">
         <source>Virginia</source>
@@ -736,10 +941,18 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="3935231380358469072" datatype="html">
+        <source>Longa is a marketplace for exchanging stock trading ideas. Longa does not verify the professional or licensing status of the signal providers. The Longa marketplace does not represent stock brokerage and does not require a specific license to allow signal providers to offer trade ideas to investors. Both signal providers and investors participate in the marketplace voluntarily and should accept all trade signals as suggestions only. Longa or the signal providers do not offer professional portfolio management services.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="3975233823881069207" datatype="html">
         <source>Guyana</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="3976775498797289842" datatype="html">
+        <source>More questions?</source>
+        <target/>
       </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
         <source>Update</source>
@@ -786,6 +999,14 @@
         <target/>
         <note priority="1" from="description">Epg add label on button</note>
       </trans-unit>
+      <trans-unit id="4288330681110145812" datatype="html">
+        <source>Analysts  and traders decide what is the L-Credit service charge they will request for  each signal transaction. The service charge is defined as Profit Charge based  on 1% profit (e.g. 2% profit with Profit Charge of 1 LC will result in 2 LC  service charge).</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4314120463822055285" datatype="html">
+        <source>Termination</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="4324906842486561563" datatype="html">
         <source>Tunisia</source>
         <target/>
@@ -821,10 +1042,36 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="4518574133221352095" datatype="html">
+        <source>General Legal Terms</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="4538062849970672142" datatype="html">
         <source>Arizona</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="4563965495368336177" datatype="html">
+        <source>Skip</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
+      <trans-unit id="4565980862144369897" datatype="html">
+        <source>Sell your trading ideas and make money</source>
+        <target/>
+        <note priority="1" from="description">swiper tile title</note>
+      </trans-unit>
+      <trans-unit id="4577142263362213528" datatype="html">
+        <source>The  trade signals are tracked in real-time. Once each transaction is complete  (BUY-&amp;gt;SELL and SELL-&amp;gt;BUY) the Longa marketplace calculates the signal  performance and displays in the marketplace.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4601819262190364793" datatype="html">
+        <source>L-Credits  can be converted in USD at any time. The payment is made to the designated  PayPal or Google wallet account of the subscriber. The withdrawal payment is  done in full less transaction fees (4%).</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4708285446680099885" datatype="html">
+        <source>Each pair of trade signals (BUY signal&amp;rarr;SELL signal or SELL signal&amp;rarr;BUY signal) constitutes a transaction. “Open transaction” is a transaction which only has one signal. The value of the open transaction may fluctuate with the price of the underlying stock. “Closed transaction” is a transaction that has both (open and close) signals and its value does not change because it is complete. All Profits and Losses are calculated for both open and closed transactions.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="4719460798898909432" datatype="html">
         <source>Dominican Republic</source>
@@ -866,20 +1113,51 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="4868295108507980682" datatype="html">
+        <source>DISCLAIMER OF WARRANTIES</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="4870035495212308796" datatype="html">
         <source>Virgin Islands (British)</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="4886078160744593245" datatype="html">
+        <source>Investors  can only see: free signals, signals that they have subscribed for, or signals  that represent closed transactions. To take advantage of new, open transaction  signals that require payment, investors need to have L-Credit balance in their  accounts.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4909001730829314884" datatype="html">
+        <source>Make money from stock investments</source>
+        <target/>
+        <note priority="1" from="description">swiper tile title</note>
+      </trans-unit>
+      <trans-unit id="4915431133669985304" datatype="html">
+        <source>Profile</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
       </trans-unit>
       <trans-unit id="4954443024319387646" datatype="html">
         <source>Taiwan, Province of China</source>
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="4964500264420567303" datatype="html">
+        <source>Terms of service</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
+      </trans-unit>
+      <trans-unit id="4993388869070895224" datatype="html">
+        <source>If  the investors do not have sufficient L-Credit balance in their accounts they  will not receive paid signals in real-time. That is the reason all investors  that have subscribed to paid trade signals should maintain L-Credit balance of  at least 10 L-Credits.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5004849258025239958" datatype="html">
         <source>Armenia</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="5016691671163257138" datatype="html">
+        <source>Do Signal Providers require licenses?</source>
+        <target/>
       </trans-unit>
       <trans-unit id="5021963283619484054" datatype="html">
         <source>South Dakota</source>
@@ -890,6 +1168,11 @@
         <source>Honduras</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="5047132225814277670" datatype="html">
+        <source>Please use this format: +0000000..</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
       </trans-unit>
       <trans-unit id="5099084320487592164" datatype="html">
         <source>Maldives</source>
@@ -911,6 +1194,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5134355160296559257" datatype="html">
+        <source>request password</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
       <trans-unit id="5144971260883559528" datatype="html">
         <source>Yemen</source>
         <target/>
@@ -920,6 +1208,11 @@
         <source>Paraguay</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="5248717555542428023" datatype="html">
+        <source>Username</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
       <trans-unit id="5259023098228234423" datatype="html">
         <source>Mali</source>
@@ -936,15 +1229,33 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5325563596589350812" datatype="html">
+        <source>Indemnification</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5330492076151471898" datatype="html">
         <source>Louisiana</source>
         <target/>
         <note priority="1" from="description">state</note>
       </trans-unit>
+      <trans-unit id="5342432350421167093" datatype="html">
+        <source>First name</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="5355657315596110768" datatype="html">
         <source>Lao People's Republic</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="5365735155805985029" datatype="html">
+        <source>For  purposes of these Terms of Use, the following terms shall have the meanings as  specified below:</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5373727393387841282" datatype="html">
+        <source>Repeat password</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
       <trans-unit id="5378112888361106499" datatype="html">
         <source>Ireland</source>
@@ -976,6 +1287,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5658411155387074631" datatype="html">
+        <source>You  hereby agree, to the fullest extent permitted by law, to indemnify, defend, and  hold Intelsoft EOOD, its Affiliated Entities and each of their respective  directors, managers, employees and agents, as well as Authorized operators,  harmless from and against any and all third party claims, demands, causes of  action, suits or proceedings, as well as any and all losses, liabilities,  damage, costs or expenses (including any reasonable attorneys' fees), arising  from or relating to: </source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5698737171438719386" datatype="html">
         <source>Namibia</source>
         <target/>
@@ -991,6 +1306,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5823198448306498228" datatype="html">
+        <source>My signals</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
+      </trans-unit>
       <trans-unit id="5857558127981009083" datatype="html">
         <source>Nepal</source>
         <target/>
@@ -1001,10 +1321,18 @@
         <target/>
         <note priority="1" from="description">the word of in page N of X pages</note>
       </trans-unit>
+      <trans-unit id="5886474493325730103" datatype="html">
+        <source>Investor is a subscriber that wishes to optimize his investment in the US stock market by following a successful investment signal feed. Investors can select among all listed paid or free trade signals feeds. Once they subscribe to the trade signal feeds, they will receive signal notifications in real-time that they may select to pursue by buying or selling stocks.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5895030245261923484" datatype="html">
         <source>Senegal</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="5911214550882917183" datatype="html">
+        <source>State</source>
+        <target/>
       </trans-unit>
       <trans-unit id="5913366966339102148" datatype="html">
         <source>Luxembourg</source>
@@ -1016,6 +1344,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5958249815366226213" datatype="html">
+        <source>Trade signal is a notification in real-time to buy or sell a stock. Currently, Longa only supports the US stock market.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5964520530683530553" datatype="html">
         <source>Texas</source>
         <target/>
@@ -1025,6 +1357,15 @@
         <source>Germany</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6024649140164351905" datatype="html">
+        <source>Stay logged in</source>
+        <target/>
+        <note priority="1" from="description">hint for checkbox</note>
+      </trans-unit>
+      <trans-unit id="6091717472385598959" datatype="html">
+        <source>(Investor)</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6133495983093212227" datatype="html">
         <source>United States</source>
@@ -1061,15 +1402,44 @@
         <target/>
         <note priority="1" from="description">state</note>
       </trans-unit>
+      <trans-unit id="6304432362546770951" datatype="html">
+        <source>Address</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="6321687538487059592" datatype="html">
         <source>Norway</source>
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6342575220033498701" datatype="html">
+        <source>What is a pay-for-performance model?</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6349426704260910037" datatype="html">
+        <source>Longa is a unique marketplace because it provides performance information about trade signal feeds that are audited. In other words, investors can be assured that they follow signal feeds that provide the listed return on investment, instead of “trusting” a web site that makes unaudited performance claims. In addition, all investors can verify the signal transaction history on all signal feeds and thus perform a self-audit.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6385636805555176186" datatype="html">
         <source>Cocos (Keeling) Islands</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6398478403623732402" datatype="html">
+        <source>YOU  UNDERSTAND AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR SOLE  RISK AND THAT THE WEBSITE WWW.LONGA.COM IS PROVIDED ON AN "AS IS" AND  "AS AVAILABLE" BASIS WITHOUT WARRANTY OF ANY KIND. YOU EXPRESSLY  ACKNOWLEDGE AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR  SOLE RISK AND THAT THE ENTIRE RISK AS TO SATISFACTORY QUALITY, PERFORMANCE,  ACCURACY AND EFFORT IS WITH YOU. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE  LAW, THE MATERIALS, PRODUCTS AND ANY SERVICES OFFERED OR RENDERED ON  WWW.LONGA.COM ARE PROVIDED “AS IS” AND "AS AVAILABLE", WITH ALL  FAULTS AND WITHOUT WARRANTY OF ANY KIND, AND INTELSOFT EOOD HEREBY DISCLAIMS  ALL WARRANTIES AND CONDITIONS WITH RESPECT TO THE PRODUCTS AND ANY SERVICES,  EITHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, THE  IMPLIED WARRANTIES AND/OR CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY  QUALITY, OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET ENJOYMENT,  AND NON-INFRINGEMENT OF THIRD PARTY RIGHTS.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6432306763191789600" datatype="html">
+        <source>What are the Marketplace Principles?</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6439365426343089851" datatype="html">
+        <source>General</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6450838456115809305" datatype="html">
+        <source>What are the fees for the service?</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6461205178975913145" datatype="html">
         <source>Mayotte</source>
@@ -1081,15 +1451,29 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6503934920192125236" datatype="html">
+        <source>Username is required' </source>
+        <target/>
+        <note priority="1" from="description">Error when username is not filled in</note>
+      </trans-unit>
       <trans-unit id="6539744792166853567" datatype="html">
         <source>Cape Verde</source>
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6542676228301148432" datatype="html">
+        <source>login</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
       <trans-unit id="6546239914534670998" datatype="html">
         <source>Lithuania</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6581071943717080429" datatype="html">
+        <source>These  Terms of Use, as well as updates hereof, constitute the entire agreement  between You and Intelsoft EOOD and govern the terms on which You can use the  website www.longa.com.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6597121833699637826" datatype="html">
         <source>Belize</source>
@@ -1101,10 +1485,18 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6619906953359761574" datatype="html">
+        <source>Each signal provider may select the service type. It can be paid or free service based on their preferences. If the service is free then no fees are due for the signals and all trade signals will be freely available to all investors that have subscribed to the free signal feeds. If the trade signal service is paid, then the provider may select the Profit service charge for the service in L-Credits (1 L-Credit = $1 USD). Charges are rounded up to the nearest upward LC credit. </source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6639775332361598247" datatype="html">
         <source>Kuwait</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6653999240853591270" datatype="html">
+        <source>Service  fees are charged after the transaction is complete. No service fees are charged  while the transaction is open. Based on the transaction status some balanced  may be partially locked to ensure that providers get paid when the transaction  closes.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6692616518638761038" datatype="html">
         <source>Bouvet Island</source>
@@ -1126,6 +1518,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6776205989816192100" datatype="html">
+        <source>Longa  is a pay-for-performance service. Only profitable signals are charged for.  Investors will not be charged for signals that have resulted in losses. The  charge is done upon closing of the transaction (BUY-&amp;gt;SELL or SELL-&amp;gt;BUY).  Open transaction signals are not charged until Close transaction signal is not  received.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6787546539374733271" datatype="html">
         <source>Belgium</source>
         <target/>
@@ -1136,15 +1532,28 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6841982905372874498" datatype="html">
+        <source>LIMITATION OF LIABILITY</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6842720336797727339" datatype="html">
         <source>Bolivia</source>
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6856207717950335898" datatype="html">
+        <source>To subscribe for a signal you need to create an 'Investor” account. Once you create the account you can subscribe to any free trade signal. To subscribe for paid trade signals you will need to purchase L-Credits. Once these L-Credits become available in your account, you can subscribe to the selected paid signal feed.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6870231548013447811" datatype="html">
         <source>Ethiopia</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6888797559367695264" datatype="html">
+        <source>Balance</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
       </trans-unit>
       <trans-unit id="6899782483332002896" datatype="html">
         <source>Syrian Arab Republic</source>
@@ -1181,6 +1590,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="7028204981963450021" datatype="html">
+        <source>Sign up</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
       <trans-unit id="7065118556791646705" datatype="html">
         <source>Cameroon</source>
         <target/>
@@ -1206,10 +1620,18 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="7132320126222699925" datatype="html">
+        <source>How does the service work?</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="7133553227204944356" datatype="html">
         <source>Georgia</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="7169001536696358077" datatype="html">
+        <source>(Provider)</source>
+        <target/>
       </trans-unit>
       <trans-unit id="7211965226704355092" datatype="html">
         <source>Seychelles</source>
@@ -1251,6 +1673,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="7469176931589470997" datatype="html">
+        <source>These  Terms of Use shall be effective until terminated by either You or Intelsoft  EOOD, as described below.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="7475322327169488366" datatype="html">
         <source>Outlying Oceania</source>
         <target/>
@@ -1261,10 +1687,18 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="7504896815250693720" datatype="html">
+        <source>Longa uses pay-for-performance model. No fees will be charged for transactions that are not profitable.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="7537920303742481572" datatype="html">
         <source>New Mexico</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="7539085561595303533" datatype="html">
+        <source>Use of the Website www.longa.com</source>
+        <target/>
       </trans-unit>
       <trans-unit id="7542940846619074358" datatype="html">
         <source>Tennessee</source>
@@ -1291,6 +1725,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="7645292816856622154" datatype="html">
+        <source>Follow the best investment strategy</source>
+        <target/>
+        <note priority="1" from="description">swiper tile title</note>
+      </trans-unit>
       <trans-unit id="7676611321967250180" datatype="html">
         <source>Serbia</source>
         <target/>
@@ -1305,6 +1744,10 @@
         <source>Fiji</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="7691678170804063767" datatype="html">
+        <source>What is “Signal Feed”?</source>
+        <target/>
       </trans-unit>
       <trans-unit id="7711413606076552385" datatype="html">
         <source>Kansas</source>
@@ -1346,6 +1789,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="7831887949049012877" datatype="html">
+        <source>Minimum 4, letters only</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
+      </trans-unit>
       <trans-unit id="7833044528021545549" datatype="html">
         <source>Configure playback</source>
         <target/>
@@ -1360,6 +1808,11 @@
         <source>Cambodia</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="7879259094177531767" datatype="html">
+        <source>Or register a new account</source>
+        <target/>
+        <note priority="1" from="description">Link-like clickable hint in form</note>
       </trans-unit>
       <trans-unit id="7892590553414841819" datatype="html">
         <source>Illinois</source>
@@ -1416,10 +1869,24 @@
         <target/>
         <note priority="1" from="description">state</note>
       </trans-unit>
+      <trans-unit id="8075656321439678912" datatype="html">
+        <source>Valid email is required</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
+      </trans-unit>
       <trans-unit id="8147072510678737075" datatype="html">
         <source>Mexico</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="8154453727027523235" datatype="html">
+        <source>Alerts</source>
+        <target/>
+        <note priority="1" from="description">header label</note>
+      </trans-unit>
+      <trans-unit id="8217475150762703372" datatype="html">
+        <source>Changes to These Terms of Use</source>
+        <target/>
       </trans-unit>
       <trans-unit id="8273479446468988017" datatype="html">
         <source>Bulgaria</source>
@@ -1476,6 +1943,10 @@
         <target/>
         <note priority="1" from="description">state</note>
       </trans-unit>
+      <trans-unit id="8614499930429377952" datatype="html">
+        <source>Privacy and Information</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="8624069568371048571" datatype="html">
         <source>Belarus</source>
         <target/>
@@ -1520,6 +1991,10 @@
         <source>Price</source>
         <target/>
         <note priority="1" from="description">Price label</note>
+      </trans-unit>
+      <trans-unit id="8906971653449314921" datatype="html">
+        <source>Longa uses pay-for-performance service model. The service charges are only applied upon profitable transactions. Longa allows signal providers to charge fees (L-Credits) for each 1% of the profit (Profit Charge). Each signal provider can select a different fee model that corresponds to their signal feed quality and expertise. For example: The signal provider selects to charge 1 L-Credit for each 1% profit (Profit Charge). He provides a buy trade signal when the stock is $100 USD and a sell trade signal when the stock is $110. The calculated profit is 10%. Based on the Profit Charge of 1 LC, the service charge will be 10 L-Credits (1 L-Credits = $1 USD) for every subscriber that has subscribed to the signal feed. If there are 100 subscribers subscribed to this signal feed then the Profit Charge will be 1000 LC less the system charges that amount to 40%, so the total will be 600 LC that can be converted to $600 USD. Please, note that signal providers can define higher Profit Charge to increase their income on profitable signal feeds.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="8918809624993966636" datatype="html">
         <source>Non-US/Other</source>

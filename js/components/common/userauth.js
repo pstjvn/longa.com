@@ -41,9 +41,17 @@ longa.ui.UserAuth = goog.defineClass(pstj.material.Element, {
                 this.getRenderer().getCssClass(), 'username')),
                 longa.data.user.username);
 
-            goog.dom.setTextContent(this.getElementByClass(goog.getCssName(
-                this.getRenderer().getCssClass(), 'usertype')),
-                (longa.ds.utils.isInvestor() ? '(Investor)' : '(Seller)'));
+            if (longa.ds.utils.isInvestor()) {
+              goog.dom.classlist.swap(this.getElementByClass(goog.getCssName(
+                  this.getRenderer().getCssClass(), 'usertype')),
+                  goog.getCssName('seller'),
+                  goog.getCssName('investor'));
+            } else {
+              goog.dom.classlist.swap(this.getElementByClass(goog.getCssName(
+                  this.getRenderer().getCssClass(), 'usertype')),
+                  goog.getCssName('investor'),
+                  goog.getCssName('seller'));
+            }
           }
         }, this));
   },

@@ -68,6 +68,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
   logout: function() {
     rpc.logout().then(
         function() {
+          longa.storage.removeCredentials();
           longa.data.user = new longa.gen.dto.User();
           this.push(longa.ds.Topic.USER_AUTH_CHANGED);
         }, function() {
@@ -84,8 +85,8 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
     goog.log.info(this.logger_, 'Login successed');
     longa.data.user = user;
     if (this.keepLoginDetails_) {
-      console.log(this.lastLoginDetails_);
-      // TODO: implement storing the login details in local storage.
+      longa.storage.storeCredentials(goog.asserts.assertInstanceof(
+          this.lastLoginDetails_, longa.gen.dto.LoginDetails));
     }
   },
 

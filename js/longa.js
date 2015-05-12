@@ -4,9 +4,11 @@ goog.require('goog.dom');
 goog.require('goog.json');
 goog.require('goog.log');
 goog.require('goog.ui.Component.EventType');
+goog.require('longa.control.Auth');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
+goog.require('longa.storage');
 goog.require('longa.template');
 goog.require('longa.ui.Main');
 goog.require('longa.ui.StartScreen');
@@ -60,33 +62,40 @@ longa.App = goog.defineClass(pstj.control.Control, {
       crossdomain: false
     });
 
-
-    // Initially - show start screen
-    this.startScreen_.render(document.body);
-
-    // Init listeners, this one will be called only once anyway so we
-    // inline it here - it will hide the start screen and we cannot go
-    // back to it until reload.
-    this.getHandler().listenOnce(this.startScreen_,
-        goog.ui.Component.EventType.ACTION,
-        function(e) {
-          var idx = this.startScreen_.indexOfChild(e.target);
-          // after it is handled / showed with animation...
-          setTimeout(goog.bind(function() {
-            this.startScreen_.dispose();
-            this.mainApp_.render(document.body);
-            if (idx == 1) {
-              // skip
-              this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
-            } else if (idx == 3) {
-              // sign up
-              this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
-            } else if (idx == 4) {
-              // log in
-              this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
-            }
-          }, this), 200);
-        });
+    // If we have credentials peform the login right away.
+    var detail = longa.storage.retrieveCredentials();
+    if (!goog.isNull(detail)) {
+      // Show some sort of loading indicator.
+      longa.control.Auth.getInstance().login(detail, false);
+      this.mainApp_.render(document.body);
+      this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
+    } else {
+      // Initially - show start screen
+      this.startScreen_.render(document.body);
+      // Init listeners, this one will be called only once anyway so we
+      // inline it here - it will hide the start screen and we cannot go
+      // back to it until reload.
+      this.getHandler().listenOnce(this.startScreen_,
+          goog.ui.Component.EventType.ACTION,
+          function(e) {
+            var idx = this.startScreen_.indexOfChild(e.target);
+            // after it is handled / showed with animation...
+            setTimeout(goog.bind(function() {
+              this.startScreen_.dispose();
+              this.mainApp_.render(document.body);
+              if (idx == 1) {
+                // skip
+                this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
+              } else if (idx == 3) {
+                // sign up
+                this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
+              } else if (idx == 4) {
+                // log in
+                this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+              }
+            }, this), 200);
+          });
+    }
   },
 
   /**

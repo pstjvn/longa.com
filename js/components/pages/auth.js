@@ -30,11 +30,11 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
     /**
      * The controller for this widget.
-     * @type {longa.control.Auth}
+     * @type {!longa.control.Auth}
      * @protected
      */
-    this.control = new longa.control.Auth(this);
-
+    this.control = longa.control.Auth.getInstance();
+    this.control.setScope(this);
     this.control.listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
       goog.asserts.assertNumber(screen);
       if (screen > 99 && screen < 103) {

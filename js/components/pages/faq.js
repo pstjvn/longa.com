@@ -1,6 +1,7 @@
 goog.provide('longa.ui.Faq');
 
 goog.require('goog.ui.registry');
+goog.require('pstj.control.Control');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
@@ -19,6 +20,18 @@ longa.ui.Faq = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    this.control_ = new pstj.control.Control(this);
+    this.control_.init();
+  },
+
+  /** @inheritDoc */
+  enterDocument: function() {
+    goog.base(this, 'enterDocument');
+    this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
+        function(e) {
+          e.stopPropagation();
+          this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.FEED);
+        });
   }
 });
 

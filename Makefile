@@ -147,6 +147,14 @@ $(shell echo $(pstj_public_source_dirs) | sed 's+$(sed_tokenizer)+--js="$(pstj_l
 $(shell echo $(smsj_public_source_dirs) | sed 's+$(sed_tokenizer)+--js="$(smjs_lib_dir)/&/**.js"+g') \
 --js="!**_test.js"
 
+calcdeps_paths = \
+--path ./js \
+--path ./tpl/$(locale) \
+--path ../../templates/ \
+--path $(closure_library)/closure/goog \
+--path $(closure_library)/third_party/closure/goog \
+$(shell echo $(pstj_public_source_dirs) | sed 's+$(sed_tokenizer)+--path $(pstj_lib_dir)/&+g')
+
 # The file lister requires all possible files in all used projects.
 $(build_dir)/$(ns).filelist.txt: \
 $(shell for dir in $(jssource_dir) ; do find $$dir -name '*.js' ; done) \
@@ -159,6 +167,34 @@ $(shell for dir in $(smsj_public_source_dirs) ; do find $(smjs_lib_dir)/$$dir -n
 	--output_manifest $@ \
 	--js_output_file /tmp/closure_compiler_build \
 	$(compiler_js_sources)
+
+
+# Generates filelist that can be used in a modulized compilation
+$(build_dir)/modulefilelist.txt: \
+$(shell for dir in $(jssource_dir) ; do find $$dir -name '*.js' ; done) \
+$(shell for dir in $(pstj_public_source_dirs) ; do find $(pstj_lib_dir)/$$dir -name '*.js' ; done) \
+$(shell for dir in $(smsj_public_source_dirs) ; do find $(smjs_lib_dir)/$$dir -name '*.js' ; done)
+	$(python) $(closure_library)/closure/bin/calcdeps.py \
+	$(calcdeps_paths) \
+	--input js/modules/main_init.js \
+	--input js/modules/app_init.js \
+	--input js/modules/startscreen_init.js > rtt.txt
+
+# Experimental build using modules: The summary code size is a bit bigger but
+# initial load file is much smaller (could be repartitioned for even smaller
+# initial load.
+modulebuild: $(build_dir)/rtt.txt
+	$(java) $(js_compiler) \
+	--compilation_level=ADVANCED \
+	--flagfile=options/compile.ini \
+	--js=build/$(ns)-cssmap.build.js \
+	$(namespace_specific_flags) \
+	--module main:93 \
+	--module app:143:main \
+	--module startscreen:1:app \
+	--module_output_path_prefix build/module_ \
+	$(shell cat $(build_dir)/rtt.txt | tr '\n' ' ')
+
 
 $(build_dir)/$(ns).build.js: \
 $(public_deps_file) \

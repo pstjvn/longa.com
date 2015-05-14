@@ -1,10 +1,16 @@
 goog.provide('longa.App');
 
+goog.require('goog.Promise');
 goog.require('goog.dom');
 goog.require('goog.json');
+goog.require('goog.labs.net.xhr');
 goog.require('goog.log');
+goog.require('goog.net.ImageLoader');
+goog.require('goog.style');
 goog.require('goog.ui.Component.EventType');
 goog.require('longa.control.Auth');
+goog.require('longa.data');
+goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.rpc');
@@ -38,13 +44,20 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @type {longa.ui.Main}
      * @private
      */
-    this.mainApp_ = new longa.ui.Main();
+    this.mainApp_ = null;
     /**
      * The start screen we need to show on each launch.
      * @type {longa.ui.StartScreen}
      * @private
      */
-    this.startScreen_ = new longa.ui.StartScreen();
+    this.startScreen_ = null;
+    /**
+     * A promise that will resolve only when the styles get successfully
+     * installed on the page.
+     * @type {goog.Promise<boolean>}
+     * @private
+     */
+    this.installStylesPromise_ = null;
     this.init();
   },
 
@@ -62,40 +75,124 @@ longa.App = goog.defineClass(pstj.control.Control, {
       crossdomain: false
     });
 
-    // If we have credentials peform the login right away.
+    // Load custom style for app by returning a promise of the
+    // installation (with a timeout of 16 ms so we are sure the
+    // browser had the time to parse those styles).
+    var source = '';
+    if (COMPILED) {
+      if (goog.isString(goog.global['APP_STYLES_DEBUG'])) {
+        source = goog.asserts.assertString(goog.global['APP_STYLES_DEBUG']);
+      } else {
+        source = goog.asserts.assertString(goog.global['APP_STYLES_COMPILED']);
+      }
+    } else {
+      source = goog.asserts.assertString(goog.global['APP_STYLES']);
+    }
+    this.installStylesPromise_ = goog.labs.net.xhr.get(source)
+        .then(function(response) {
+          return new goog.Promise(function(resolve, reject) {
+            goog.style.installStyles(response);
+            setTimeout(function() {
+              resolve(true);
+            });
+          });
+        });
+
     var detail = longa.storage.retrieveCredentials();
+    // If we have stired credentials attempt to load data and then render the
+    // app.
+    // If not - preload the start screen images and render the start screen.
     if (!goog.isNull(detail)) {
       // Show some sort of loading indicator.
-      longa.control.Auth.getInstance().login(detail, false);
-      this.mainApp_.render(document.body);
-      this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
-    } else {
-      // Initially - show start screen
-      this.startScreen_.render(document.body);
-      // Init listeners, this one will be called only once anyway so we
-      // inline it here - it will hide the start screen and we cannot go
-      // back to it until reload.
-      this.getHandler().listenOnce(this.startScreen_,
-          goog.ui.Component.EventType.ACTION,
-          function(e) {
-            var idx = this.startScreen_.indexOfChild(e.target);
-            // after it is handled / showed with animation...
-            setTimeout(goog.bind(function() {
-              this.startScreen_.dispose();
+      var loginlistenerkey = this.listen(longa.ds.Topic.USER_AUTH_CHANGED,
+          function() {
+            this.cancel(loginlistenerkey);
+            if (longa.ds.utils.isKnownUser()) {
+              // Start loading data from server and only the show main screen.
+              this.mainApp_ = new longa.ui.Main();
               this.mainApp_.render(document.body);
-              if (idx == 1) {
-                // skip
-                this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
-              } else if (idx == 3) {
-                // sign up
-                this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
-              } else if (idx == 4) {
-                // log in
+              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+            } else {
+              // Login attempted but failed
+              // Make sure the styles for the app has been loaded
+              // and then show login with fail.
+              this.installStylesPromise_.then(function(_) {
+                this.removeLoader_();
+                this.mainApp_ = new longa.ui.Main();
+                this.mainApp_.render(document.body);
+                // Show screen with failed info.
+                // TODO: add fail notice - the login form is too deep so
+                // instead we should use the 'toast'.
                 this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
-              }
-            }, this), 200);
+              });
+            }
           });
+      longa.control.Auth.getInstance().login(detail, false);
+    } else {
+      goog.Promise.all(
+          [this.installStylesPromise_, this.preloadStartScreenImages_()])
+          .then(function() {
+            // we are sure the images has loaded and the
+            // styles has been applied.
+            //
+            // remove the loader and render the start screen.
+            this.startScreen_ = new longa.ui.StartScreen();
+            this.removeLoader_();
+            this.startScreen_.render(document.body);
+            this.getHandler().listenOnce(this.startScreen_,
+                goog.ui.Component.EventType.ACTION,
+                function(e) {
+                  var idx = this.startScreen_.indexOfChild(e.target);
+                  // after it is handled / showed with animation...
+                  setTimeout(goog.bind(function() {
+                    if (goog.isNull(this.mainApp_)) {
+                      this.mainApp_ = new longa.ui.Main();
+                    }
+                    this.startScreen_.dispose();
+                    this.mainApp_.render(document.body);
+                    if (idx == longa.ds.Screen.FAQ) {
+                      // skip
+                      this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
+                    } else if (idx == longa.ds.Screen.REGISTER) {
+                      // sign up
+                      this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
+                    } else if (idx == longa.ds.Screen.LOGIN) {
+                      // log in
+                      this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+                    }
+                  }, this), 200);
+                });
+          }, null, this);
     }
+  },
+
+  /**
+   * Removes the loader screen.
+   * @private
+   */
+  removeLoader_: function() {
+    document.body.removeChild(document.body.querySelector('#loader'));
+    document.head.removeChild(document.head.querySelector('#loadercss'));
+  },
+
+  /**
+   * Starts preloading of the images for the start screen.
+   *
+   * @private
+   * @return {goog.Promise<boolean>} The promise that will resolve once the
+   *     images have been loaded.
+   */
+  preloadStartScreenImages_: function() {
+    var il = new goog.net.ImageLoader();
+    goog.array.forEach(longa.data.preloadImages, function(uri, i) {
+      il.addImage(i.toString(), uri);
+    });
+    return new goog.Promise(function(resolve, reject) {
+      this.getHandler().listen(il, goog.net.EventType.COMPLETE, function(_) {
+        resolve(true);
+      });
+      il.start();
+    }, this);
   },
 
   /**

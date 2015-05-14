@@ -1,11 +1,122 @@
 <!doctype html>
 <html>
   <head>
-    <title>My App</title>
+    <title>Longa</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="build/app.debug.css">
+    <style id="loadercss">
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .loading-indicator {
+        width: 100%;
+        height: 100%;
+        background-color: #009688;
+      }
+      .loading-indicator-inner {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+      }
+      .loading-indicator-dots {
+        display: block;
+        position: relative;
+        width: 360px;
+        height: 2px;
+        margin: auto;
+      }
+      .loading-indicator-dots span {
+        opacity: 0;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        margin-top: -3px;
+        width: 6px;
+        height: 6px;
+        background-color: #FF9100;
+        -webkit-border-radius: 1000px;
+        -moz-border-radius: 1000px;
+        border-radius: 1000px;
+      }
+      .loading-indicator-dots span {
+        -webkit-animation: move 2.5s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: move 2.5s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        animation: move 2.5s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+      }
+      .loading-indicator-dots span:nth-child(2) {
+        -webkit-animation: move 2.5s 270ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: move 2.5s 270ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        animation: move 2.5s 270ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+      }
+      .loading-indicator-dots span:nth-child(3) {
+        -webkit-animation: move 2.5s 540ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: move 2.5s 540ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        animation: move 2.5s 540ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+      }
+      .loading-indicator-dots span:nth-child(4) {
+        -webkit-animation: move 2.5s 810ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: move 2.5s 810ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        animation: move 2.5s 810ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+      }
+      .loading-indicator-dots span:nth-child(5) {
+        -webkit-animation: move 2.5s 1080ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: move 2.5s 1080ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        animation: move 2.5s 1080ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+      }
+      .loading-indicator-dots span:nth-child(6) {
+        -webkit-animation: move 2.5s 1350ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: move 2.5s 1350ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        animation: move 2.5s 1350ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+      }
+
+      @-webkit-keyframes move {
+        0% {
+          left: 0%;
+          opacity: 0;
+        }
+        25%,75% {
+          opacity: 1;
+        }
+        100% {
+          left: 100%;
+          opacity: 0;
+        }
+      }
+      @-moz-keyframes move {
+        0% {
+          left: 0%;
+          opacity: 0;
+        }
+        25%,75% {
+          opacity: 1;
+        }
+        100% {
+          left: 100%;
+          opacity: 0;
+        }
+      }
+      @keyframes move {
+        0% {
+          left: 0%;
+          opacity: 0;
+        }
+        25%,75% {
+          opacity: 1;
+        }
+        100% {
+          left: 100%;
+          opacity: 0;
+        }
+      }
+    </style>
     <script>
+      var APP_STYLES = 'build/app.css';
+      var APP_STYLES_COMPILED = 'build/app.build.css';
+      var APP_STYLES_DEBUG = 'build/app.debug.css';
       var PSTJ = {
         NGAGENT: {
           USE_NEXT_TICK: false
@@ -14,6 +125,21 @@
     </script>
   </head>
   <body>
+    <div id="loader" class="loading-indicator">
+      <div class="loading-indicator-inner">
+        <div>
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="50px" viewBox="0 0 156.481 43.654" style="enable-background:new 0 0 156.481 43.654;" xml:space="preserve"><polygon style="fill:white;" points="4.216,10.665 0.338,10.665 0.338,34.058 13.019,34.058 13.019,31.084 4.216,31.084 "></polygon><path style="fill:white;" d="M39.121,10.144c-3.373,0-6.254,1.194-8.646,3.583c-2.392,2.389-3.587,5.257-3.587,8.604 c0,3.389,1.196,6.277,3.587,8.665c2.391,2.389,5.273,3.583,8.646,3.583c3.393,0,6.28-1.199,8.661-3.598 c2.381-2.398,3.572-5.282,3.572-8.65c0-3.348-1.196-6.216-3.587-8.604C45.375,11.338,42.493,10.144,39.121,10.144z M45.161,28.391 c-1.676,1.673-3.69,2.509-6.04,2.509c-2.371,0-4.395-0.836-6.07-2.509c-1.676-1.673-2.514-3.693-2.514-6.06 c0-2.347,0.838-4.356,2.514-6.029c1.676-1.673,3.699-2.51,6.07-2.51c2.35,0,4.364,0.837,6.04,2.51 c1.675,1.673,2.514,3.683,2.514,6.029C47.674,24.697,46.836,26.718,45.161,28.391z"></path><polygon style="fill:white;" points="80.11,27.313 68.645,10.665 64.781,10.665 64.781,34.058 68.307,34.058 68.307,16.767 80.417,34.058 83.637,34.058 83.637,10.665 80.11,10.665 "></polygon><path style="fill:white;" d="M106.845,22.224v3.587h10.7c-0.695,1.544-1.748,2.778-3.158,3.703 c-1.41,0.924-2.974,1.386-4.69,1.386c-2.372,0-4.396-0.836-6.071-2.509s-2.514-3.693-2.514-6.06c0-2.347,0.838-4.356,2.514-6.029 s3.699-2.51,6.071-2.51c1.205,0,2.345,0.23,3.418,0.69s1.998,1.108,2.774,1.946h4.507c-1.063-1.941-2.54-3.475-4.43-4.599 c-1.891-1.124-3.981-1.687-6.27-1.687c-3.373,0-6.255,1.194-8.646,3.583c-2.391,2.389-3.587,5.257-3.587,8.604 c0,3.389,1.196,6.277,3.587,8.665c2.392,2.389,5.273,3.583,8.646,3.583c3.331,0,6.203-1.162,8.614-3.486 c2.412-2.325,3.618-5.128,3.618-8.41v-0.429L106.845,22.224z"></path><polygon style="fill-rule:evenodd;clip-rule:evenodd;fill:white;" points="146.762,10.737 143.821,10.737 133.981,34.077 137.762,34.077 140.702,27.058 145.142,15.657 149.462,27.058 152.521,34.138 156.481,34.138 "></polygon><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6d00;" d="M20.779,22.512C20.544,14.438,24.607,5.945,34.772,0 c-11.056,2.703-15.93,12.483-15.718,22.132c-1.844-0.442-3.421-0.94-4.612-1.484c0.025,1.434,1.833,2.612,4.729,3.511 c0.886,9.216,6.399,17.844,15.602,19.496c-7.621-3.601-12.833-10.958-13.828-19.009c12.673,3.054,39.612,1.894,41.518-4.871 C53.944,25.111,32.853,24.957,20.779,22.512z"></path></svg>
+          <div class="loading-indicator-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="build/app.debug.js"></script>
   </body>
 </html>

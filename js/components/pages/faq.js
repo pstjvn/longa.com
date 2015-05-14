@@ -1,6 +1,7 @@
 goog.provide('longa.ui.Faq');
 
 goog.require('goog.asserts');
+goog.require('goog.async.Delay');
 goog.require('goog.ui.registry');
 goog.require('longa.ds.utils');
 goog.require('longa.template');
@@ -23,6 +24,7 @@ longa.ui.Faq = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    this.delay_ = new goog.async.Delay(this.navigate_, 200, this);
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
     this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
@@ -41,10 +43,7 @@ longa.ui.Faq = goog.defineClass(pstj.material.Element, {
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         function(e) {
           e.stopPropagation();
-          var screen = (longa.ds.utils.isKnownUser() &&
-              !longa.ds.utils.isInvestor()) ? longa.ds.Screen.SERVICE :
-                  longa.ds.Screen.FEED;
-          this.control_.push(longa.ds.Topic.SHOW_SCREEN, screen);
+          this.delay_.start();
         });
   },
 
@@ -59,6 +58,16 @@ longa.ui.Faq = goog.defineClass(pstj.material.Element, {
     if (!goog.isNull(el)) return goog.asserts.assertInstanceof(el,
         pstj.material.Button);
     else return null;
+  },
+
+  /**
+   * @private
+   */
+  navigate_: function() {
+    var screen = (longa.ds.utils.isKnownUser() &&
+        !longa.ds.utils.isInvestor()) ? longa.ds.Screen.SERVICE :
+            longa.ds.Screen.FEED;
+    this.control_.push(longa.ds.Topic.SHOW_SCREEN, screen);
   }
 });
 

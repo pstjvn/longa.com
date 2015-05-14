@@ -757,7 +757,6 @@
       <trans-unit id="3089118602567605209" datatype="html">
         <source>Go to signal feed</source>
         <target/>
-        <note priority="1" from="description">button label</note>
       </trans-unit>
       <trans-unit id="3102823133461101412" datatype="html">
         <source>Oregon</source>
@@ -1470,6 +1469,10 @@
         <source>Lithuania</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6554591591779323889" datatype="html">
+        <source>Go to service definition</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6581071943717080429" datatype="html">
         <source>These  Terms of Use, as well as updates hereof, constitute the entire agreement  between You and Intelsoft EOOD and govern the terms on which You can use the  website www.longa.com.</source>

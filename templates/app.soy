@@ -11,6 +11,16 @@
   </div>
 {/template}
 
+/** Templetize the string used in code. */
+{template .StringFAQLabelForUsers}
+  {msg desc=""}Go to signal feed{/msg}
+{/template}
+
+/** Templetize the string used in code. */
+{template .StringFAQLabelForSeller}
+  {msg desc=""}Go to service definition{/msg}
+{/template}
+
 /** Another template */
 {template .Address}
   {@param city: string}
@@ -745,7 +755,7 @@
         {/call}
       </div>
     </section>
-    <section style="display: none">
+    <section>
       {call pstj.material.template.IconContainer}
         {param type: 'user' /}
       {/call}

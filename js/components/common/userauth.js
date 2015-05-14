@@ -27,38 +27,44 @@ longa.ui.UserAuth = goog.defineClass(pstj.material.Element, {
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
     // By default consider the user NOT logged in.
-    this.control_ = new pstj.control.Control();
+    this.control_ = new pstj.control.Control(this);
     this.control_.init();
-    this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED, goog.bind(
-        function() {
-          var hasUser = longa.ds.utils.isKnownUser();
-          var sections = this.querySelectorAll('section');
-          goog.style.setElementShown(sections[0], !hasUser);
-          goog.style.setElementShown(sections[1], hasUser);
-          if (hasUser) {
+    this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED,
+        this.setVisibleSectionByUser);
+  },
 
-            goog.dom.setTextContent(this.getElementByClass(goog.getCssName(
-                this.getRenderer().getCssClass(), 'username')),
-                longa.data.user.username);
+  /**
+   * Updates the visibility of the widget based on the current user.
+   * @private
+   */
+  setVisibleSectionByUser: function() {
+    var hasUser = longa.ds.utils.isKnownUser();
+    var sections = this.querySelectorAll('section');
+    goog.style.setElementShown(sections[0], !hasUser);
+    goog.style.setElementShown(sections[1], hasUser);
+    if (hasUser) {
+      goog.dom.setTextContent(this.getElementByClass(goog.getCssName(
+          this.getRenderer().getCssClass(), 'username')),
+          longa.data.user.username);
 
-            if (longa.ds.utils.isInvestor()) {
-              goog.dom.classlist.swap(this.getElementByClass(goog.getCssName(
-                  this.getRenderer().getCssClass(), 'usertype')),
-                  goog.getCssName('seller'),
-                  goog.getCssName('investor'));
-            } else {
-              goog.dom.classlist.swap(this.getElementByClass(goog.getCssName(
-                  this.getRenderer().getCssClass(), 'usertype')),
-                  goog.getCssName('investor'),
-                  goog.getCssName('seller'));
-            }
-          }
-        }, this));
+      if (longa.ds.utils.isInvestor()) {
+        goog.dom.classlist.swap(this.getElementByClass(goog.getCssName(
+            this.getRenderer().getCssClass(), 'usertype')),
+            goog.getCssName('seller'),
+            goog.getCssName('investor'));
+      } else {
+        goog.dom.classlist.swap(this.getElementByClass(goog.getCssName(
+            this.getRenderer().getCssClass(), 'usertype')),
+            goog.getCssName('investor'),
+            goog.getCssName('seller'));
+      }
+    }
   },
 
   /** @override */
   enterDocument: function() {
     goog.base(this, 'enterDocument');
+    this.setVisibleSectionByUser();
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         this.handleAction_);
   },

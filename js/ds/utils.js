@@ -61,6 +61,15 @@ _.isInvestor = function() {
 
 
 /**
+ * Checks if the user is Seller type.
+ * @return {boolean}
+ */
+_.isSeller = function() {
+  return _.getCurrentUserType() == UserType.SELLER;
+};
+
+
+/**
  * Returns true if the user is currently logged in.
  * @return {boolean}
  */

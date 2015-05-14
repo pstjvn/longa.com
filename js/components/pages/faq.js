@@ -1,6 +1,9 @@
 goog.provide('longa.ui.Faq');
 
+goog.require('goog.asserts');
 goog.require('goog.ui.registry');
+goog.require('longa.ds.utils');
+goog.require('longa.template');
 goog.require('pstj.control.Control');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
@@ -22,6 +25,14 @@ longa.ui.Faq = goog.defineClass(pstj.material.Element, {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
+    this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+      var button = this.getActionButton_();
+      if (!goog.isNull(button)) {
+        button.setContent((longa.ds.utils.isSeller() ?
+            longa.template.StringFAQLabelForSeller().toString() :
+            longa.template.StringFAQLabelForUsers().toString()));
+      }
+    });
   },
 
   /** @inheritDoc */
@@ -30,8 +41,24 @@ longa.ui.Faq = goog.defineClass(pstj.material.Element, {
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         function(e) {
           e.stopPropagation();
-          this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.FEED);
+          var screen = (longa.ds.utils.isKnownUser() &&
+              !longa.ds.utils.isInvestor()) ? longa.ds.Screen.SERVICE :
+                  longa.ds.Screen.FEED;
+          this.control_.push(longa.ds.Topic.SHOW_SCREEN, screen);
         });
+  },
+
+  /**
+   * Getter for the button in the FAQ.
+   *
+   * @private
+   * @return {pstj.material.Button}
+   */
+  getActionButton_: function() {
+    var el = this.getChildAt(1);
+    if (!goog.isNull(el)) return goog.asserts.assertInstanceof(el,
+        pstj.material.Button);
+    else return null;
   }
 });
 

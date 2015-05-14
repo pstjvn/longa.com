@@ -9,6 +9,7 @@
 goog.provide('app');
 
 goog.require('goog.debug.Console');
+goog.require('goog.log');
 goog.require('longa.App');
 
 
@@ -19,7 +20,5 @@ if (goog.DEBUG) {
   goog.log.getLogger('longa.rpc').setLevel(goog.log.Level.ALL);
 }
 
-
-// Init the app.
+// Start the app logic.
 (new longa.App());
-

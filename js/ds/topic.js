@@ -34,6 +34,7 @@ longa.ds.Topic = {
   SHOW_MENU: 'show-menu',
   // The DTO for user balance has changed.
   USER_BALANCE_CHANGE: 'user-balance-change',
-  USER_ALERTS_LOADED: 'user-alerts-loaded'
+  // Used when a control encounters an error and cannot resolve it on its own.
+  CONTROL_ERROR: 'control-error'
 
 };

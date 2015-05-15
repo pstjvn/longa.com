@@ -189,6 +189,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
       } else {
         // User logged out - clean up
         this.destroyAlertLoader_();
+        longa.data.alerts.clear();
       }
     });
   },

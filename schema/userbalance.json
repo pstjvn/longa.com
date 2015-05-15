@@ -40,7 +40,11 @@
       "description": "???",
       "type": "number",
       "$_name": "serviceCharges"
-    }
+    },
+    "usertype": {
+      "type": "string",
+      "description": "The usertype, 0 is unknown, 1 is investor, 2 is seller"
+    },
   },
   "required": "$_all"
 }

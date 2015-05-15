@@ -121,6 +121,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="570634809953812426" datatype="html">
+        <source>Profit/Loss - All Time</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="598357484396990573" datatype="html">
         <source>Aland Islands</source>
         <target/>
@@ -345,6 +349,10 @@
         <target/>
         <note priority="1" from="description">state</note>
       </trans-unit>
+      <trans-unit id="1505728362554673319" datatype="html">
+        <source>Profit/Loss - Open</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1562013926672647714" datatype="html">
         <source>Nicaragua</source>
         <target/>
@@ -553,6 +561,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2252983963418600407" datatype="html">
+        <source>Service change (LC)</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2254060102521310645" datatype="html">
         <source>Tanzania, United Republic of</source>
         <target/>
@@ -645,6 +657,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2611475427610660053" datatype="html">
+        <source>Transactions</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2633824972286491960" datatype="html">
         <source>Djibouti</source>
         <target/>
@@ -664,6 +680,10 @@
         <source>Minimum 6 symbols</source>
         <target/>
         <note priority="1" from="description">Error on input</note>
+      </trans-unit>
+      <trans-unit id="2717763929462918747" datatype="html">
+        <source>Current Balance (LC)</source>
+        <target/>
       </trans-unit>
       <trans-unit id="2748434989225518032" datatype="html">
         <source>Where investors meet successful signal traders</source>
@@ -724,6 +744,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2921868700206229107" datatype="html">
+        <source>Profit/Loss - This month</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="3012223470297892100" datatype="html">
         <source>Gabon</source>
         <target/>
@@ -748,6 +772,10 @@
         <source>Kiribati</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="3078025123186139383" datatype="html">
+        <source>Last Received Signal</source>
+        <target/>
       </trans-unit>
       <trans-unit id="3086562963920355958" datatype="html">
         <source>Tuvalu</source>
@@ -1208,6 +1236,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5242590999576574365" datatype="html">
+        <source>All Time Credit (LC)</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
         <source>Username</source>
         <target/>
@@ -1286,8 +1318,20 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5552946715208529758" datatype="html">
+        <source>Profit</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5656239699008045812" datatype="html">
+        <source>Withdrawal(LC)</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5658411155387074631" datatype="html">
         <source>You  hereby agree, to the fullest extent permitted by law, to indemnify, defend, and  hold Intelsoft EOOD, its Affiliated Entities and each of their respective  directors, managers, employees and agents, as well as Authorized operators,  harmless from and against any and all third party claims, demands, causes of  action, suits or proceedings, as well as any and all losses, liabilities,  damage, costs or expenses (including any reasonable attorneys' fees), arising  from or relating to: </source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5668924639796372939" datatype="html">
+        <source>Profit/Loss - This year</source>
         <target/>
       </trans-unit>
       <trans-unit id="5698737171438719386" datatype="html">
@@ -1366,6 +1410,10 @@
         <source>(Investor)</source>
         <target/>
       </trans-unit>
+      <trans-unit id="6103276538230117563" datatype="html">
+        <source>First Received Signal</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6133495983093212227" datatype="html">
         <source>United States</source>
         <target/>
@@ -1395,6 +1443,11 @@
         <source>Chile</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6272349699005437244" datatype="html">
+        <source>Buy credit</source>
+        <target/>
+        <note priority="1" from="description">Buy credit button label</note>
       </trans-unit>
       <trans-unit id="6280188391773988152" datatype="html">
         <source>Alabama</source>
@@ -1578,6 +1631,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6975217312064433051" datatype="html">
+        <source>Widthraw</source>
+        <target/>
+        <note priority="1" from="description">Widthraw button label</note>
+      </trans-unit>
       <trans-unit id="7012227002133419149" datatype="html">
         <source>Togo</source>
         <target/>
@@ -1607,6 +1665,10 @@
         <source>Maryland</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="7078271376845640958" datatype="html">
+        <source>Loss</source>
+        <target/>
       </trans-unit>
       <trans-unit id="7104853853273794929" datatype="html">
         <source>Greenland</source>
@@ -1722,6 +1784,10 @@
         <source>Bangladesh</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="7593555694782789615" datatype="html">
+        <source>Open</source>
+        <target/>
       </trans-unit>
       <trans-unit id="7627070236552679953" datatype="html">
         <source>Uganda</source>
@@ -1984,6 +2050,10 @@
         <source>Cook Islands</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="8849079416155889937" datatype="html">
+        <source>Average Position Duration (Days)</source>
+        <target/>
       </trans-unit>
       <trans-unit id="8884008684136621484" datatype="html">
         <source>Qatar</source>

@@ -44,6 +44,14 @@ longa.ui.Trend = goog.defineClass(pstj.material.Element, {
   },
 
   /**
+   * Getter for the internal value.
+   * @return {number}
+   */
+  getValue: function() {
+    return this.value;
+  },
+
+  /**
    * @override
    * @return {longa.ui.TrendRenderer}
    */
@@ -54,9 +62,11 @@ longa.ui.Trend = goog.defineClass(pstj.material.Element, {
 
   /** @inheritDoc */
   decorateInternal: function(el) {
-    goog.base(this, 'decorateInternal', el);
     var value = el.getAttribute('value');
-    if (!goog.isNull(value)) this.value = parseFloat(value);
+    if (!goog.isNull(value)) {
+      this.value = parseFloat(value);
+    }
+    goog.base(this, 'decorateInternal', el);
   },
 
   /**
@@ -83,8 +93,17 @@ longa.ui.TrendRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   },
 
   /** @inheritDoc */
-  getTemplate: function(m) {
-    return longa.template.Trend(m);
+  getTemplate: function(model) {
+    return longa.template.Trend(model);
+  },
+
+  /** @override */
+  generateTemplateData: function(instance) {
+    var value = goog.asserts.assertInstanceof(instance, longa.ui.Trend)
+        .getValue();
+    return {
+      value: value
+    };
   },
 
   /**
@@ -93,18 +112,21 @@ longa.ui.TrendRenderer = goog.defineClass(pstj.material.ElementRenderer, {
    */
   applyValue: function(instance) {
     goog.style.setStyle(instance.getElementStrict(), 'backgroundColor',
-        this.generateColor(instance.value));
+        this.generateColor(instance.getValue()));
   },
 
   /**
    * The value to calculate color based on.
-   * @type {number}
+   * @param {number} value The value for which to generate the color.
    * @return {string}
    * @protected
    */
   generateColor: function(value) {
-    var color = (value > 0 ? longa.ui.TrendRenderer.Color.UP :
-        value < 0 ? longa.ui.TrendRenderer.Color.DOWN : '#ffffff');
+    var color = '';
+    if (value > 0) color = longa.ui.TrendRenderer.Color.UP;
+    else if (value < 0) color = longa.ui.TrendRenderer.Color.DOWN;
+    else color = longa.ui.TrendRenderer.Color.NEUTRAL;
+
     // rebalance the value for edge cases (values between abt(n~1) and 0
     if (value > 0 && value < 1) value = 1;
     if (value < 0 && value > -1) value = -1;
@@ -116,11 +138,15 @@ longa.ui.TrendRenderer = goog.defineClass(pstj.material.ElementRenderer, {
    * value from 0 to 100 to a scale from 0.4 to 1.0 (opacity).
    *
    * @param {number} value The trend value.
-   * @return {string} The rgba() formatted color.
+   * @return {number} The calculated opacity.
    * @protected
    */
   calculateOpacity: function(value) {
-    return pstj.math.utils.crossRule(0, 100, 0.4, 1, value);
+    if (value == 0) {
+      return 0.5;
+    } else {
+      return pstj.math.utils.crossRule(0, 100, 0.4, 1, value);
+    }
   },
 
   statics: {
@@ -135,7 +161,8 @@ longa.ui.TrendRenderer = goog.defineClass(pstj.material.ElementRenderer, {
      */
     Color: {
       UP: '#008A00',
-      DOWN: '#BE0000'
+      DOWN: '#BE0000',
+      NEUTRAL: '#CDCDCD'
     }
   }
 });

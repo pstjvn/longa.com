@@ -112,6 +112,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
               this.mainApp_ = new longa.ui.Main();
               this.mainApp_.render(document.body);
               this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+              this.updateAll();
             } else {
               // Login attempted but failed
               // Make sure the styles for the app has been loaded
@@ -148,15 +149,16 @@ longa.App = goog.defineClass(pstj.control.Control, {
                     if (goog.isNull(this.mainApp_)) {
                       this.mainApp_ = new longa.ui.Main();
                     }
+                    console.log(idx);
                     this.startScreen_.dispose();
                     this.mainApp_.render(document.body);
-                    if (idx == longa.ds.Screen.FAQ) {
+                    if (idx == 1) {
                       // skip
                       this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
-                    } else if (idx == longa.ds.Screen.REGISTER) {
+                    } else if (idx == 3) {
                       // sign up
                       this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
-                    } else if (idx == longa.ds.Screen.LOGIN) {
+                    } else if (idx == 4) {
                       // log in
                       this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
                     }
@@ -164,6 +166,13 @@ longa.App = goog.defineClass(pstj.control.Control, {
                 });
           }, null, this);
     }
+
+    // Subsribe to login/logout - if a user logged in retrieve the details.
+    this.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+      if (longa.ds.utils.isKnownUser()) {
+        this.updateAll();
+      }
+    });
   },
 
   /**
@@ -195,6 +204,19 @@ longa.App = goog.defineClass(pstj.control.Control, {
     }, this);
   },
 
+
+  /**
+   * Force update all data.
+   */
+  updateAll: function() {
+    goog.Promise.all([
+      this.retrieveBalance()
+    ]).then(function(data) {
+      goog.log.info(this.logger_, 'Update all finished');
+      this.push(longa.ds.Topic.USER_BALANCE_CHANGE);
+    }, null, this);
+  },
+
   /**
    * Attempts to perform authorization with the backend.
    */
@@ -214,7 +236,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
    */
   retrieveBalance: function() {
     goog.log.info(this.logger_, 'Attempting balance retrieval');
-    rpc.getBalance().then(this.onBalanceReceived, this.onBalanaceFailed, this);
+    return rpc.getBalance().then(
+        this.onBalanceReceived, this.onBalanaceFailed, this);
   },
 
   /**
@@ -266,6 +289,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
   onBalanceReceived: function(balance) {
     goog.log.info(this.logger_, 'Balance received: ' +
         goog.debug.expose(balance));
+    longa.data.balance = balance;
+    return balance;
   },
 
   /**

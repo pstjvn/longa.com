@@ -1,5 +1,6 @@
 goog.provide('longa.ui.Page');
 
+goog.require('goog.array');
 goog.require('goog.ui.Component.State');
 goog.require('goog.ui.registry');
 goog.require('pstj.material.Element');
@@ -19,6 +20,18 @@ longa.ui.Page = goog.defineClass(pstj.material.Element, {
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
     this.setSupportedState(goog.ui.Component.State.SELECTED, true);
+  },
+
+  /**
+   * Intentionally dispose of the children, we are not going to use them again.
+   * @override
+   */
+  removeChildren: function() {
+    var children = goog.base(this, 'removeChildren');
+    goog.array.forEach(children, function(component) {
+      goog.dispose(component);
+    });
+    return children;
   }
 });
 

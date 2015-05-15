@@ -1,8 +1,15 @@
 goog.provide('longa.ui.Balance');
 
+goog.require('goog.asserts');
+goog.require('goog.log');
 goog.require('goog.ui.registry');
+goog.require('longa.gen.dto.UserBalance');
+goog.require('longa.ui.CustomTrend');
+goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.RadioButton');
+goog.require('pstj.material.RadioGroup');
 
 
 /** @extends {pstj.material.Element} */
@@ -25,6 +32,11 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
 longa.ui.BalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   constructor: function() {
     pstj.material.ElementRenderer.call(this);
+    /**
+     * @private
+     * @type {goog.debug.Logger}
+     */
+    this.logger_ = goog.log.getLogger('longa.ui.BalanceRenderer');
   },
 
   /** @override */
@@ -34,7 +46,25 @@ longa.ui.BalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.Balance(model);
+    return longa.template.UserBalance(model);
+  },
+
+  /** @override */
+  generateTemplateData: function(instance) {
+    var model = instance.getModel();
+    if (!goog.isNull(model)) {
+      return goog.asserts.assertInstanceof(model, longa.gen.dto.UserBalance);
+    } else if (!goog.isNull(longa.data.balance)) {
+      return goog.asserts.assertInstanceof(longa.data.balance,
+          longa.gen.dto.UserBalance);
+    } else {
+      goog.log.warning(this.logger_, 'Rendering Balance sheet with empty data');
+      return new longa.gen.dto.UserBalance();
+    }
+  },
+
+  getStructuralCssClass: function() {
+    return goog.getCssName('longa-app-balance');
   },
 
   statics: {
@@ -42,7 +72,7 @@ longa.ui.BalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
      * @final
      * @type {string}
      */
-    CSS_CLASS: goog.getCssName('longa-app-balance')
+    CSS_CLASS: goog.getCssName('longa-app-user-balance')
   }
 });
 goog.addSingletonGetter(longa.ui.BalanceRenderer);

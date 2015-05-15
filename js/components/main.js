@@ -3,9 +3,11 @@ goog.provide('longa.ui.Main');
 goog.require('goog.async.Delay');
 goog.require('goog.log');
 goog.require('goog.ui.registry');
+goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.ui.Auth');
+goog.require('longa.ui.Balance');
 goog.require('longa.ui.Faq');
 goog.require('longa.ui.MainHeader');
 goog.require('longa.ui.Menu');
@@ -83,10 +85,21 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     });
 
     this.control.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+      console.log('UserAuthChange');
       if (longa.ds.utils.isKnownUser()) {
         this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
       } else {
+        console.log('Call destroy');
+        // if the user is unknown (i.e. logout) destroy the balance sheets.
+        this.destroyMainBalanceSheet_();
         this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+      }
+    });
+
+    this.control.listen(longa.ds.Topic.USER_BALANCE_CHANGE, function() {
+      this.destroyMainBalanceSheet_();
+      if (!goog.isNull(longa.data.balance)) {
+        this.balanceWrapper.addChild(new longa.ui.Balance(), true);
       }
     });
 
@@ -177,6 +190,13 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.sideHeaderPanel.getMain().addChild(this.refreshButton, true);
 
     this.mainHeaderPanel.getMain().addChild(this.mainPages, true);
+  },
+
+  /** @private */
+  destroyMainBalanceSheet_: function() {
+    if (this.balanceWrapper.hasChildren()) {
+      this.balanceWrapper.removeChildren();
+    }
   }
 });
 

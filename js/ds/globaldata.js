@@ -11,6 +11,16 @@ longa.data.user = new longa.gen.dto.User();
 
 
 /**
+ * Provides access to current user's balance sheet.
+ *
+ * When no user is logged in it will be null.
+ *
+ * @type {longa.gen.dto.UserBalance}
+ */
+longa.data.balance = null;
+
+
+/**
  * Configure the images that you want preloaded.
  * @type {Array<string>}
  */

@@ -31,5 +31,8 @@ longa.ds.Topic = {
   // Someone needs access to the menu.
   // This is usually pushed in narrow view when the user wants to go to
   // navigation/menu.
-  SHOW_MENU: 'show-menu'
+  SHOW_MENU: 'show-menu',
+  // The DTO for user balance has changed.
+  USER_BALANCE_CHANGE: 'user-balance-change'
+
 };

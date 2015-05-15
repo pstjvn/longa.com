@@ -796,19 +796,9 @@
   </div>
 {/template}
 
-/** Balance */
-{template .Balance}
-  <div class="{css longa-app-balance}"></div>
-{/template}
-
 /** SignalFeed */
 {template .Service}
   <div class="{css longa-app-service}"></div>
-{/template}
-
-/** Balance */
-{template .SignalFeed}
-  <div class="{css longa-app-feed}"></div>
 {/template}
 
 /** Balance */
@@ -829,5 +819,175 @@
 
 /** Template for the Trend element. */
 {template .Trend}
-  <div class="{css longa-app-trend}"></div>
+  {@param value: number}
+  <div is class="{css longa-app-trend}" value="{$value}"></div>
+{/template}
+
+/** Custom trending icons for Balance sheet */
+{template .CustomTrend}
+  {@param value: number}
+  <div is class="{css longa-app-custom-trend}" value="{$value}">
+    {if $value == 0}
+      {call pstj.material.template.IconContainer}
+        {param type: 'trending-neutral' /}
+      {/call}
+    {elseif $value > 0}
+      {call pstj.material.template.IconContainer}
+        {param type: 'trending-up' /}
+      {/call}
+    {else}
+      {call pstj.material.template.IconContainer}
+        {param type: 'trending-down' /}
+      {/call}
+    {/if}
+    <div class="{css longa-app-custom-trend-label}">{$value}{sp}%</div>
+  </div>
+{/template}
+
+/**
+  {@param allTimeChargesForProfit: number}
+  {@param averageTransactionDuration: number}
+  {@param balance: number}
+  {@param credit: number}
+  {@param debit: number}
+  {@param firstSignalDate: string}
+  {@param firstSignalTime: string}
+  {@param lastSignalDate: string}
+  {@param lastSignalTime: string}
+  {@param lostSignalCount: number}
+  {@param maximumWithdrawal: number}
+  {@param memberCount: number}
+  {@param openSignalCount: number}
+  {@param profitLossRatio: number}
+  {@param profitLossRatioMonth: number}
+  {@param profitLossRatioOpen: number}
+  {@param profitLossRatioYear: number}
+  {@param profitableSignalCount: number}
+  {@param serviceCharges: number}
+  {@param signalCount: number}
+  {@param systemCharges: number}
+  {@param withdrawal: number}
+ */
+/** Balance view */
+{template .UserBalance}
+  {@param averageTransactionDuration: number}
+  {@param balance: number}
+  {@param credit: number}
+  {@param debit: number}
+  {@param profitLossRatio: number}
+  {@param profitLossRatioMonth: number}
+  {@param profitLossRatioOpen: number}
+  {@param profitLossRatioYear: number}
+  {@param firstSignalDate: string}
+  {@param firstSignalTime: string}
+  {@param lastSignalDate: string}
+  {@param lastSignalTime: string}
+  {@param lostSignalCount: number}
+  {@param openSignalCount: number}
+  {@param profitableSignalCount: number}
+  {@param signalCount: number}
+  {@param withdrawal: number}
+  {@param usertype: string}
+  <div is class="{css longa-app-balance} {css longa-app-user-balance}">
+    <div class="{css longa-app-balance-padded} {css colored}">
+      <div is class="{css material-radio-group}">
+      {call pstj.material.template.RadioButton /}
+      {call pstj.material.template.RadioButton /}
+      {call pstj.material.template.RadioButton /}
+      {if $usertype == '2'}
+        {call pstj.material.template.RadioButton /}
+      {/if}
+    </div>
+    </div>
+    <div class="{css longa-app-balance-padded} {css colored}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Profit/Loss - All Time{/msg}</label>
+      {call .CustomTrend}
+        {param value: $profitLossRatio /}
+      {/call}
+    </div>
+    <div class="{css longa-app-balance-padded} {css colored}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Profit/Loss - Open{/msg}</label>
+      {call .CustomTrend}
+        {param value: $profitLossRatioOpen /}
+      {/call}
+    </div>
+    <div class="{css longa-app-balance-padded} {css colored}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Profit/Loss - This month{/msg}</label>
+      {call .CustomTrend}
+        {param value: $profitLossRatioMonth /}
+      {/call}
+    </div>
+    <div class="{css longa-app-balance-padded} {css colored}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Profit/Loss - This year{/msg}</label>
+      {call .CustomTrend}
+        {param value: $profitLossRatioYear /}
+      {/call}
+    </div>
+    <div class="{css longa-app-balance-padded} {css colored}">
+      <label class="{css longa-app-balance-flex}">
+        {msg desc=""}Profit{/msg}:{sp}<span>{$profitableSignalCount}</span>
+      </label>
+      <label class="{css longa-app-balance-flex}">
+        {msg desc=""}Loss{/msg}:{sp}<span>{$lostSignalCount}</span>
+      </label>
+      <label class="{css longa-app-balance-flex}">
+        {msg desc=""}Open{/msg}:{sp}<span>{$openSignalCount}</span>
+      </label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      {call pstj.material.template.Button}
+        {param content kind="text"}
+          {msg desc="Buy credit button label"}Buy credit{/msg}
+        {/param}
+        {param icon: 'none' /}
+        {param ink: true /}
+      {/call}
+      <label class="{css longa-app-balance-flex}"></label>
+      {call pstj.material.template.Button}
+        {param content kind="text"}
+          {msg desc="Widthraw button label"}Widthraw{/msg}
+        {/param}
+        {param icon: 'none' /}
+        {param ink: true /}
+      {/call}
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Current Balance (LC){/msg}:</label>
+      <label>{$balance}</label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}All Time Credit (LC){/msg}:</label>
+      <label>{$credit}</label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Service change (LC){/msg}:</label>
+      <label>{$debit}</label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Withdrawal(LC){/msg}:</label>
+      <label>{$withdrawal}</label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Transactions{/msg}:</label>
+      <label>{$signalCount}</label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Average Position Duration (Days){/msg}:</label>
+      <label>{$averageTransactionDuration}</label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}Last Received Signal{/msg}:</label>
+      <label>{$lastSignalDate}{sp}{$lastSignalTime}</label>
+    </div>
+    <div class="{css longa-app-balance-padded}">
+      <label class="{css longa-app-balance-flex}">{msg desc=""}First Received Signal{/msg}:</label>
+      <label>{$firstSignalDate}{sp}{$firstSignalTime}</label>
+    </div>
+  </div>
+{/template}
+
+/**
+ * Represents a single record in the signal feed list.
+ */
+{template .SignalFeed}
 {/template}

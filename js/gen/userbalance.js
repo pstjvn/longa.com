@@ -59,6 +59,11 @@ longa.gen.dto.UserBalance = goog.defineClass(longa.gen.dto.Balance, {
      * @type {!number}
      */
     this.serviceCharges = 0;
+    /**
+     * The usertype, 0 is unknown, 1 is investor, 2 is seller
+     * @type {!string}
+     */
+    this.usertype = '';
   },
 
   /**@override */
@@ -71,6 +76,7 @@ longa.gen.dto.UserBalance = goog.defineClass(longa.gen.dto.Balance, {
     this.allTimeChargesForProfit = a.assertNumber(map['pip_charge']);
     this.systemCharges = a.assertNumber(map['system_charge']);
     this.serviceCharges = a.assertNumber(map['service_charge']);
+    this.usertype = a.assertString(map['usertype']);
     goog.base(this, 'fromJSON', map);
   },
 
@@ -84,7 +90,8 @@ longa.gen.dto.UserBalance = goog.defineClass(longa.gen.dto.Balance, {
       'max_withdrawal': this.maximumWithdrawal,
       'pip_charge': this.allTimeChargesForProfit,
       'system_charge': this.systemCharges,
-      'service_charge': this.serviceCharges
+      'service_charge': this.serviceCharges,
+      'usertype': this.usertype
     };
     return goog.object.extend(exports,
         a.assertObject(goog.base(this, 'toJSON')));

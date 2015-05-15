@@ -1,6 +1,5 @@
 goog.provide('longa.rpc');
-goog.provide('longa.rpc.Calls');
-goog.provide('longa.rpc.Main');
+goog.provide('longa.rpc_');
 
 goog.require('goog.Promise');
 goog.require('goog.debug');
@@ -20,7 +19,7 @@ var UserBalance = longa.gen.dto.UserBalance;
 
 
 /** Implements the RPC for the Longa.com project */
-longa.rpc.Main = goog.defineClass(null, {
+longa.rpc_.Main = goog.defineClass(null, {
   constructor: function() {
     /**
      * The logger to use for RPC
@@ -73,7 +72,7 @@ longa.rpc.Main = goog.defineClass(null, {
    */
   login: function(request) {
 
-    request.run = longa.rpc.Calls.LOGIN;
+    request.run = longa.rpc_.Calls.LOGIN;
 
     goog.log.fine(this.logger_, 'Attemping log-in on server');
     goog.log.info(this.logger_, 'User credentials for request: ' +
@@ -237,7 +236,7 @@ longa.rpc.Main = goog.defineClass(null, {
     goog.log.info(this.logger_, 'Attempt to recover account: ' + email);
     return new goog.Promise(function(resolve, reject) {
       this.resource_.get({
-        'run': longa.rpc.Calls.RECOVER,
+        'run': longa.rpc_.Calls.RECOVER,
         'email': email
       }, goog.bind(function(err, result) {
         if (!goog.isNull(err)) {
@@ -374,7 +373,7 @@ longa.rpc.Main = goog.defineClass(null, {
 /**
  * @enum {string}
  */
-longa.rpc.Calls = {
+longa.rpc_.Calls = {
   LOGIN: 'log',
   RECOVER: 'forgot'
 };
@@ -385,13 +384,13 @@ longa.rpc.Calls = {
  *
  * The instance is constructed to be used as a shorthand, example:
  * <pre>
- *   var rpc = longa.rpc.instance;
+ *   var rpc = longa.rpc;
  *   rpc.login(...);
  * </pre>
  *
  * @final
- * @type {longa.rpc.Main}
+ * @type {longa.rpc_.Main}
  */
-longa.rpc.instance = new longa.rpc.Main();
+longa.rpc = new longa.rpc_.Main();
 
 });  // goog.scope

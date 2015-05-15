@@ -26,7 +26,7 @@ goog.require('pstj.widget.Swiper');
 
 
 goog.scope(function() {
-var rpc = longa.rpc.instance;
+var rpc = longa.rpc;
 var T = longa.ds.Topic;
 
 

@@ -8,7 +8,7 @@ goog.require('pstj.control.Control');
 
 goog.scope(function() {
 // var T = longa.ds.Topic;
-var rpc = longa.rpc.instance;
+var rpc = longa.rpc;
 
 
 /** @extends {pstj.control.Control} */

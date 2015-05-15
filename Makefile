@@ -48,7 +48,7 @@ $(build_dir)/$(ns).css \
 $(public_deps_file)
 	@echo '>>> $(ns) done'
 
-build: $(build_dir)/$(ns).build.js
+build: all $(build_dir)/$(ns).build.js
 
 debug: $(build_dir)/$(ns).debug.js
 

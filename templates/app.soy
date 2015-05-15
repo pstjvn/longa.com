@@ -485,7 +485,8 @@
     {param icon: 'none' /}
     {param content kind="text"}{msg desc="menu item label"}My signals{/msg}{/param}
   {/call}
-  {call pstj.material.template.MenuItem}
+  {call .MenuItem}
+    {param badge: '' /}
     {param icon: 'none' /}
     {param content kind="text"}{msg desc="menu item label"}Alerts{/msg}{/param}
   {/call}
@@ -990,4 +991,22 @@
  * Represents a single record in the signal feed list.
  */
 {template .SignalFeed}
+{/template}
+
+/** Customized menu item with badge */
+{template .MenuItem}
+  {@param badge: string}
+  {@param icon: string}
+  {@param? content: string}
+  <div is class="{css longa-menu-item} {css core-tap}" use-pointer>
+    {call pstj.material.template.IconContainer}
+      {param type: $icon /}
+    {/call}
+    <div class="{css longa-menu-item-content}">
+      {call pstj.material.template.Item}
+        {param content: $content /}
+      {/call}
+    </div>
+    <div class="{css longa-menu-item-badge}">{$badge}</div>
+  </div>
 {/template}

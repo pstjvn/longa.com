@@ -68,6 +68,7 @@ longa.ui.MenuItem = goog.defineClass(pstj.material.MenuItem, {
 
   /** @override */
   enterDocument: function() {
+    goog.base(this, 'enterDocument');
     this.getHandler().listen(longa.data.alerts,
         pstj.ds.DtoBase.EventType.CHANGE, this.handleAlertsChange_);
   },
@@ -78,7 +79,10 @@ longa.ui.MenuItem = goog.defineClass(pstj.material.MenuItem, {
    * @private
    */
   handleAlertsChange_: function(e) {
-    this.setBadge(longa.data.alerts.getCount().toString());
+    var count = longa.data.alerts.getUnreadCound();
+    var value = '';
+    if (count > 0) value = count.toString();
+    this.setBadge(value);
   }
 });
 

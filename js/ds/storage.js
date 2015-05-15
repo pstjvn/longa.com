@@ -1,14 +1,14 @@
 /**
  * @fileoverview Provides global access to storage mechanizm for the whole app.
  *
- * Currently implemented is storage only for the user credentials.
- * TODO: implement storage for last alert index.
+ * Currently implemented is storage only for the user credentials and alerts.
  * TODO: implement sotrage for stuctured data (lovefield - see
  * https://github.com/google/lovefield).
  */
 
 goog.provide('longa.storage');
 
+goog.require('longa.data');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('pstj.storage.Storage');
 
@@ -28,6 +28,15 @@ longa.storage.storage_ = new pstj.storage.Storage();
  * @private
  */
 longa.storage.credentialsSymbol_ = 'credentials';
+
+
+/**
+ * The symbol under which to save the last alert index received.
+ * @type {string}
+ * @final
+ * @private
+ */
+longa.storage.alertIndexSymbol_ = 'lastalert';
 
 
 /**
@@ -67,4 +76,43 @@ longa.storage.retrieveCredentials = function() {
   } catch (e) {
     return null;
   }
+};
+
+
+/**
+ * Retrieve the last index of alert received. If no alert was received
+ * zero will be returned.
+ * @return {!number}
+ */
+longa.storage.getLastAlertIndex = function() {
+  try {
+    var result = longa.storage.storage_.get(longa.storage.getAlertSymbol_());
+    if (goog.isDefAndNotNull(result)) {
+      goog.asserts.assertNumber(result);
+      return result;
+    } else {
+      return 0;
+    }
+  } catch (e) {
+    return 0;
+  }
+};
+
+
+/**
+ * Saves the last alert index received.
+ * @param {!number} index The alert index.
+ */
+longa.storage.setLastAlertIndex = function(index) {
+  longa.storage.storage_.set(longa.storage.getAlertSymbol_(), index);
+};
+
+
+/**
+ * Matches the alert to the user.
+ * @return {!string}
+ * @private
+ */
+longa.storage.getAlertSymbol_ = function() {
+  return longa.storage.alertIndexSymbol_ + longa.data.user.accountid;
 };

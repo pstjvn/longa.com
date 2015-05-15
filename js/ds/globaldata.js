@@ -1,5 +1,6 @@
 goog.provide('longa.data');
 
+goog.require('longa.ds.Alerts');
 goog.require('longa.gen.dto.User');
 
 
@@ -31,3 +32,10 @@ longa.data.preloadImages = [
   'assets/images/hands.jpg',
   'assets/images/d.jpg'
 ];
+
+
+/**
+ * Global reference to the current et of alerts.
+ * @type {longa.ds.Alerts}
+ */
+longa.data.alerts = new longa.ds.Alerts();

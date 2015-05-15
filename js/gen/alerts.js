@@ -32,7 +32,7 @@ longa.gen.dto.Alerts = goog.defineClass(pstj.ds.DtoBase, {
     goog.array.forEach(a.assertArray(map['alert']), function(item) {
       var i = new longa.gen.dto.Alert();
       i.fromJSON(a.assertObject(item));
-      this.alerts.push(item);
+      this.alerts.push(i);
     }, this);
     this.delay = a.assertNumber(map['delay']);
     goog.base(this, 'fromJSON', map);

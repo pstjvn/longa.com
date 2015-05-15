@@ -5,6 +5,7 @@ goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
 goog.require('longa.ds.UserType');
 goog.require('longa.ds.utils');
+goog.require('longa.ui.MenuItem');
 goog.require('pstj.control.Control');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');

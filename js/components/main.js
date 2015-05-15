@@ -85,7 +85,6 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     });
 
     this.control.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
-      console.log('UserAuthChange');
       if (longa.ds.utils.isKnownUser()) {
         this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
       } else {

@@ -1,6 +1,7 @@
 goog.provide('longa.App');
 
 goog.require('goog.Promise');
+goog.require('goog.async.Delay');
 goog.require('goog.dom');
 goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
@@ -12,7 +13,8 @@ goog.require('longa.control.Auth');
 goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
-goog.require('longa.gen.dto.LoginDetails');
+goog.require('longa.ds.utils');
+goog.require('longa.gen.dto.Alerts');
 goog.require('longa.rpc');
 goog.require('longa.storage');
 goog.require('longa.template');
@@ -25,7 +27,6 @@ goog.require('pstj.widget.Swiper');
 
 goog.scope(function() {
 var rpc = longa.rpc.instance;
-var LoginDetails = longa.gen.dto.LoginDetails;
 var T = longa.ds.Topic;
 
 
@@ -58,6 +59,18 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @private
      */
     this.installStylesPromise_ = null;
+    /**
+     * Reference to the alert loader used to continuously load alerts.
+     * @type {goog.async.Delay}
+     * @private
+     */
+    this.alertLoader_ = null;
+    /**
+     * Delay to use to re-get the alerts.
+     * @type {number}
+     * @private
+     */
+    this.alertLoadingDelay_ = 5 * 60 * 1000;
     this.init();
   },
 
@@ -74,6 +87,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
       // domain we are currently running under.
       crossdomain: false
     });
+
 
     // Load custom style for app by returning a promise of the
     // installation (with a timeout of 16 ms so we are sure the
@@ -98,6 +112,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
           });
         });
 
+
     var detail = longa.storage.retrieveCredentials();
     // If we have stired credentials attempt to load data and then render the
     // app.
@@ -112,7 +127,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
               this.mainApp_ = new longa.ui.Main();
               this.mainApp_.render(document.body);
               this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
-              this.updateAll();
+              // this.updateAll();
             } else {
               // Login attempted but failed
               // Make sure the styles for the app has been loaded
@@ -149,7 +164,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
                     if (goog.isNull(this.mainApp_)) {
                       this.mainApp_ = new longa.ui.Main();
                     }
-                    console.log(idx);
                     this.startScreen_.dispose();
                     this.mainApp_.render(document.body);
                     if (idx == 1) {
@@ -170,7 +184,11 @@ longa.App = goog.defineClass(pstj.control.Control, {
     // Subsribe to login/logout - if a user logged in retrieve the details.
     this.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
       if (longa.ds.utils.isKnownUser()) {
+        // User just logged in.
         this.updateAll();
+      } else {
+        // User logged out - clean up
+        this.destroyAlertLoader_();
       }
     });
   },
@@ -210,25 +228,12 @@ longa.App = goog.defineClass(pstj.control.Control, {
    */
   updateAll: function() {
     goog.Promise.all([
-      this.retrieveBalance()
+      this.retrieveBalance(),
+      this.retrieveAlerts()
     ]).then(function(data) {
       goog.log.info(this.logger_, 'Update all finished');
       this.push(longa.ds.Topic.USER_BALANCE_CHANGE);
     }, null, this);
-  },
-
-  /**
-   * Attempts to perform authorization with the backend.
-   */
-  performAuth: function() {
-
-    goog.log.info(this.logger_, 'attempt login with rpc');
-
-    var credentaisl = new LoginDetails();
-    credentaisl.username = 'aaa';
-    credentaisl.password = '123456';
-    credentaisl.run = 'log';
-    rpc.login(credentaisl).then(this.onLogin, this.onLoginFail, this);
   },
 
   /**
@@ -242,12 +247,11 @@ longa.App = goog.defineClass(pstj.control.Control, {
 
   /**
    * Attempts to retvrieve the alerts for the currently logged in account.
-   * @param {number=} opt_beginAfter If provided it is considered an alert id
-   *    and only alerts with larger ID than this one will be returned.
    */
-  retrieveAlerts: function(opt_beginAfter) {
+  retrieveAlerts: function() {
     goog.log.info(this.logger_, 'Attempting alerts retrieval');
-    rpc.getAlerts((goog.isNumber(opt_beginAfter) ? opt_beginAfter : 0))
+    var last = longa.storage.getLastAlertIndex();
+    return rpc.getAlerts(last)
         .then(this.onAlertLoaded, this.onAlertsFailed, this);
   },
 
@@ -255,30 +259,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
    * Attempt to load the profile initially.
    */
   retrieveProfile: function() {
-    rpc.getProfile().then(this.onProfileUpdate, this.onProfileFailure, this);
-  },
-
-  /**
-   * Handles successfull login completion.
-   * @protected
-   * @param {longa.gen.dto.User} user
-   */
-  onLogin: function(user) {
-    goog.log.info(this.logger_, 'New user received: ' +
-        goog.debug.expose(/** @type {Object<string, *>} */(
-            user.toJSON())));
-    this.retrieveBalance();
-    this.retrieveAlerts();
-    this.retrieveProfile();
-  },
-
-  /**
-   * Handles failure in user login completion.
-   * @protected
-   * @param {*} e The error produced.
-   */
-  onLoginFail: function(e) {
-    this.handleError(e);
+    return rpc.getProfile()
+        .then(this.onProfileUpdate, this.onProfileFailure, this);
   },
 
   /**
@@ -314,6 +296,19 @@ longa.App = goog.defineClass(pstj.control.Control, {
   onAlertLoaded: function(alerts) {
     goog.log.info(this.logger_, 'Retrieved ' + alerts.alerts.length +
         ' new alerts');
+    // If in the meantime while wating for the alerts the user logged out
+    // we want to fail this chain.
+    if (!longa.ds.utils.isKnownUser()) {
+      throw new Error('User logged out, no alert');
+    }
+    // if we have response - reset the delay.
+    var delay = alerts.delay * 1000;
+    this.createAlertLoader_(delay);
+    if (alerts.alerts.length > 0) {
+      longa.storage.setLastAlertIndex(alerts.alerts[0].id);
+    }
+    longa.data.alerts.merge(alerts);
+    return alerts;
   },
 
   /**
@@ -322,6 +317,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
    * @param {*} e The error that occured from loading the alerts.
    */
   onAlertsFailed: function(e) {
+    // if we do not have response reset the delay with old value.
+    this.createAlertLoader_(this.alertLoadingDelay_);
     this.handleError(e);
   },
 
@@ -355,6 +352,48 @@ longa.App = goog.defineClass(pstj.control.Control, {
   handleError: function(e) {
     goog.log.error(this.logger_, 'Error perfoming login: ' +
         (goog.isObject(e) ? e.message : ''));
+  },
+
+  /**
+   * Called when the alerts get loaded and we have potentially new delay.
+   * @param {!number} delay The delay to use.
+   * @private
+   */
+  createAlertLoader_: function(delay) {
+    if (delay != this.alertLoadingDelay_) {
+      this.destroyAlertLoader_();
+      this.alertLoadingDelay_ = delay;
+    }
+    if (goog.isNull(this.alertLoader_)) {
+      this.alertLoader_ = new goog.async.Delay(this.onAlertUpdateFired,
+          this.alertLoadingDelay_, this);
+    }
+    this.alertLoader_.start();
+  },
+
+  /**
+   * Removes the alert loader - this should happen when the user logs out
+   * and we no longer should receive alerts.
+   *
+   * When a new user logs in the alert loading will be triggered by
+   * retrieveAll.
+   *
+   * @private
+   */
+  destroyAlertLoader_: function() {
+    if (!goog.isNull(this.alertLoader_)) {
+      goog.dispose(this.alertLoader_);
+      this.alertLoader_ = null;
+    }
+    this.alertLoadingDelay_ = 5 * 60 * 1000;
+  },
+
+  /**
+   * Called when the delay for new alert loading elapses - time to load alert.
+   * @protected
+   */
+  onAlertUpdateFired: function() {
+    this.retrieveAlerts();
   }
 });
 });  // goog.scope

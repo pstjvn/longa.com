@@ -33,6 +33,7 @@ longa.ds.Topic = {
   // navigation/menu.
   SHOW_MENU: 'show-menu',
   // The DTO for user balance has changed.
-  USER_BALANCE_CHANGE: 'user-balance-change'
+  USER_BALANCE_CHANGE: 'user-balance-change',
+  USER_ALERTS_LOADED: 'user-alerts-loaded'
 
 };

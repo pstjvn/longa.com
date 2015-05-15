@@ -18,6 +18,7 @@ if (goog.DEBUG) {
   (new goog.debug.Console()).setCapturing(true);
   goog.log.getLogger('longa.App').setLevel(goog.log.Level.OFF);
   goog.log.getLogger('longa.rpc').setLevel(goog.log.Level.OFF);
+  goog.log.getLogger('longa.control.Auth').setLevel(goog.log.Level.OFF);
 }
 
 // Start the app logic.

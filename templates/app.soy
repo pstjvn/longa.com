@@ -40,6 +40,11 @@
   </svg>
 {/template}
 
+/** Message when login with existing credentials from storgae did not work. */
+{template .CannotLoginWithSavedCredentials}
+  {msg desc="error message"}Could not login, please re-enter your credentials{/msg}
+{/template}
+
 /** Text template */
 {template .DefaultToastButton}
   {msg desc="The default text to put on toasts"}dismiss{/msg}

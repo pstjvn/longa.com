@@ -1972,6 +1972,11 @@
         <source>Changes to These Terms of Use</source>
         <target/>
       </trans-unit>
+      <trans-unit id="8260579772640058202" datatype="html">
+        <source>Could not login, please re-enter your credentials</source>
+        <target/>
+        <note priority="1" from="description">error message</note>
+      </trans-unit>
       <trans-unit id="8273479446468988017" datatype="html">
         <source>Bulgaria</source>
         <target/>

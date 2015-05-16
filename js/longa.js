@@ -117,60 +117,84 @@ longa.App = goog.defineClass(pstj.control.Control, {
               // Start loading data from server and only the show main screen.
               this.mainApp_ = new longa.ui.Main();
               this.mainApp_.render(document.body);
-              longa.control.Toaster.getInstance();
-              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.ALERTS);
-              // this.updateAll();
+              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+              // Start preload of FAQ images as they are not requested until
+              // FAQ is selected and then they cannot load fast enough.
+              this.preloadFaqImages_();
             } else {
               // Login attempted but failed
               // Make sure the styles for the app has been loaded
               // and then show login with fail.
-              this.installStylesPromise_.then(function(_) {
+              goog.Promise.all([
+                this.installStylesPromise_,
+                this.preloadFaqImages_()
+              ]).then(function(_) {
+                goog.log.info(this.logger_, 'Images were preloaded: ' + _[1]);
                 this.removeLoader_();
                 this.mainApp_ = new longa.ui.Main();
                 this.mainApp_.render(document.body);
-                // Show screen with failed info.
-                // TODO: add fail notice - the login form is too deep so
-                // instead we should use the 'toast'.
                 this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+                longa.control.Toaster.getInstance().addToast(
+                    longa.template.CannotLoginWithSavedCredentials(
+                        null).toString(),
+                    null, null);
+
               });
             }
           });
       longa.control.Auth.getInstance().login(detail, false);
     } else {
-      goog.Promise.all(
-          [this.installStylesPromise_, this.preloadStartScreenImages_()])
-          .then(function() {
-            // we are sure the images has loaded and the
-            // styles has been applied.
-            //
-            // remove the loader and render the start screen.
-            this.startScreen_ = new longa.ui.StartScreen();
-            this.removeLoader_();
-            this.startScreen_.render(document.body);
-            this.getHandler().listenOnce(this.startScreen_,
-                goog.ui.Component.EventType.ACTION,
-                function(e) {
-                  var idx = this.startScreen_.indexOfChild(e.target);
-                  // after it is handled / showed with animation...
-                  setTimeout(goog.bind(function() {
-                    if (goog.isNull(this.mainApp_)) {
-                      this.mainApp_ = new longa.ui.Main();
-                    }
-                    this.startScreen_.dispose();
-                    this.mainApp_.render(document.body);
-                    if (idx == 1) {
-                      // skip
-                      this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
-                    } else if (idx == 3) {
-                      // sign up
-                      this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
-                    } else if (idx == 4) {
-                      // log in
-                      this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
-                    }
-                  }, this), 200);
-                });
-          }, null, this);
+      // Wait for styles and start screen images.
+      goog.Promise.all([
+        this.installStylesPromise_,
+        this.preloadStartScreenImages_()
+      ]).then(function() {
+        // we are sure the images has loaded and the
+        // styles has been applied.
+        //
+        // remove the loader and render the start screen.
+        this.startScreen_ = new longa.ui.StartScreen();
+        this.removeLoader_();
+        this.startScreen_.render(document.body);
+        // When the user selects an action from the start screen...
+        this.getHandler().listenOnce(this.startScreen_,
+            goog.ui.Component.EventType.ACTION,
+            function(e) {
+              // Select the screen to show after start screen.
+              var idx = this.startScreen_.indexOfChild(e.target);
+              // if the user selected to go to FAQ we need to preload those
+              // images first
+              var promises = [];
+              if (idx == 1) promises.push(this.preloadFaqImages_());
+              // also wait for at least 200ms so the button animation is played
+              // correclty
+              promises.push(new goog.Promise(function(resolve, reject) {
+                setTimeout(function() {
+                  resolve(null);
+                }, 200);
+              }, this));
+              // When composite from above is resolved show main screen.
+              goog.Promise.all(promises).then(goog.bind(function() {
+                if (goog.isNull(this.mainApp_)) {
+                  this.mainApp_ = new longa.ui.Main();
+                }
+                this.startScreen_.dispose();
+                this.mainApp_.render(document.body);
+                if (idx == 1) {
+                  // skip
+                  this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
+                } else if (idx == 3) {
+                  // sign up
+                  this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
+                } else if (idx == 4) {
+                  // log in
+                  this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+                }
+                // If showed screen was not FAQ start preloading FAQ images now
+                if (idx != 1) this.preloadFaqImages_();
+              }, this));
+            });
+      }, null, this);
     }
 
     // Subsribe to login/logout - if a user logged in retrieve the details.
@@ -210,13 +234,43 @@ longa.App = goog.defineClass(pstj.control.Control, {
       il.addImage(i.toString(), uri);
     });
     return new goog.Promise(function(resolve, reject) {
-      this.getHandler().listen(il, goog.net.EventType.COMPLETE, function(_) {
-        resolve(true);
-      });
+      this.getHandler().listenOnce(il, goog.net.EventType.COMPLETE,
+          function(_) {
+            resolve(true);
+          });
       il.start();
     }, this);
   },
 
+  /**
+   * Preload the images or wait for up to 15 seconds - whichever comes first.
+   * @private
+   * @return {goog.Promise<boolean>} True if the images were preloaded, false
+   * if the timeout passed out.
+   */
+  preloadFaqImages_: function() {
+    var il = new goog.net.ImageLoader();
+    goog.array.forEach(longa.data.preloadFaqImages, function(uri, i) {
+      il.addImage(i.toString(), uri);
+    });
+    return new goog.Promise(function(resolve, reject) {
+      var resolved = false;
+      setTimeout(function() {
+        if (!resolved) {
+          resolved = true;
+          resolve(false);
+        }
+      });
+      this.getHandler().listenOnce(il, goog.net.EventType.COMPLETE,
+          function(_) {
+            if (!resolved) {
+              resolved = true;
+              resolve(true);
+            }
+          });
+      il.start();
+    }, this);
+  },
 
   /**
    * Force update all data.

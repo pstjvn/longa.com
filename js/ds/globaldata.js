@@ -35,6 +35,20 @@ longa.data.preloadImages = [
 
 
 /**
+ * The images used by the swpier in FAQ page.
+ * @type {Array<string>}
+ */
+longa.data.preloadFaqImages = [
+  'assets/images/1.png',
+  'assets/images/2.jpg',
+  'assets/images/3.jpg',
+  'assets/images/4.jpg',
+  'assets/images/5.jpg',
+  'assets/images/6.jpg'
+];
+
+
+/**
  * Global reference to the current et of alerts.
  * @type {longa.ds.Alerts}
  */

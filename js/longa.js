@@ -9,6 +9,7 @@ goog.require('goog.log');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
 goog.require('goog.ui.Component.EventType');
+goog.require('longa.control.Alerts');
 goog.require('longa.control.Auth');
 goog.require('longa.data');
 goog.require('longa.ds.Screen');
@@ -59,18 +60,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @private
      */
     this.installStylesPromise_ = null;
-    /**
-     * Reference to the alert loader used to continuously load alerts.
-     * @type {goog.async.Delay}
-     * @private
-     */
-    this.alertLoader_ = null;
-    /**
-     * Delay to use to re-get the alerts.
-     * @type {number}
-     * @private
-     */
-    this.alertLoadingDelay_ = 5 * 60 * 1000;
     this.init();
   },
 
@@ -186,11 +175,13 @@ longa.App = goog.defineClass(pstj.control.Control, {
       if (longa.ds.utils.isKnownUser()) {
         // User just logged in.
         this.updateAll();
-      } else {
-        // User logged out - clean up
-        this.destroyAlertLoader_();
-        longa.data.alerts.clear();
       }
+    });
+
+    // Subscribe for handling error from other controls.
+    this.listen(longa.ds.Topic.CONTROL_ERROR, function(error) {
+      goog.asserts.assertInstanceof(error, Error);
+      this.handleError(error);
     });
   },
 
@@ -230,8 +221,9 @@ longa.App = goog.defineClass(pstj.control.Control, {
   updateAll: function() {
     goog.Promise.all([
       this.retrieveBalance(),
-      this.retrieveAlerts()
+      longa.control.Alerts.getInstance().get()
     ]).then(function(data) {
+      console.log(data);
       goog.log.info(this.logger_, 'Update all finished');
       this.push(longa.ds.Topic.USER_BALANCE_CHANGE);
     }, null, this);
@@ -244,16 +236,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
     goog.log.info(this.logger_, 'Attempting balance retrieval');
     return rpc.getBalance().then(
         this.onBalanceReceived, this.onBalanaceFailed, this);
-  },
-
-  /**
-   * Attempts to retvrieve the alerts for the currently logged in account.
-   */
-  retrieveAlerts: function() {
-    goog.log.info(this.logger_, 'Attempting alerts retrieval');
-    var last = longa.storage.getLastAlertIndex();
-    return rpc.getAlerts(last)
-        .then(this.onAlertLoaded, this.onAlertsFailed, this);
   },
 
   /**
@@ -282,44 +264,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
    * @param {*} e The error produced from the retrieval.
    */
   onBalanaceFailed: function(e) {
-    this.handleError(e);
-  },
-
-  /**
-   * Handles the loading of alerts. Note that alerts are constantly queried and
-   * only the new alert instances need to be added to the list and not
-   * to replace the whole Alerts instance. However the server will always return
-   * a new Alerts instance, thus you need to manually merge the alerts array.
-   *
-   * @protected
-   * @param {!longa.gen.dto.Alerts} alerts
-   */
-  onAlertLoaded: function(alerts) {
-    goog.log.info(this.logger_, 'Retrieved ' + alerts.alerts.length +
-        ' new alerts');
-    // If in the meantime while wating for the alerts the user logged out
-    // we want to fail this chain.
-    if (!longa.ds.utils.isKnownUser()) {
-      throw new Error('User logged out, no alert');
-    }
-    // if we have response - reset the delay.
-    var delay = alerts.delay * 1000;
-    this.createAlertLoader_(delay);
-    if (alerts.alerts.length > 0) {
-      longa.storage.setLastAlertIndex(alerts.alerts[0].id);
-    }
-    longa.data.alerts.merge(alerts);
-    return alerts;
-  },
-
-  /**
-   * Handles the error from loading new alerts.
-   * @protected
-   * @param {*} e The error that occured from loading the alerts.
-   */
-  onAlertsFailed: function(e) {
-    // if we do not have response reset the delay with old value.
-    this.createAlertLoader_(this.alertLoadingDelay_);
     this.handleError(e);
   },
 
@@ -353,48 +297,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
   handleError: function(e) {
     goog.log.error(this.logger_, 'Error perfoming login: ' +
         (goog.isObject(e) ? e.message : ''));
-  },
-
-  /**
-   * Called when the alerts get loaded and we have potentially new delay.
-   * @param {!number} delay The delay to use.
-   * @private
-   */
-  createAlertLoader_: function(delay) {
-    if (delay != this.alertLoadingDelay_) {
-      this.destroyAlertLoader_();
-      this.alertLoadingDelay_ = delay;
-    }
-    if (goog.isNull(this.alertLoader_)) {
-      this.alertLoader_ = new goog.async.Delay(this.onAlertUpdateFired,
-          this.alertLoadingDelay_, this);
-    }
-    this.alertLoader_.start();
-  },
-
-  /**
-   * Removes the alert loader - this should happen when the user logs out
-   * and we no longer should receive alerts.
-   *
-   * When a new user logs in the alert loading will be triggered by
-   * retrieveAll.
-   *
-   * @private
-   */
-  destroyAlertLoader_: function() {
-    if (!goog.isNull(this.alertLoader_)) {
-      goog.dispose(this.alertLoader_);
-      this.alertLoader_ = null;
-    }
-    this.alertLoadingDelay_ = 5 * 60 * 1000;
-  },
-
-  /**
-   * Called when the delay for new alert loading elapses - time to load alert.
-   * @protected
-   */
-  onAlertUpdateFired: function() {
-    this.retrieveAlerts();
   }
 });
 });  // goog.scope

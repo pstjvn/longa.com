@@ -24,8 +24,8 @@ longa.gen.dto.Alert = goog.defineClass(pstj.ds.DtoBase, {
     this.text = '';
     /**@type {!string} */
     this.type = '';
-    /**@type {!Date} */
-    this.date = new Date();
+    /**@type {!string} */
+    this.date = '';
     /**@type {!number} */
     this.accountid = 0;
     /**@type {!string} */
@@ -39,7 +39,7 @@ longa.gen.dto.Alert = goog.defineClass(pstj.ds.DtoBase, {
     this.id = a.assertNumber(map['alert_id']);
     this.text = a.assertString(map['alert_text']);
     this.type = a.assertString(map['alert_type']);
-    this.date = (new Date(a.assertString(map['alert_date']))) || this.date;
+    this.date = a.assertString(map['alert_date']);
     this.accountid = a.assertNumber(map['provider_acctid']);
     this.username = a.assertString(map['username']);
     this.read = !!(a.assertNumber(map['read']));
@@ -52,7 +52,7 @@ longa.gen.dto.Alert = goog.defineClass(pstj.ds.DtoBase, {
       'alert_id': this.id,
       'alert_text': this.text,
       'alert_type': this.type,
-      'alert_date': this.date.toString(),
+      'alert_date': this.date,
       'provider_acctid': this.accountid,
       'username': this.username,
       'read': parseFloat(this.read)

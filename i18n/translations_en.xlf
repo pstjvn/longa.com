@@ -1245,6 +1245,11 @@
         <target/>
         <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
+      <trans-unit id="5253238488250996325" datatype="html">
+        <source>show old alerts</source>
+        <target/>
+        <note priority="1" from="description">Button label</note>
+      </trans-unit>
       <trans-unit id="5259023098228234423" datatype="html">
         <source>Mali</source>
         <target/>
@@ -1467,6 +1472,11 @@
       <trans-unit id="6342575220033498701" datatype="html">
         <source>What is a pay-for-performance model?</source>
         <target/>
+      </trans-unit>
+      <trans-unit id="6348506786533801403" datatype="html">
+        <source>No new signals for your account.</source>
+        <target/>
+        <note priority="1" from="description">Message when no alerts are present for this account</note>
       </trans-unit>
       <trans-unit id="6349426704260910037" datatype="html">
         <source>Longa is a unique marketplace because it provides performance information about trade signal feeds that are audited. In other words, investors can be assured that they follow signal feeds that provide the listed return on investment, instead of “trusting” a web site that makes unaudited performance claims. In addition, all investors can verify the signal transaction history on all signal feeds and thus perform a self-audit.</source>

@@ -18,7 +18,6 @@
     },
     "alert_date": {
       "type": "string",
-      "$_type": "Date",
       "$_name": "date"
     },
     "provider_acctid": {

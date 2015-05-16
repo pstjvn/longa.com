@@ -809,7 +809,38 @@
 
 /** Balance */
 {template .Alerts}
-  <div class="{css longa-app-alerts}"></div>
+  {@param alerts: list<?>}
+  <div class="{css longa-app-alerts}">
+    {foreach $alert in $alerts}
+      {call .Alert data="$alert" /}
+    {ifempty}
+      <div>{msg desc="Message when no alerts are present for this account"}No new signals for your account.{/msg}</div>
+      {call pstj.material.template.Button}
+        {param icon: 'none' /}
+        {param ink: true /}
+        {param content kind="text"}
+          {msg desc="Button label"}show old alerts{/msg}
+        {/param}
+      {/call}
+    {/foreach}
+  </div>
+{/template}
+
+/** Alert instance */
+{template .Alert}
+  {@param text: string}
+  {@param username: string}
+  {@param date: string}
+  {@param read: number}
+  <div class="{css longa-app-alert}{if $read == 1}{css longa-app-alert-read}{/if}">
+    <div class="{css longa-app-alert-message}">{$text}</div>
+      <div class="{css longa-app-alert-from}">
+        <div>
+          <span class="{css longa-app-alert-user}">{$username}</span>on{sp}<span>{$date}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 {/template}
 
 /** Balance */

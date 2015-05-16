@@ -87,15 +87,17 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
    */
   handleLoginFormSubmit_: function(e) {
     var login = this.getLoginForm_();
+    if (e.target == login.getActionButton()) {
     login.removeError();
-    if (login.isValid()) {
-      login.setEnabled(false);
-      var detail = new longa.gen.dto.LoginDetails();
-      detail.username = login.getUsername();
-      detail.password = login.getPassword();
-      this.control.login(detail, login.isKeepCredentials());
-    } else {
-      login.setError('Username/password must be valid');
+      if (login.isValid()) {
+        login.setEnabled(false);
+        var detail = new longa.gen.dto.LoginDetails();
+        detail.username = login.getUsername();
+        detail.password = login.getPassword();
+        this.control.login(detail, login.isKeepCredentials());
+      } else {
+        login.setError('Username/password must be valid');
+      }
     }
   },
 

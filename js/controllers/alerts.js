@@ -9,6 +9,7 @@
 goog.provide('longa.control.Alerts');
 
 goog.require('goog.async.Delay');
+goog.require('longa.control.Toaster');
 goog.require('longa.data');
 goog.require('longa.ds.utils');
 goog.require('longa.rpc');
@@ -91,7 +92,11 @@ longa.control.Alerts = goog.defineClass(pstj.control.Control, {
       if (alerts.alerts.length > 0) {
         longa.storage.setLastAlertIndex(alerts.alerts[0].id);
       }
-      longa.data.alerts.merge(alerts);
+      try {
+        longa.data.alerts.merge(alerts);
+      } catch (e) {
+        // TODO: show something useful to the user.
+      }
     }
     return alerts;
   },

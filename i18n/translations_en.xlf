@@ -272,6 +272,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1330646976582013113" datatype="html">
+        <source>dismiss</source>
+        <target/>
+        <note priority="1" from="description">The default text to put on toasts</note>
+      </trans-unit>
       <trans-unit id="1331379005917484978" datatype="html">
         <source>Slovakia</source>
         <target/>

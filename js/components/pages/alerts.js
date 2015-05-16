@@ -1,6 +1,10 @@
 goog.provide('longa.ui.Alerts');
 
+goog.require('goog.asserts');
+goog.require('goog.ui.Control');
 goog.require('goog.ui.registry');
+goog.require('longa.data');
+goog.require('pstj.ds.DtoBase.EventType');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
 
@@ -17,6 +21,28 @@ longa.ui.Alerts = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+  },
+
+  /** @override  */
+  enterDocument: function() {
+    goog.base(this, 'enterDocument');
+    this.getHandler().listen(longa.data.alerts,
+        pstj.ds.DtoBase.EventType.CHANGE, this.onModelChange_);
+  },
+
+  /**
+   * @private
+   * @param {goog.events.Event} e The change event from the model.
+   */
+  onModelChange_: function(e) {
+    var parent = this.getParent();
+    if (!goog.isNull(parent) &&
+        goog.asserts.assertInstanceof(parent, goog.ui.Control).isSelected()) {
+      // We do not want to destroy the view, so instead
+      // we will show info and action button to reload.
+    } else {
+      // We are not in the view, directly re-render.
+    }
   }
 });
 
@@ -35,6 +61,11 @@ longa.ui.AlertsRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   /** @override */
   getTemplate: function(model) {
     return longa.template.Alerts(model);
+  },
+
+  /** @override */
+  generateTemplateData: function(control) {
+    return longa.data.alerts;
   },
 
   statics: {

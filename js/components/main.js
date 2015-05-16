@@ -6,6 +6,7 @@ goog.require('goog.ui.registry');
 goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
+goog.require('longa.ui.Alerts');
 goog.require('longa.ui.Auth');
 goog.require('longa.ui.Balance');
 goog.require('longa.ui.Faq');
@@ -130,6 +131,7 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
 
     // Main screens
     this.auth = new longa.ui.Auth();
+    this.alerts = new longa.ui.Alerts();
     this.terms = new longa.ui.Terms();
     this.faq = new longa.ui.Faq();
 
@@ -149,6 +151,7 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.signalsWrapper = new longa.ui.Page();
     // 5
     this.alertsWrapper = new longa.ui.Page();
+    this.alertsWrapper.addChild(this.alerts, true);
     // 6
     this.profileWrapper = new longa.ui.Page();
     // 7

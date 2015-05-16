@@ -11,6 +11,7 @@ goog.require('goog.style');
 goog.require('goog.ui.Component.EventType');
 goog.require('longa.control.Alerts');
 goog.require('longa.control.Auth');
+goog.require('longa.control.Toaster');
 goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
@@ -112,10 +113,12 @@ longa.App = goog.defineClass(pstj.control.Control, {
           function() {
             this.cancel(loginlistenerkey);
             if (longa.ds.utils.isKnownUser()) {
+              this.removeLoader_();
               // Start loading data from server and only the show main screen.
               this.mainApp_ = new longa.ui.Main();
               this.mainApp_.render(document.body);
-              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+              longa.control.Toaster.getInstance();
+              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.ALERTS);
               // this.updateAll();
             } else {
               // Login attempted but failed
@@ -223,7 +226,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
       this.retrieveBalance(),
       longa.control.Alerts.getInstance().get()
     ]).then(function(data) {
-      console.log(data);
       goog.log.info(this.logger_, 'Update all finished');
       this.push(longa.ds.Topic.USER_BALANCE_CHANGE);
     }, null, this);

@@ -12,6 +12,7 @@ goog.require('longa.ui.Page');
 goog.require('longa.ui.Pages');
 goog.require('longa.ui.RecoverForm');
 goog.require('longa.ui.RegistrationForm');
+goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
 
@@ -87,8 +88,8 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
    */
   handleLoginFormSubmit_: function(e) {
     var login = this.getLoginForm_();
-    if (e.target == login.getActionButton()) {
-    login.removeError();
+    if (e.target instanceof pstj.material.Button) {
+      login.removeError();
       if (login.isValid()) {
         login.setEnabled(false);
         var detail = new longa.gen.dto.LoginDetails();

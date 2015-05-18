@@ -1,0 +1,17 @@
+{
+  "$schema": "",
+  "title": "ReportList",
+  "description": "Describes the report list received from server.",
+  "type": "object",
+  "properties": {
+    "report": {
+      "type": "array",
+      "$_name": "items",
+      "items" : {
+        "type": "object",
+        "$_reference": "report"
+      }
+    }
+  },
+  "required": "$_all"
+}

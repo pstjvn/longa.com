@@ -1,0 +1,33 @@
+{
+  "$schema": "",
+  "title": "ReportRecord",
+  "description": "Describes a single report record in record data list",
+  "type": "object",
+  "properties": {
+    "date": {
+      "description": "The date of this reporting record",
+      "type": "string",
+      "$_type": "Date"
+    },
+		"pl_all_time": {
+		  "description": "Profit/loss for all time at this particular date",
+		  "type": "number",
+		  "$_name": "profitLossRatio"
+		},
+		"signal_count": {
+		  "description": "The signal count at that date",
+		  "type": "number",
+		  "$_name": "signalCount"
+		},
+		"charge": {
+		  "description": "Chagres at that date",
+		  "type": "number"
+		},
+		"member_count": {
+		  "description": "Number of subscribers, valid only for sellers",
+		  "type": "number",
+		  "$_name": "memberCount"
+		}
+  },
+  "required": "$_all"
+}

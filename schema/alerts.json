@@ -1,7 +1,7 @@
 {
   "$schema": "",
   "title": "Alerts",
-  "description": "Describes a single alert for this user",
+  "description": "Describes the alert listr",
   "type": "object",
   "properties": {
     "alert": {

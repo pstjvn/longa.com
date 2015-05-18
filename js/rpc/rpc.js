@@ -7,6 +7,7 @@ goog.require('goog.json');
 goog.require('goog.log');
 goog.require('longa.gen.dto.Alerts');
 goog.require('longa.gen.dto.Profile');
+goog.require('longa.gen.dto.ReportList');
 goog.require('longa.gen.dto.User');
 goog.require('longa.gen.dto.UserBalance');
 goog.require('pstj.resource');
@@ -148,6 +149,31 @@ longa.rpc_.Main = goog.defineClass(null, {
   },
 
   /**
+   * RPC call: /rep
+   * @param {number} acctid The account id to retrieve report for.
+   * @return {!goog.Promise<longa.gen.dto.ReportList>}
+   */
+  getReport: function(acctid) {
+    goog.log.info(this.logger_, 'Retrieving reporting data for: ' + acctid);
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': 'rep',
+        'acctid': acctid
+      }, goog.bind(function(err, result) {
+        try {
+          var report = this.handleReportResponse(err, result);
+        } catch (e) {
+          goog.log.error(this.logger_, 'Cannot retirve report: ' +
+              e.message);
+          reject(e);
+          return;
+        }
+        resolve(report);
+      }, this));
+    }, this);
+  },
+
+  /**
    * RPC call: /alert
    * @param {number=} opt_beginAfter The alert ID after which to begin the
    *    collection.
@@ -278,6 +304,20 @@ longa.rpc_.Main = goog.defineClass(null, {
     var b = new UserBalance();
     b.fromJSON(balance);
     return b;
+  },
+
+  /**
+   * Default handler for the balance request (balance without acctid).
+   * @param {Error?} err The error if there was any in the RPC link.
+   * @param {?} report The request's result from server.
+   * @protected
+   * @return {!longa.gen.dto.ReportList}
+   */
+  handleReportResponse: function(err, report) {
+    this.handleRawResponse_(err, report);
+    var rl = new longa.gen.dto.ReportList();
+    rl.fromJSON(report);
+    return rl;
   },
 
   /**

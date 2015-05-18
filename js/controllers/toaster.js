@@ -58,10 +58,20 @@ longa.control.Toaster = goog.defineClass(pstj.control.Control, {
     this.delay_ = new goog.async.Delay(function() {
       this.checkQueue_();
     }, 500, this);
+    /**
+     * When showing a toast - hide it automatically after 10 seconds.
+     * @type {goog.async.Delay}
+     * @private
+     * @final
+     */
+    this.hideDelay_ = new goog.async.Delay(function() {
+      this.toast_.setOpen(false);
+    }, 10000, this);
 
 
     this.getHandler().listen(this.toast_, goog.ui.Component.EventType.CLOSE,
         function(e) {
+          this.hideDelay_.stop();
           this.delay_.start();
         });
 
@@ -137,6 +147,7 @@ longa.control.Toaster = goog.defineClass(pstj.control.Control, {
     this.toast_.setContent(msg);
     this.isFree_ = false;
     this.toast_.setOpen(true);
+    this.hideDelay_.start();
   }
 });
 goog.addSingletonGetter(longa.control.Toaster);

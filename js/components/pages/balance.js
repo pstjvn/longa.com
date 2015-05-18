@@ -4,6 +4,8 @@ goog.require('goog.asserts');
 goog.require('goog.log');
 goog.require('goog.ui.registry');
 goog.require('longa.gen.dto.UserBalance');
+goog.require('longa.strings');
+goog.require('longa.template');
 goog.require('longa.ui.CustomTrend');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
@@ -24,6 +26,75 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+  },
+
+  /** @inheritDoc */
+  enterDocument: function() {
+    goog.base(this, 'enterDocument');
+    this.getHandler().listen(this, goog.ui.Component.EventType.CHECK,
+        this.handleRadioGroupChange);
+    this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
+        this.handleAction);
+  },
+
+  /**
+   * Handles action event from children (usually buttons).
+   * @param {goog.events.Event} e
+   * @protected
+   */
+  handleAction: function(e) {
+    if (e.target instanceof pstj.material.Button) {
+      switch (e.target.getAction()) {
+        case 'buy':
+          // code
+          break;
+        case 'widthraw':
+          var model = longa.data.balance;
+          if (!goog.isNull(model)) {
+            if (goog.asserts.assertInstanceof(model, longa.gen.dto.UserBalance)
+                .balance > 0) {
+              // TODO: imlement show balance widthrawal.
+              console.log('Show widthdawal');
+            } else {
+              longa.control.Toaster.getInstance().addToast(
+                  longa.strings.NoSufficientBalanceForWidthdrawal(
+                      null).toString(), null, null);
+            }
+          }
+          break;
+      }
+    }
+  },
+
+  /**
+   * Handles the selection of a new radio button in the radio group.
+   * @param {goog.events.Event} e The CHANGE event coming from the radio button.
+   * @protected
+   */
+  handleRadioGroupChange: function(e) {
+    var target = goog.asserts.assertInstanceof(e.target,
+        pstj.material.Element);
+    var idx = this.getRadioGroup().indexOfChild(target);
+    // TODO: implement chart switching based on selected index.
+    console.log('Show sheet data with idx:' + idx);
+
+  },
+
+  /**
+   * Getter for the radio group element in the balance sheet.
+   * @protected
+   * @return {!pstj.material.RadioGroup}
+   */
+  getRadioGroup: function() {
+    var idx = this.getRenderer().getRadioGroupIndex();
+    return goog.asserts.assertInstanceof(this.getChildAt(idx),
+        pstj.material.RadioGroup);
+  },
+
+  /** @override */
+  getRenderer: function() {
+    return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
+        longa.ui.BalanceRenderer);
   }
 });
 
@@ -63,6 +134,17 @@ longa.ui.BalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
     }
   },
 
+  /**
+   * Getter for the index at which the radio group is in the component tree of
+   * the balance sheet used. Balance sheet should always have a radio group
+   * for the data viewer.
+   * @return {!number}
+   */
+  getRadioGroupIndex: function() {
+    return 0;
+  },
+
+  /** @override */
   getStructuralCssClass: function() {
     return goog.getCssName('longa-app-balance');
   },

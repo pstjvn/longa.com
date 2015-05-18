@@ -61,6 +61,13 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @private
      */
     this.installStylesPromise_ = null;
+    /**
+     * A promise for the charts api. It will be started the first time the API
+     * is called upon.
+     * @type {goog.Promise<boolean>}
+     * @private
+     */
+    this.chartsApiPromise_ = null;
     this.init();
   },
 
@@ -101,6 +108,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
             });
           });
         });
+    // Start preloading google apis asap as it might take over 2 seconds.
+    this.loadChartsApi();
 
 
     var detail = longa.storage.retrieveCredentials();
@@ -243,6 +252,17 @@ longa.App = goog.defineClass(pstj.control.Control, {
   },
 
   /**
+   * Always returns the same promise for the charts api.
+   * @return {goog.Promise<boolean>}
+   */
+  loadChartsApi: function() {
+    if (goog.isNull(this.chartsApiPromise_)) {
+      this.chartsApiPromise_ = this.preloadChartsApi_();
+    }
+    return this.chartsApiPromise_;
+  },
+
+  /**
    * Preload the images or wait for up to 15 seconds - whichever comes first.
    * @private
    * @return {goog.Promise<boolean>} True if the images were preloaded, false
@@ -270,6 +290,62 @@ longa.App = goog.defineClass(pstj.control.Control, {
           });
       il.start();
     }, this);
+  },
+
+  /**
+   * Preloader for the charts API.
+   * @private
+   * @return {goog.Promise<boolean>}
+   */
+  preloadChartsApi_: function() {
+    return this.preloadJSAPI_().then(function(_) {
+      goog.log.info(this.logger_, 'JSAPI loaded');
+      return (new goog.Promise(function(resolve, reject) {
+        // we are now sure the JSAPI is there, load charts.
+        goog.global['google']['load']('visualization', '1.0', {
+          'packages': ['corechart'],
+          'callback': function() {
+            resolve(true);
+          }
+        });
+      })).then(
+          // Success loading vizualization
+          function(_) {
+            goog.log.info(this.logger_, 'Vizualization API loaded');
+          },
+          // Failed loading vizualization.
+          function(e) {
+            longa.control.Toaster.getInstance().addToast(
+                longa.strings.CannotLoadGoogleAPIs(null).toString(),
+                null, null);
+          },
+          this);
+    }, function(e) {
+      longa.control.Toaster.getInstance().addToast(
+          longa.strings.CannotLoadGoogleAPIs(null).toString(),
+          null, null);
+    }, this);
+  },
+
+  /**
+   * Starts the preloading of the google JSAPI lib.
+   *
+   * @private
+   * @return {goog.Promise<boolean>}
+   */
+  preloadJSAPI_: function() {
+    goog.log.info(this.logger_, 'Start loading JSAPI');
+    var scriptElement = goog.dom.createDom('script', {
+      'type': 'text/javascript',
+      'src': 'https://www.google.com/jsapi?callback=LONGAAPI.onJSAPILoad'
+    });
+
+    return new goog.Promise(function(resolve, reject) {
+      goog.exportSymbol('LONGAAPI.onJSAPILoad', function() {
+        resolve(true);
+      });
+      document.head.appendChild(scriptElement);
+    });
   },
 
   /**

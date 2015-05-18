@@ -14,7 +14,7 @@ var a = goog.asserts;
 
 
 /**
- * Describes a single alert for this user
+ * Describes the alert listr
  * @extends {pstj.ds.DtoBase}
  */
 longa.gen.dto.Alerts = goog.defineClass(pstj.ds.DtoBase, {

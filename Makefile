@@ -178,22 +178,23 @@ $(shell for dir in $(smsj_public_source_dirs) ; do find $(smjs_lib_dir)/$$dir -n
 	$(calcdeps_paths) \
 	--input js/modules/main_init.js \
 	--input js/modules/app_init.js \
-	--input js/modules/startscreen_init.js > rtt.txt
+	--input js/modules/startscreen_init.js > $@
 
 # Experimental build using modules: The summary code size is a bit bigger but
 # initial load file is much smaller (could be repartitioned for even smaller
 # initial load.
-modulebuild: $(build_dir)/rtt.txt
+modulebuild: $(build_dir)/modulefilelist.txt
 	$(java) $(js_compiler) \
 	--compilation_level=ADVANCED \
 	--flagfile=options/compile.ini \
 	--js=build/$(ns)-cssmap.build.js \
 	$(namespace_specific_flags) \
+	--output_module_dependencies moddep.js \
 	--module main:93 \
-	--module app:143:main \
+	--module app:149:main \
 	--module startscreen:1:app \
 	--module_output_path_prefix build/module_ \
-	$(shell cat $(build_dir)/rtt.txt | tr '\n' ' ')
+	$(shell cat $(build_dir)/modulefilelist.txt | tr '\n' ' ')
 
 
 $(build_dir)/$(ns).build.js: \

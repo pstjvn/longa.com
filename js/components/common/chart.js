@@ -192,6 +192,8 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
      */
     Options: {
       'title': '',
+      'width': 380,
+      'height': 280,
       'series': {
         0: {
           'color': '#00796b',

@@ -88,7 +88,8 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
    */
   handleLoginFormSubmit_: function(e) {
     var login = this.getLoginForm_();
-    if (e.target instanceof pstj.material.Button) {
+    if (e.target instanceof pstj.material.Button ||
+        e.target instanceof pstj.material.InputBase) {
       login.removeError();
       if (login.isValid()) {
         login.setEnabled(false);

@@ -140,6 +140,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="626934422171726707" datatype="html">
+        <source>Insufucuent balance for widthdrawal.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="627347266532800587" datatype="html">
         <source>Turks and Caicos Islands</source>
         <target/>
@@ -159,6 +163,10 @@
         <source>Palau</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="724464174196447482" datatype="html">
+        <source>Longa  is a pay-for-performance service. Only profitable signals are charged for.  Investors will not be charged for signals that have resulted in losses. The  charge is done upon closing of the transaction (BUY&amp;rarr;SELL or SELL&amp;rarr;BUY).  Open transaction signals are not charged until Close transaction signal is not  received.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="724957661944599897" datatype="html">
         <source>Czech Republic</source>
@@ -473,6 +481,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1965932542337227450" datatype="html">
+        <source>Couldn't load charting APIs, are you connected to the Internet?</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1986405314539882148" datatype="html">
         <source>Utah</source>
         <target/>
@@ -502,6 +514,10 @@
         <source>Thailand</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="2069461718514997889" datatype="html">
+        <source>Longa  supports both BUY&amp;rarr;SELL or SELL&amp;rarr;BUY (Short Sell) transactions. Both  transaction types are charged upon transaction completion if the transaction is  profitable.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="2075170650254067845" datatype="html">
         <source>E-main</source>
@@ -653,10 +669,6 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
-      <trans-unit id="2588907727381132347" datatype="html">
-        <source>Longa  supports both BUY-&amp;gt;SELL or SELL-&amp;gt;BUY (Short Sell) transactions. Both  transaction types are charged upon transaction completion if the transaction is  profitable.</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="2592002115951925734" datatype="html">
         <source>Marshall Islands</source>
         <target/>
@@ -664,6 +676,10 @@
       </trans-unit>
       <trans-unit id="2611475427610660053" datatype="html">
         <source>Transactions</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2614912433079111490" datatype="html">
+        <source>First Pushed Signal</source>
         <target/>
       </trans-unit>
       <trans-unit id="2633824972286491960" datatype="html">
@@ -796,6 +812,10 @@
         <target/>
         <note priority="1" from="description">state</note>
       </trans-unit>
+      <trans-unit id="3104843639864850573" datatype="html">
+        <source>The  trade signals are tracked in real-time. Once each transaction is complete  (BUY&amp;rarr;SELL and SELL&amp;rarr;BUY) the Longa marketplace calculates the signal  performance and displays in the marketplace.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="3178143531053451735" datatype="html">
         <source>Investor</source>
         <target/>
@@ -806,6 +826,10 @@
         <target/>
         <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
+      <trans-unit id="3279194719099619100" datatype="html">
+        <source>Signals</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="3280635276421664253" datatype="html">
         <source>Virgin Islands (US)</source>
         <target/>
@@ -815,6 +839,11 @@
         <source>Connecticut</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="3294616674055785907" datatype="html">
+        <source>New alerts received!</source>
+        <target/>
+        <note priority="1" from="description">toast message for new alerts</note>
       </trans-unit>
       <trans-unit id="3301086086650990787" datatype="html">
         <source>Register</source>
@@ -977,6 +1006,10 @@
         <source>Longa is a marketplace for exchanging stock trading ideas. Longa does not verify the professional or licensing status of the signal providers. The Longa marketplace does not represent stock brokerage and does not require a specific license to allow signal providers to offer trade ideas to investors. Both signal providers and investors participate in the marketplace voluntarily and should accept all trade signals as suggestions only. Longa or the signal providers do not offer professional portfolio management services.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="3973931101896534797" datatype="html">
+        <source>Date</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="3975233823881069207" datatype="html">
         <source>Guyana</source>
         <target/>
@@ -990,6 +1023,10 @@
         <source>Update</source>
         <target/>
         <note priority="1" from="description">Update button label</note>
+      </trans-unit>
+      <trans-unit id="4037049952003713649" datatype="html">
+        <source>Profit Chagre (LC)</source>
+        <target/>
       </trans-unit>
       <trans-unit id="4082876576192670199" datatype="html">
         <source>Uzbekistan</source>
@@ -1093,12 +1130,12 @@
         <target/>
         <note priority="1" from="description">swiper tile title</note>
       </trans-unit>
-      <trans-unit id="4577142263362213528" datatype="html">
-        <source>The  trade signals are tracked in real-time. Once each transaction is complete  (BUY-&amp;gt;SELL and SELL-&amp;gt;BUY) the Longa marketplace calculates the signal  performance and displays in the marketplace.</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="4601819262190364793" datatype="html">
         <source>L-Credits  can be converted in USD at any time. The payment is made to the designated  PayPal or Google wallet account of the subscriber. The withdrawal payment is  done in full less transaction fees (4%).</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4691887509600985309" datatype="html">
+        <source>Members</source>
         <target/>
       </trans-unit>
       <trans-unit id="4708285446680099885" datatype="html">
@@ -1424,6 +1461,11 @@
         <source>First Received Signal</source>
         <target/>
       </trans-unit>
+      <trans-unit id="6115795307387220664" datatype="html">
+        <source>Go to alerts</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
       <trans-unit id="6133495983093212227" datatype="html">
         <source>United States</source>
         <target/>
@@ -1589,10 +1631,6 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
-      <trans-unit id="6776205989816192100" datatype="html">
-        <source>Longa  is a pay-for-performance service. Only profitable signals are charged for.  Investors will not be charged for signals that have resulted in losses. The  charge is done upon closing of the transaction (BUY-&amp;gt;SELL or SELL-&amp;gt;BUY).  Open transaction signals are not charged until Close transaction signal is not  received.</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="6787546539374733271" datatype="html">
         <source>Belgium</source>
         <target/>
@@ -1700,6 +1738,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="7130246242889767822" datatype="html">
+        <source>Last Pushed Signal</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="7132320126222699925" datatype="html">
         <source>How does the service work?</source>
         <target/>
@@ -1722,6 +1764,14 @@
         <source>Madagascar</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="7256151484792961589" datatype="html">
+        <source>System change (LC)</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7274956910037832493" datatype="html">
+        <source>Error loading reporting data</source>
+        <target/>
       </trans-unit>
       <trans-unit id="7303091661854783304" datatype="html">
         <source>United Kingdom</source>
@@ -1778,6 +1828,10 @@
       </trans-unit>
       <trans-unit id="7539085561595303533" datatype="html">
         <source>Use of the Website www.longa.com</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7541005936062780573" datatype="html">
+        <source>Charge</source>
         <target/>
       </trans-unit>
       <trans-unit id="7542940846619074358" datatype="html">
@@ -1898,6 +1952,10 @@
         <target/>
         <note priority="1" from="description">Link-like clickable hint in form</note>
       </trans-unit>
+      <trans-unit id="7886124458983163216" datatype="html">
+        <source>Subscribed users</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="7892590553414841819" datatype="html">
         <source>Illinois</source>
         <target/>
@@ -2006,6 +2064,10 @@
         <source>Ohio</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="8470311110519302542" datatype="html">
+        <source>No data</source>
+        <target/>
       </trans-unit>
       <trans-unit id="8496313228903628689" datatype="html">
         <source>El Salvador</source>

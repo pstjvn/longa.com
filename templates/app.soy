@@ -1,16 +1,5 @@
 {namespace longa.template}
 
-/** Test our theory about DTO */
-{template .Test}
-  {@param name: string}
-  {@param age: number}
-  {@param address: ?}
-  <div>
-    <div>{$name} - {$age}</div>
-    {call .Address data="$address" /}
-  </div>
-{/template}
-
 /** Teplatized logo for the app. */
 {template .LongaLogo}
   {@param width: string}
@@ -38,6 +27,16 @@
         c0.886,9.216,6.399,17.844,15.602,19.496c-7.621-3.601-12.833-10.958-13.828-19.009c12.673,3.054,39.612,1.894,41.518-4.871
         C53.944,25.111,32.853,24.957,20.779,22.512z"/>
   </svg>
+{/template}
+
+/** Toast for new alerts. */
+{template .ToastForNewAlerts}
+  {msg desc="toast message for new alerts"}New alerts received!{/msg}
+{/template}
+
+/** Button label */
+{template .ToastForNewAlertsButton}
+  {msg desc="button label"}Go to alerts{/msg}
 {/template}
 
 /** Message when login with existing credentials from storgae did not work. */
@@ -661,8 +660,8 @@
     <li>{msg desc=""}All  provider stock trading signals are tracked and audited in real-time. All signal  performance data is accurate and easy to examine and understand.{/msg}</li>
     <li>{msg desc=""}Longa  utilizes real-time market data quote information and does not manipulate signal  performance. The marketplace collects all trade signals, calculates their  performance, and displays the results on the web site.{/msg}</li>
     <li>{msg desc=""}Longa  marketplace uses L-Credit (LC) as payment currency for signal services. Each  L-Credit is worth $1 USD (1 LC = 1 US dollar).{/msg}</li>
-    <li>{msg desc=""}Longa  is a pay-for-performance service. Only profitable signals are charged for.  Investors will not be charged for signals that have resulted in losses. The  charge is done upon closing of the transaction (BUY-&gt;SELL or SELL-&gt;BUY).  Open transaction signals are not charged until Close transaction signal is not  received.{/msg}</li>
-    <li>{msg desc=""}Longa  supports both BUY-&gt;SELL or SELL-&gt;BUY (Short Sell) transactions. Both  transaction types are charged upon transaction completion if the transaction is  profitable.{/msg}</li>
+    <li>{msg desc=""}Longa  is a pay-for-performance service. Only profitable signals are charged for.  Investors will not be charged for signals that have resulted in losses. The  charge is done upon closing of the transaction (BUY&rarr;SELL or SELL&rarr;BUY).  Open transaction signals are not charged until Close transaction signal is not  received.{/msg}</li>
+    <li>{msg desc=""}Longa  supports both BUY&rarr;SELL or SELL&rarr;BUY (Short Sell) transactions. Both  transaction types are charged upon transaction completion if the transaction is  profitable.{/msg}</li>
     <li>{msg desc=""}Analysts  and traders decide what is the L-Credit service charge they will request for  each signal transaction. The service charge is defined as Profit Charge based  on 1% profit (e.g. 2% profit with Profit Charge of 1 LC will result in 2 LC  service charge).{/msg}</li>
     <li>{msg desc=""}Longa  investors need to have at least 10 L-Credits in their account to be able to  subscribe for paid trade signals. All free trade signals do not require  L-Credit balance.{/msg}</li>
     <li>{msg desc=""}Investors  can only see: free signals, signals that they have subscribed for, or signals  that represent closed transactions. To take advantage of new, open transaction  signals that require payment, investors need to have L-Credit balance in their  accounts.{/msg}</li>
@@ -672,7 +671,7 @@
   <p class="{css longa-app-faq-question}">{msg desc=""}How does the service work?{/msg}</p>
   <ul class="{css longa-app-faq-answers}">
     <li>{msg desc=""}Stock  analysts and traders have expert stock market knowledge that they want to sell.  They setup accounts with Longa marketplace and start submitting trade signals.{/msg}</li>
-    <li>{msg desc=""}The  trade signals are tracked in real-time. Once each transaction is complete  (BUY-&gt;SELL and SELL-&gt;BUY) the Longa marketplace calculates the signal  performance and displays in the marketplace.{/msg}</li>
+    <li>{msg desc=""}The  trade signals are tracked in real-time. Once each transaction is complete  (BUY&rarr;SELL and SELL&rarr;BUY) the Longa marketplace calculates the signal  performance and displays in the marketplace.{/msg}</li>
     <li>{msg desc=""}Investors  that have interest to purchase or use trade signals subscribe to these signals  and use them for investment purposes. If the transaction is profitable they pay  service fees to the signal provider based on the provider defined Profit  Charge. If the transaction is not profitable - no service fees are paid. This  is a pay-for-performance type of service.{/msg}</li>
     <li>{msg desc=""}Service  fees are charged after the transaction is complete. No service fees are charged  while the transaction is open. Based on the transaction status some balanced  may be partially locked to ensure that providers get paid when the transaction  closes.{/msg}</li>
     <li>{msg desc=""}If  the investors do not have sufficient L-Credit balance in their accounts they  will not receive paid signals in real-time. That is the reason all investors  that have subscribed to paid trade signals should maintain L-Credit balance of  at least 10 L-Credits.{/msg}</li>
@@ -810,11 +809,8 @@
 
 /** Balance */
 {template .Alerts}
-  {@param alerts: list<?>}
   <div class="{css longa-app-alerts}">
-    {foreach $alert in $alerts}
-      {call .Alert data="$alert" /}
-    {ifempty}
+    <section class="{css longa-app-alerts-section}">
       <div>{msg desc="Message when no alerts are present for this account"}No new signals for your account.{/msg}</div>
       {call pstj.material.template.Button}
         {param icon: 'none' /}
@@ -823,7 +819,10 @@
           {msg desc="Button label"}show old alerts{/msg}
         {/param}
       {/call}
-    {/foreach}
+    </section class="{css longa-app-alerts-section}">
+      {call pstj.material.template.CoreElement /}
+    <section>
+    </section>
   </div>
 {/template}
 
@@ -877,18 +876,17 @@
   </div>
 {/template}
 
-/**
+/** Balance view */
+{template .UserBalance}
   {@param allTimeChargesForProfit: number}
   {@param averageTransactionDuration: number}
   {@param balance: number}
   {@param credit: number}
-  {@param debit: number}
   {@param firstSignalDate: string}
   {@param firstSignalTime: string}
   {@param lastSignalDate: string}
   {@param lastSignalTime: string}
   {@param lostSignalCount: number}
-  {@param maximumWithdrawal: number}
   {@param memberCount: number}
   {@param openSignalCount: number}
   {@param profitLossRatio: number}
@@ -900,28 +898,11 @@
   {@param signalCount: number}
   {@param systemCharges: number}
   {@param withdrawal: number}
- */
-/** Balance view */
-{template .UserBalance}
-  {@param averageTransactionDuration: number}
-  {@param balance: number}
-  {@param credit: number}
-  {@param debit: number}
-  {@param profitLossRatio: number}
-  {@param profitLossRatioMonth: number}
-  {@param profitLossRatioOpen: number}
-  {@param profitLossRatioYear: number}
-  {@param firstSignalDate: string}
-  {@param firstSignalTime: string}
-  {@param lastSignalDate: string}
-  {@param lastSignalTime: string}
-  {@param lostSignalCount: number}
-  {@param openSignalCount: number}
-  {@param profitableSignalCount: number}
-  {@param signalCount: number}
-  {@param withdrawal: number}
   {@param usertype: string}
   <div is class="{css longa-app-balance} {css longa-app-user-balance}">
+    <div class="{css longa-app-balance-charts}">
+      {call .Chart /}
+    </div>
     <div class="{css longa-app-balance-padded} {css colored}">
       <div is class="{css material-radio-group}">
       {call pstj.material.template.RadioButton /}
@@ -968,13 +949,16 @@
       </label>
     </div>
     <div class="{css longa-app-balance-padded}">
-      {call pstj.material.template.Button}
-        {param content kind="text"}
-          {msg desc="Buy credit button label"}Buy credit{/msg}
-        {/param}
-        {param icon: 'none' /}
-        {param ink: true /}
-      {/call}
+      {if $usertype == 1}
+        {call pstj.material.template.Button}
+          {param content kind="text"}
+            {msg desc="Buy credit button label"}Buy credit{/msg}
+          {/param}
+          {param icon: 'none' /}
+          {param ink: true /}
+          {param action: 'buy' /}
+        {/call}
+      {/if}
       <label class="{css longa-app-balance-flex}"></label>
       {call pstj.material.template.Button}
         {param content kind="text"}
@@ -982,21 +966,38 @@
         {/param}
         {param icon: 'none' /}
         {param ink: true /}
+        {param action: 'widthraw' /}
       {/call}
     </div>
-    <div class="{css longa-app-balance-padded}">
+    {if $usertype == 2}
+      <div class="{css longa-app-balance-padded}">
+        <label class="{css longa-app-balance-flex}">{msg desc=""}Profit Chagre (LC){/msg}:</label>
+        <label>{$allTimeChargesForProfit}</label>
+      </div>
+      <div class="{css longa-app-balance-padded}">
+        <label class="{css longa-app-balance-flex}">{msg desc=""}Subscribed users{/msg}:</label>
+        <label>{$memberCount}</label>
+      </div>
+    {/if}
+    <div class="{css longa-app-balance-padded}  {css colored}">
       <label class="{css longa-app-balance-flex}">{msg desc=""}Current Balance (LC){/msg}:</label>
       <label>{$balance}</label>
     </div>
-    <div class="{css longa-app-balance-padded}">
+    <div class="{css longa-app-balance-padded}  {css colored}">
       <label class="{css longa-app-balance-flex}">{msg desc=""}All Time Credit (LC){/msg}:</label>
       <label>{$credit}</label>
     </div>
-    <div class="{css longa-app-balance-padded}">
+    <div class="{css longa-app-balance-padded}  {css colored}">
       <label class="{css longa-app-balance-flex}">{msg desc=""}Service change (LC){/msg}:</label>
-      <label>{$debit}</label>
+      <label>{$serviceCharges}</label>
     </div>
-    <div class="{css longa-app-balance-padded}">
+    {if $usertype == 2}
+      <div class="{css longa-app-balance-padded}  {css colored}">
+        <label class="{css longa-app-balance-flex}">{msg desc=""}System change (LC){/msg}:</label>
+        <label>{$systemCharges}</label>
+      </div>
+    {/if}
+    <div class="{css longa-app-balance-padded}  {css colored}">
       <label class="{css longa-app-balance-flex}">{msg desc=""}Withdrawal(LC){/msg}:</label>
       <label>{$withdrawal}</label>
     </div>
@@ -1009,11 +1010,19 @@
       <label>{$averageTransactionDuration}</label>
     </div>
     <div class="{css longa-app-balance-padded}">
-      <label class="{css longa-app-balance-flex}">{msg desc=""}Last Received Signal{/msg}:</label>
+      {if $usertype == 1}
+        <label class="{css longa-app-balance-flex}">{msg desc=""}Last Received Signal{/msg}:</label>
+      {elseif $usertype == 2}
+        <label class="{css longa-app-balance-flex}">{msg desc=""}Last Pushed Signal{/msg}:</label>
+      {/if}
       <label>{$lastSignalDate}{sp}{$lastSignalTime}</label>
     </div>
     <div class="{css longa-app-balance-padded}">
-      <label class="{css longa-app-balance-flex}">{msg desc=""}First Received Signal{/msg}:</label>
+      {if $usertype == 1}
+        <label class="{css longa-app-balance-flex}">{msg desc=""}First Received Signal{/msg}:</label>
+      {elseif $usertype == 2}
+        <label class="{css longa-app-balance-flex}">{msg desc=""}First Pushed Signal{/msg}:</label>
+      {/if}
       <label>{$firstSignalDate}{sp}{$firstSignalTime}</label>
     </div>
   </div>
@@ -1040,5 +1049,15 @@
       {/call}
     </div>
     <div class="{css longa-menu-item-badge}">{$badge}</div>
+  </div>
+{/template}
+
+/** The chart element */
+{template .Chart}
+  <div is class="{css longa-app-chart}">
+    <div class="{css longa-app-chart-content}"></div>
+    <div class="{css longa-app-chart-overlay}" style="display: none;">
+      {msg desc=""}No data{/msg}
+    </div>
   </div>
 {/template}

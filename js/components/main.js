@@ -89,7 +89,6 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
       if (longa.ds.utils.isKnownUser()) {
         this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
       } else {
-        console.log('Call destroy');
         // if the user is unknown (i.e. logout) destroy the balance sheets.
         this.destroyMainBalanceSheet_();
         this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
@@ -99,7 +98,9 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.control.listen(longa.ds.Topic.USER_BALANCE_CHANGE, function() {
       this.destroyMainBalanceSheet_();
       if (!goog.isNull(longa.data.balance)) {
-        this.balanceWrapper.addChild(new longa.ui.Balance(), true);
+        var balance = new longa.ui.Balance();
+        this.balanceWrapper.addChild(balance, true);
+        balance.loadReportingData();
       }
     });
 

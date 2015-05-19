@@ -3,9 +3,12 @@ goog.provide('longa.ui.Balance');
 goog.require('goog.asserts');
 goog.require('goog.log');
 goog.require('goog.ui.registry');
+goog.require('longa.control.Report');
+goog.require('longa.control.viz');
 goog.require('longa.gen.dto.UserBalance');
 goog.require('longa.strings');
 goog.require('longa.template');
+goog.require('longa.ui.Chart');
 goog.require('longa.ui.CustomTrend');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
@@ -31,7 +34,7 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
   /** @inheritDoc */
   enterDocument: function() {
     goog.base(this, 'enterDocument');
-    this.getHandler().listen(this, goog.ui.Component.EventType.CHECK,
+    this.getHandler().listen(this, goog.ui.Component.EventType.CHANGE,
         this.handleRadioGroupChange);
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         this.handleAction);
@@ -68,16 +71,14 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
 
   /**
    * Handles the selection of a new radio button in the radio group.
-   * @param {goog.events.Event} e The CHANGE event coming from the radio button.
+   * @param {goog.events.Event} e The CHANGE event coming from the radiogroup.
    * @protected
    */
   handleRadioGroupChange: function(e) {
-    var target = goog.asserts.assertInstanceof(e.target,
-        pstj.material.Element);
-    var idx = this.getRadioGroup().indexOfChild(target);
-    // TODO: implement chart switching based on selected index.
-    console.log('Show sheet data with idx:' + idx);
-
+    var idx = this.getRadioGroup().getSelectedIndex();
+    if (idx != -1) {
+      this.getChart().setSelectedIndex(idx);
+    }
   },
 
   /**
@@ -91,10 +92,34 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
         pstj.material.RadioGroup);
   },
 
+  /**
+   * Getter for the chart element.
+   * @protected
+   * @return {!longa.ui.Chart}
+   */
+  getChart: function() {
+    var idx = this.getRenderer().getChartIndex();
+    return goog.asserts.assertInstanceof(this.getChildAt(idx),
+        longa.ui.Chart);
+  },
+
   /** @override */
   getRenderer: function() {
     return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
         longa.ui.BalanceRenderer);
+  },
+
+  /**
+   * Tell the balance sheet to load a new reporting set.
+   */
+  loadReportingData: function() {
+    goog.Promise.all([
+      longa.control.Report.getInstance().loadReport(longa.data.user.accountid),
+      longa.control.viz.load()
+    ]).then(function(results) {
+      var data = /** @type {!longa.gen.dto.ReportList} */ (results[0]);
+      this.getChart().setModel(data);
+    }, null, this);
   }
 });
 
@@ -141,6 +166,14 @@ longa.ui.BalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
    * @return {!number}
    */
   getRadioGroupIndex: function() {
+    return 1;
+  },
+
+  /**
+   * Returns the index of the charts element in the template.
+   * @return {!number}
+   */
+  getChartIndex: function() {
     return 0;
   },
 

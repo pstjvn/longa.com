@@ -1,5 +1,6 @@
 goog.provide('longa.ui.UserAuth');
 
+goog.require('goog.async.Delay');
 goog.require('goog.style');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
@@ -26,11 +27,32 @@ longa.ui.UserAuth = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
-    // By default consider the user NOT logged in.
+    /**
+     * Flag for the delayed pushes.
+     * @type {boolean}
+     * @private
+     */
+    this.pushLogin_ = false;
+    /**
+     * @private
+     * @type {goog.async.Delay}
+     */
+    this.delay_ = new goog.async.Delay(function() {
+      if (this.pushLogin_) {
+        this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+      } else {
+        this.control_.push(longa.ds.Topic.USER_AUTH_FORGET);
+      }
+    }, 100, this);
+    /**
+     * @private
+     * @type {pstj.control.Control}
+     */
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
     this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED,
         this.setVisibleSectionByUser);
+    this.registerDisposable(this.delay_);
   },
 
   /**
@@ -76,10 +98,11 @@ longa.ui.UserAuth = goog.defineClass(pstj.material.Element, {
    */
   handleAction_: function(e) {
     if (e.target == this.getChildAt(0)) {
-      this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+      this.pushLogin_ = true;
     } else {
-      this.control_.push(longa.ds.Topic.USER_AUTH_FORGET);
+      this.pushLogin_ = false;
     }
+    this.delay_.start();
   }
 });
 

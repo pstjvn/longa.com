@@ -68,6 +68,13 @@ longa.ui.StartScreen = goog.defineClass(pstj.material.Element, {
   getRenderer: function() {
     return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
         longa.ui.StartScreenRenderer);
+  },
+
+  /** @inheritDoc */
+  disposeInternal: function() {
+    goog.base(this, 'disposeInternal');
+    this.radiogroup_ = null;
+    this.swiper_ = null;
   }
 });
 

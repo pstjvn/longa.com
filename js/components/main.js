@@ -63,21 +63,20 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     // Configure the main with a main controller.
     this.control = new pstj.control.Control(this);
     this.control.init();
+    // TODO: tweak those animations - if the login button is pressed
+    // first finish button animation, then switch to login then hide
+    // sidebar.
 
     // Handle screen switches on top level (screens).
     this.control.listen(longa.ds.Topic.SHOW_SCREEN, function(s) {
       // Whenever we show a new screen we need to close the drawer
       this.delayHideSidebar_.start();
-
-      // We should be able to switch screens from here.
       if (s > 99 && s < 103) {
-        goog.log.info(this.logger_, 'Switching to login view');
         this.mainPages.setSelectedIndex(0);
       } else if (s >= 0 && s < 10) {
         this.mainPages.setSelectedIndex(s);
       }
     });
-
 
     // handle presses on the MENU button on top of main header.
     this.control.listen(longa.ds.Topic.SHOW_MENU, function() {
@@ -89,21 +88,9 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
       if (longa.ds.utils.isKnownUser()) {
         this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
       } else {
-        // if the user is unknown (i.e. logout) destroy the balance sheets.
-        this.destroyMainBalanceSheet_();
         this.control.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
       }
     });
-
-    this.control.listen(longa.ds.Topic.USER_BALANCE_CHANGE, function() {
-      this.destroyMainBalanceSheet_();
-      if (!goog.isNull(longa.data.balance)) {
-        var balance = new longa.ui.Balance();
-        this.balanceWrapper.addChild(balance, true);
-        balance.loadReportingData();
-      }
-    });
-
 
     // CONSTRUCTS THE UI, for now we prefer this way as it allows for
     // faster access to the subcomponents.
@@ -144,6 +131,7 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.authWrapper.addChild(this.auth, true);
     // 1
     this.balanceWrapper = new longa.ui.Page();
+    this.balanceWrapper.addChild(new longa.ui.Balance(), true);
     // 2
     this.serviceWrapper = new longa.ui.Page();
     // 3

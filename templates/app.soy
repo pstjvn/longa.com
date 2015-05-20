@@ -1061,3 +1061,123 @@
     </div>
   </div>
 {/template}
+
+/** Templetized credit purchase form. */
+{template .BuyCredit}
+  <div is class="{css longa-app-buy-credit}">
+    <div>
+      {call .ErrorMessage /}
+    </div>
+    <div is class="{css core-element} {css longa-app-buy-credit-header}">
+      <div>{msg desc=""}Add LC to your account{/msg}</div>
+    </div>
+    <section>
+      {call pstj.material.template.Input}
+        {param label kind="text"}
+          {msg desc=""}Longa credits to add{/msg}
+        {/param}
+        {param error kind="text"}
+          {msg desc=""}Must be a number, minimum 10{/msg}
+        {/param}
+        {param pattern kind="text"}
+          {literal}^[1-9][\d]{1,8}${/literal}
+        {/param}
+        {param name: 'lc' /}
+        {param type: 'text' /}
+        {param value: '' /}
+      {/call}
+      <div is class="{css core-item} {css longa-app-buy-credit-label}">
+        <label>{msg desc=""}Price (in USD):{/msg}{sp}
+          <span class="{css longa-app-buy-credit-currency}"></span>
+        </label>
+      </div>
+      <div is class="{css core-item} {css longa-app-buy-credit-button}">
+        {call pstj.material.template.Button}
+          {param icon: 'none' /}
+          {param content kind="text"}
+            {msg desc="button label"}submit{/msg}
+          {/param}
+          {param ink: true /}
+          {param recenter: true /}
+          {param action: 'submit' /}
+        {/call}
+      </div>
+    </section>
+    <div is class="{css material-fab} {css material-fab-transition} {css material-fab-raised} {css longa-app-buy-credit-back-button}" ink action="goback" use-pointer icon="back-arrow">
+      {call pstj.material.template.Shadow /}
+      {call pstj.material.template.IconContainer}
+        {param type: 'back-arrow' /}
+      {/call}
+      {call pstj.material.template.Ripple}
+        {param recenter: true /}
+      {/call}
+    </div>
+  </div>
+{/template}
+
+/** Templetized form for withdrawal */
+{template .WithdrawCredit}
+  <div is class="{css longa-app-withdraw} {css longa-app-buy-credit}">
+    <div>
+      {call .ErrorMessage /}
+    </div>
+    <div is class="{css core-element} {css longa-app-buy-credit-header}">
+      <div>{msg desc=""}Withdraw LC from your account{/msg}</div>
+    </div>
+    <section>
+      {call pstj.material.template.Input}
+        {param label kind="text"}
+          {msg desc=""}Longa credits to withdraw{/msg}
+        {/param}
+        {param error kind="text"}
+          {msg desc=""}Shoud be a natural number{/msg}
+        {/param}
+        {param pattern kind="text"}
+          {literal}^[\d]+${/literal}
+        {/param}
+        {param name: 'lc' /}
+        {param type: 'text' /}
+        {param value: '' /}
+      {/call}
+      <div is class="{css core-item} {css longa-app-buy-credit-label}">
+        <label>{msg desc=""}Rates (in USD):{/msg}{sp}
+          <span class="{css longa-app-buy-credit-currency}"></span>
+        </label>
+      </div>
+      <div is class="{css core-item} {css longa-app-buy-credit-button}">
+        {call pstj.material.template.Button}
+          {param icon: 'none' /}
+          {param content kind="text"}
+            {msg desc="button label"}submit{/msg}
+          {/param}
+          {param ink: true /}
+          {param recenter: true /}
+          {param action: 'submit' /}
+        {/call}
+      </div>
+    </section>
+    <div is class="{css material-fab} {css material-fab-transition} {css material-fab-raised} {css longa-app-buy-credit-back-button}" ink action="goback" use-pointer icon="back-arrow">
+      {call pstj.material.template.Shadow /}
+      {call pstj.material.template.IconContainer}
+        {param type: 'back-arrow' /}
+      {/call}
+      {call pstj.material.template.Ripple}
+        {param recenter: true /}
+      {/call}
+    </div>
+  </div>
+{/template}
+
+/** Themplate for the Pages component. */
+{template .Balance}
+  <div is class="{css longa-app-balance-pages}" animate>
+    <div is class="{css longa-app-page} {css animation-left-right}" style="overflow-y: auto;">
+    </div>
+    <div is class="{css longa-app-page} {css animation-right-left}">
+      {call .BuyCredit /}
+    </div>
+    <div is class="{css longa-app-page} {css animation-right-left}">
+      {call .WithdrawCredit /}
+    </div>
+  </div>
+{/template}

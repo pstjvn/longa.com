@@ -1,0 +1,165 @@
+goog.provide('longa.ui.BuyCredit');
+goog.provide('longa.ui.BuyCreditRenderer');
+
+goog.require('goog.async.Delay');
+goog.require('goog.dom');
+goog.require('goog.string');
+goog.require('goog.ui.Component.EventType');
+goog.require('goog.ui.registry');
+goog.require('longa.ds.Screen');
+goog.require('longa.ds.Topic');
+goog.require('longa.template');
+goog.require('longa.ui.ErrorMessage');
+goog.require('longa.ui.Form');
+goog.require('pstj.control.Control');
+goog.require('pstj.material.Button');
+goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.Fab');
+goog.require('pstj.material.Input');
+goog.require('pstj.material.Item');
+
+
+/** @extends {longa.ui.Form} */
+longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
+  /**
+   * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
+   *     to display as the content of the control (if any).
+   * @param {goog.ui.ControlRenderer=} opt_renderer Renderer used to render or
+   *     decorate the component; defaults to {@link goog.ui.ControlRenderer}.
+   * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+   *     document interaction.
+   */
+  constructor: function(opt_content, opt_renderer, opt_domHelper) {
+    longa.ui.Form.call(this, opt_content, opt_renderer, opt_domHelper);
+    this.backDelay_ = new goog.async.Delay(function() {
+      this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+    }, 200, this);
+    /**
+     * @private
+     * @type {pstj.control.Control}
+     */
+    this.control_ = new pstj.control.Control(this);
+    this.control_.init();
+  },
+
+  /** @inheritDoc */
+  enterDocument: function() {
+    goog.base(this, 'enterDocument');
+    this.getHandler().listen(this, goog.ui.Component.EventType.CHANGE,
+        this.handleInputChange);
+    this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
+        this.handleActionButtons);
+  },
+
+  /**
+   * @protected
+   * @param {goog.events.Event} e The CHANGE event from the input
+   */
+  handleInputChange: function(e) {
+    var input = goog.asserts.assertInstanceof(e.target, pstj.material.Input);
+    if (input.isValid()) {
+      var num = parseInt(input.getCachedValue(), 10);
+      if (!(isNaN(num))) {
+        this.updateLabel(num);
+      } else {
+        this.updateLabel();
+      }
+    } else {
+      this.updateLabel();
+    }
+    this.getSubmitButton().setEnabled(input.isValid());
+  },
+
+  /**
+   * Handles the action buttons in the view.
+   * @param {goog.events.Event} e
+   * @protected
+   */
+  handleActionButtons: function(e) {
+    if (e.target instanceof pstj.material.Button &&
+      /** @type {pstj.material.Button} */(e.target).getAction() == 'goback') {
+      this.backDelay_.start();
+    } else {
+      console.log('Submit to server');
+    }
+  },
+
+  /**
+   * Getter for the action button.
+   * @protected
+   * @return {!pstj.material.Button}
+   */
+  getSubmitButton: function() {
+    return goog.asserts.assertInstanceof(this.getChildAt(4).getChildAt(0),
+        pstj.material.Button);
+  },
+
+  /**
+   * The value to put on the label.
+   * @param {number=} opt_value
+   * @protected
+   */
+  updateLabel: function(opt_value) {
+    goog.dom.setTextContent(
+        this.getRenderer().getLabelElement(this.getElement()),
+        (goog.isNumber(opt_value) ? goog.string.padNumber(opt_value, 0, 2) :
+            ''));
+  },
+
+  /**
+   * @override
+   * @return {longa.ui.BuyCreditRenderer}
+   */
+  getRenderer: function() {
+    return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
+        longa.ui.BuyCreditRenderer);
+  }
+});
+
+
+/** @extends {pstj.material.ElementRenderer} */
+longa.ui.BuyCreditRenderer = goog.defineClass(pstj.material.ElementRenderer, {
+  constructor: function() {
+    pstj.material.ElementRenderer.call(this);
+  },
+
+  /** @override */
+  getCssClass: function() {
+    return longa.ui.BuyCreditRenderer.CSS_CLASS;
+  },
+
+  /** @override */
+  getTemplate: function(model) {
+    return longa.template.BuyCredit(model);
+  },
+
+  /**
+   * Getter for a specific child.
+   * @param {Element} el The root element to look into.
+   * @return {Element}
+   */
+  getLabelElement: function(el) {
+    return goog.dom.getElementByClass(goog.getCssName(
+        this.getStructuralCssClass(), 'currency'), el);
+  },
+
+  statics: {
+    /**
+     * @final
+     * @type {string}
+     */
+    CSS_CLASS: goog.getCssName('longa-app-buy-credit')
+  }
+});
+goog.addSingletonGetter(longa.ui.BuyCreditRenderer);
+
+// Register for default renderer.
+goog.ui.registry.setDefaultRenderer(longa.ui.BuyCredit,
+    longa.ui.BuyCreditRenderer);
+
+
+// Register decorator factory function.
+goog.ui.registry.setDecoratorByClassName(
+    longa.ui.BuyCreditRenderer.CSS_CLASS, function() {
+      return new longa.ui.BuyCredit(null);
+    });

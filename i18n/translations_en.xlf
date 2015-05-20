@@ -103,6 +103,10 @@
         <source>Why is Longa marketplace unique?</source>
         <target/>
       </trans-unit>
+      <trans-unit id="474445275980328866" datatype="html">
+        <source>Longa credits to withdraw</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="516176798986294299" datatype="html">
         <source>Country</source>
         <target/>
@@ -635,6 +639,14 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2389057876780168966" datatype="html">
+        <source>Longa credits to add</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2394140746147028217" datatype="html">
+        <source>Withdraw LC from your account</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2427223107800831324" datatype="html">
         <source>Italy</source>
         <target/>
@@ -663,6 +675,10 @@
         <source>Cuba</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="2564888201364355486" datatype="html">
+        <source>Rates (in USD):</source>
+        <target/>
       </trans-unit>
       <trans-unit id="2575998129003872734" datatype="html">
         <source>Argentina</source>
@@ -1096,6 +1112,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="4419652485130789080" datatype="html">
+        <source>Shoud be a natural number</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="4432846451354662736" datatype="html">
         <source>Congo, The Democratic Republic</source>
         <target/>
@@ -1475,6 +1495,10 @@
         <source>Switzerland</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6196800148188229327" datatype="html">
+        <source>Must be a number, minimum 10</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6229118554878370786" datatype="html">
         <source>Kyrgyzstan</source>
@@ -2060,6 +2084,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="8450859729620670981" datatype="html">
+        <source>Price (in USD):</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="8462192005150983848" datatype="html">
         <source>Ohio</source>
         <target/>
@@ -2096,6 +2124,10 @@
       </trans-unit>
       <trans-unit id="8614499930429377952" datatype="html">
         <source>Privacy and Information</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="8615761684122442494" datatype="html">
+        <source>Add LC to your account</source>
         <target/>
       </trans-unit>
       <trans-unit id="8624069568371048571" datatype="html">
@@ -2215,6 +2247,11 @@
         <source>New Jersey</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="9150895953971730874" datatype="html">
+        <source>submit</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
       </trans-unit>
     </body>
   </file>

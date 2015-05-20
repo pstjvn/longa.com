@@ -1,15 +1,19 @@
-goog.provide('longa.ui.Balance');
+goog.provide('longa.ui.UserBalance');
 
 goog.require('goog.asserts');
+goog.require('goog.async.Delay');
 goog.require('goog.log');
 goog.require('goog.ui.registry');
 goog.require('longa.control.Report');
 goog.require('longa.control.viz');
+goog.require('longa.ds.Screen');
+goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.UserBalance');
 goog.require('longa.strings');
 goog.require('longa.template');
 goog.require('longa.ui.Chart');
 goog.require('longa.ui.CustomTrend');
+goog.require('pstj.control.Control');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
@@ -18,7 +22,7 @@ goog.require('pstj.material.RadioGroup');
 
 
 /** @extends {pstj.material.Element} */
-longa.ui.Balance = goog.defineClass(pstj.material.Element, {
+longa.ui.UserBalance = goog.defineClass(pstj.material.Element, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -29,6 +33,42 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    /**
+     * Flag - set by the action handler to denote to the delayed switcher
+     * to which screen to go next.
+     *
+     * @type {boolean}
+     * @private
+     */
+    this.showBuy_ = false;
+    /**
+     * Delayed screen switch pusher - we utilize it to make the UI better
+     * apprehended.
+     *
+     * @type {goog.async.Delay}
+     * @private
+     */
+    this.delay_ = new goog.async.Delay(function() {
+      if (this.showBuy_) {
+        this.control_.push(longa.ds.Topic.SHOW_SCREEN,
+            longa.ds.Screen.BALANCE_BUY);
+      } else {
+        this.control_.push(longa.ds.Topic.SHOW_SCREEN,
+            longa.ds.Screen.BALANCE_WIDHTRAW);
+      }
+    }, 100, this);
+    /**
+     * Control instance to use to talk to the control bus.
+     *
+     * @private
+     * @type {pstj.control.Control}
+     */
+    this.control_ = new pstj.control.Control(this);
+    this.control_.init();
+
+    // Make sure to clean up
+    this.registerDisposable(this.delay_);
+    this.registerDisposable(this.control_);
   },
 
   /** @inheritDoc */
@@ -49,15 +89,16 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
     if (e.target instanceof pstj.material.Button) {
       switch (e.target.getAction()) {
         case 'buy':
-          // code
+          this.showBuy_ = true;
+          this.delay_.start();
           break;
         case 'widthraw':
           var model = longa.data.balance;
           if (!goog.isNull(model)) {
             if (goog.asserts.assertInstanceof(model, longa.gen.dto.UserBalance)
                 .balance > 0) {
-              // TODO: imlement show balance widthrawal.
-              console.log('Show widthdawal');
+              this.showBuy_ = false;
+              this.delay_.start();
             } else {
               longa.control.Toaster.getInstance().addToast(
                   longa.strings.NoSufficientBalanceForWidthdrawal(
@@ -106,7 +147,7 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
   /** @override */
   getRenderer: function() {
     return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
-        longa.ui.BalanceRenderer);
+        longa.ui.UserBalanceRenderer);
   },
 
   /**
@@ -125,19 +166,19 @@ longa.ui.Balance = goog.defineClass(pstj.material.Element, {
 
 
 /** @extends {pstj.material.ElementRenderer} */
-longa.ui.BalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
+longa.ui.UserBalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   constructor: function() {
     pstj.material.ElementRenderer.call(this);
     /**
      * @private
      * @type {goog.debug.Logger}
      */
-    this.logger_ = goog.log.getLogger('longa.ui.BalanceRenderer');
+    this.logger_ = goog.log.getLogger('longa.ui.UserBalanceRenderer');
   },
 
   /** @override */
   getCssClass: function() {
-    return longa.ui.BalanceRenderer.CSS_CLASS;
+    return longa.ui.UserBalanceRenderer.CSS_CLASS;
   },
 
   /** @override */
@@ -190,15 +231,15 @@ longa.ui.BalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
     CSS_CLASS: goog.getCssName('longa-app-user-balance')
   }
 });
-goog.addSingletonGetter(longa.ui.BalanceRenderer);
+goog.addSingletonGetter(longa.ui.UserBalanceRenderer);
 
 // Register for default renderer.
-goog.ui.registry.setDefaultRenderer(longa.ui.Balance,
-    longa.ui.BalanceRenderer);
+goog.ui.registry.setDefaultRenderer(longa.ui.UserBalance,
+    longa.ui.UserBalanceRenderer);
 
 
 // Register decorator factory function.
 goog.ui.registry.setDecoratorByClassName(
-    longa.ui.BalanceRenderer.CSS_CLASS, function() {
-      return new longa.ui.Balance(null);
+    longa.ui.UserBalanceRenderer.CSS_CLASS, function() {
+      return new longa.ui.UserBalance(null);
     });

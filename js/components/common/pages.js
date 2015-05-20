@@ -1,4 +1,5 @@
 goog.provide('longa.ui.Pages');
+goog.provide('longa.ui.PagesRenderer');
 
 goog.require('goog.math.Size');
 goog.require('goog.style');
@@ -93,8 +94,9 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
       this.nextIndexToApply_ = idx;
       if (this.useAnimation_) {
         this.setTransitioning(true);
+        this.getChildAt(this.nextIndexToApply_).getElement().offsetWidth;
         this.getHandler().listenOnce(
-            this.getChildAt(this.selectedIndex).getElementStrict(),
+            this.getChildAt(this.nextIndexToApply_).getElementStrict(),
             goog.events.EventType.TRANSITIONEND,
             this.removeTransitionState_);
         this.getRaf().start();

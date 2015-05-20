@@ -64,6 +64,14 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
   },
 
   /**
+   * @protected
+   * @param {boolean} enable
+   */
+  setUseAnimation: function(enable) {
+    this.useAnimation_ = enable;
+  },
+
+  /**
    * Setter for the selected index.
    *
    * Note that is the index is out of bound the setter will be ignored and no

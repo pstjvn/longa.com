@@ -77,7 +77,7 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
    */
   handleActionButtons: function(e) {
     if (e.target instanceof pstj.material.Button &&
-      /** @type {pstj.material.Button} */(e.target).getAction() == 'goback') {
+        /** @type {pstj.material.Button} */(e.target).getAction() == 'goback') {
       this.backDelay_.start();
     } else {
       console.log('Submit to server');

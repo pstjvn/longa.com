@@ -79,6 +79,7 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
    * error will be thrown, but one will be logged.
    *
    * @param {number} idx The index to select.
+   * @suppress {uselessCode}
    */
   setSelectedIndex: function(idx) {
     if (idx < 0 || idx > this.getChildCount() - 1) {

@@ -39,3 +39,19 @@
 {template .Members}
   {msg desc=""}Members{/msg}
 {/template}
+
+/** Cannot create session for transaction */
+{template .cannotCretePaypalTransaction kind="text"}
+  {msg desc=""}Couldn't create transaction session, try later.{/msg}
+{/template}
+
+/** Message when withdrawing. */
+{template .onWithdrawSuccess}
+  {@param amount: number}
+  {msg desc=""}{$amount} LC withdrawn from your account.{/msg}
+{/template}
+
+/** Message when withdraw fails. */
+{template .onWithdrawFail kind="text"}
+  {msg desc=""}Withdrawal failed:{sp}{/msg}
+{/template}

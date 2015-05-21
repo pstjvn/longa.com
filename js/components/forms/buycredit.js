@@ -6,6 +6,7 @@ goog.require('goog.dom');
 goog.require('goog.string');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
+goog.require('longa.control.Exchange');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.template');
@@ -77,6 +78,15 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
   },
 
   /**
+   * Getter for the current amount.
+   * @return {number}
+   * @protected
+   */
+  getAmount: function() {
+    return parseInt(this.getInput().getValue(), 10);
+  },
+
+  /**
    * Handles changes in screen.
    * @param {number} screen The screen number to show.
    * @private
@@ -136,8 +146,39 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
         /** @type {pstj.material.Button} */(e.target).getAction() == 'goback') {
       this.backDelay_.start();
     } else {
-      console.log('Submit to server');
+      this.submitHandler();
     }
+  },
+
+  /**
+   * @protected
+   */
+  submitHandler: function() {
+    if (this.getInput().isValid() && !this.getInput().isEmpty()) {
+      this.getSubmitButton().setEnabled(false);
+      longa.control.Exchange.getInstance()
+          .buyCredit(this.getAmount())
+          .thenAlways(this.restoreButton, this)
+          .then(this.handleNewRedirectUri, null, this);
+    }
+  },
+
+  /**
+   * Restores the button availability.
+   * @protected
+   */
+  restoreButton: function() {
+    this.getSubmitButton().setEnabled(true);
+    this.getInput().setValue('');
+  },
+
+  /**
+   * Simply redirect to the new URI.
+   * @param {!string} uri The URL to set.
+   * @protected
+   */
+  handleNewRedirectUri: function(uri) {
+    // navigate to the new uri.
   },
 
   /**
@@ -169,6 +210,17 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
   getRenderer: function() {
     return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
         longa.ui.BuyCreditRenderer);
+  },
+
+  /**
+   * Getter for the input.
+   * @protected
+   * @return {!pstj.material.InputBase}
+   */
+  getInput: function() {
+    return goog.asserts.assertInstanceof(
+        this.getChildAt(this.getRenderer().getInputIndex()),
+        pstj.material.InputBase);
   }
 });
 
@@ -197,6 +249,14 @@ longa.ui.BuyCreditRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   getLabelElement: function(el) {
     return goog.dom.getElementByClass(goog.getCssName(
         this.getStructuralCssClass(), 'currency'), el);
+  },
+
+  /**
+   * Getter for the index where the input sits in the component.
+   * @return {!number}
+   */
+  getInputIndex: function() {
+    return 2;
   },
 
   statics: {

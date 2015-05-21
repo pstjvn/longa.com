@@ -676,6 +676,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2555515636286050558" datatype="html">
+        <source>Withdrawal failed: </source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2564888201364355486" datatype="html">
         <source>Rates (in USD):</source>
         <target/>
@@ -1317,6 +1321,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5268426344625174607" datatype="html">
+        <source>Couldn't create transaction session, try later.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5303154840514040213" datatype="html">
         <source>Oklahoma</source>
         <target/>
@@ -1369,6 +1377,10 @@
         <source>South Carolina</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="5460596733824016360" datatype="html">
+        <source><x id="AMOUNT"/> LC withdrawn from your account.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="5479903040249546535" datatype="html">
         <source>France, Metropolitan</source>

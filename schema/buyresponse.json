@@ -1,0 +1,28 @@
+{
+  "$schema": "",
+  "title": "BuyCreditResponse",
+  "description": "DTO for paypal details",
+  "type": "object",
+  "properties": {
+    "server": {
+      "description": "The server to use for responses.",
+      "type": "string"
+    },
+    "invoice": {
+      "type": "string",
+      "$_name": "invoiceId",
+      "description": "The invoice to trigger on the server."
+    },
+    "paypal_url": {
+      "type": "string",
+      "$_name": "url",
+      "description": "A preconfigured URI to compare to."
+    },
+    "custom": {
+      "type": "string",
+      "$_name": "sid",
+      "description": "Pass-through variable for your own tracking purposes."
+    }
+  },
+  "required": "$_all"
+}

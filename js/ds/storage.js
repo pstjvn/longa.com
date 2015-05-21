@@ -40,12 +40,57 @@ longa.storage.alertIndexSymbol_ = 'lastalert';
 
 
 /**
+ * The symbol under which to save the last alert index received.
+ * @type {string}
+ * @final
+ * @private
+ */
+longa.storage.stashTsSymbol_ = 'lsts';
+
+
+/**
  * Saves the credentials for later re-logins.
  * @param {!longa.gen.dto.LoginDetails} credentials The details to save.
  */
 longa.storage.storeCredentials = function(credentials) {
   longa.storage.storage_.set(longa.storage.credentialsSymbol_,
       credentials);
+};
+
+
+/**
+ * Stashes the credentials for returning user from paypal.
+ * @param {!longa.gen.dto.LoginDetails} credentials
+ * @param {!string} key
+ */
+longa.storage.stashCredentials = function(credentials, key) {
+  longa.storage.storage_.set(key, credentials);
+  longa.storage.storage_.set(longa.storage.stashTsSymbol_, goog.now());
+};
+
+
+/**
+ * Unstashes previuosly stored credentials.
+ * @param {!string} key
+ * @return {?longa.gen.dto.LoginDetails}
+ */
+longa.storage.unstashCredentials = function(key) {
+  var res = null;
+  try {
+    var lastStashTs = longa.storage.storage_.get(longa.storage.stashTsSymbol_);
+    if (goog.isNumber(lastStashTs) &&
+        goog.now() - lastStashTs < (15 * 60 * 1000)) {
+      var result = longa.storage.storage_.get(key);
+      if (goog.isDefAndNotNull(result)) {
+        goog.asserts.assertObject(result);
+        var ld = new longa.gen.dto.LoginDetails();
+        ld.fromJSON(result);
+        res = ld;
+      }
+    }
+    longa.storage.storage_.remove(key);
+  } catch (e) { }
+  return res;
 };
 
 

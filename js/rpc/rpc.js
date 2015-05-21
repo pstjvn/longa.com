@@ -6,17 +6,12 @@ goog.require('goog.debug');
 goog.require('goog.json');
 goog.require('goog.log');
 goog.require('longa.gen.dto.Alerts');
+goog.require('longa.gen.dto.BuyCreditResponse');
 goog.require('longa.gen.dto.Profile');
 goog.require('longa.gen.dto.ReportList');
 goog.require('longa.gen.dto.User');
 goog.require('longa.gen.dto.UserBalance');
 goog.require('pstj.resource');
-
-goog.scope(function() {
-var Alerts = longa.gen.dto.Alerts;
-var Profile = longa.gen.dto.Profile;
-var User = longa.gen.dto.User;
-var UserBalance = longa.gen.dto.UserBalance;
 
 
 /** Implements the RPC for the Longa.com project */
@@ -69,7 +64,7 @@ longa.rpc_.Main = goog.defineClass(null, {
    * RPC call: /log implementation.
    *
    * @param {longa.gen.dto.LoginDetails} request
-   * @return {!goog.Promise<!User>}
+   * @return {!goog.Promise<!longa.gen.dto.User>}
    */
   login: function(request) {
 
@@ -124,7 +119,7 @@ longa.rpc_.Main = goog.defineClass(null, {
 
   /**
    * PRC call: /bal
-   * @return {!goog.Promise<!UserBalance>}
+   * @return {!goog.Promise<!longa.gen.dto.UserBalance>}
    */
   getBalance: function() {
 
@@ -174,6 +169,53 @@ longa.rpc_.Main = goog.defineClass(null, {
   },
 
   /**
+   * RPC /buy_credit
+   * @param {!number} amount The LC credit to purchase.
+   * @return {!goog.Promise<!longa.gen.dto.BuyCreditResponse>}
+   */
+  buyCredit: function(amount) {
+    goog.log.info(this.logger_, 'Attempting to purchase credits: ' + amount);
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': 'buy_credit',
+        'amount': amount.toString()
+      }, goog.bind(function(err, result) {
+        try {
+          var pp = this.handleBuyCreditResponse(err, result);
+        } catch (e) {
+          goog.log.error(this.logger_, 'Cannot retrieve paypal payment info' +
+              e.message);
+          reject(e);
+          return;
+        }
+        resolve(pp);
+      }, this));
+    }, this);
+  },
+
+  /**
+   * RPC /withdrawal
+   * @param {!number} amount The LC credits to withdraw.
+   * @return {!goog.Promise<boolean>}
+   */
+  withdrawCredit: function(amount) {
+    goog.log.info(this.logger_, 'Attempting withdrawal credits: ' + amount);
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': 'withdrawal',
+        'amount': amount.toString()
+      }, goog.bind(function(err, result) {
+        try {
+          this.handleRawResponse_(err, result);
+        } catch (e) {
+          reject(e);
+        }
+        resolve(true);
+      }, this));
+    }, this);
+  },
+
+  /**
    * RPC call: /alert
    * @param {number=} opt_beginAfter The alert ID after which to begin the
    *    collection.
@@ -205,7 +247,7 @@ longa.rpc_.Main = goog.defineClass(null, {
 
   /**
    * RPC call: /profile
-   * @return {!goog.Promise<!Profile>}
+   * @return {!goog.Promise<!longa.gen.dto.Profile>}
    */
   getProfile: function() {
     goog.log.fine(this.logger_, 'Retriving profile info');
@@ -230,8 +272,8 @@ longa.rpc_.Main = goog.defineClass(null, {
   /**
    * RPC call: /profile (POST)
    * Update the user profile on the server.
-   * @param {!Profile} profile
-   * @return {!goog.Promise<!Profile>}
+   * @param {!longa.gen.dto.Profile} profile
+   * @return {!goog.Promise<!longa.gen.dto.Profile>}
    */
   updateProfile: function(profile) {
     goog.log.info(this.logger_, 'Updating profile');
@@ -283,11 +325,11 @@ longa.rpc_.Main = goog.defineClass(null, {
    * @param {?} loginResult The login result if the call was successfully
    *    completed.
    * @protected
-   * @return {!User}
+   * @return {!longa.gen.dto.User}
    */
   handleLoginResult: function(err, loginResult) {
     this.handleRawResponse_(err, loginResult);
-    var credentials = new User();
+    var credentials = new longa.gen.dto.User();
     credentials.fromJSON(loginResult);
     return credentials;
   },
@@ -297,11 +339,11 @@ longa.rpc_.Main = goog.defineClass(null, {
    * @param {Error?} err The error if there was any in the RPC link.
    * @param {?} balance The request's result from server.
    * @protected
-   * @return {!UserBalance}
+   * @return {!longa.gen.dto.UserBalance}
    */
   handleBalanceResponse: function(err, balance) {
     this.handleRawResponse_(err, balance);
-    var b = new UserBalance();
+    var b = new longa.gen.dto.UserBalance();
     b.fromJSON(balance);
     return b;
   },
@@ -326,14 +368,28 @@ longa.rpc_.Main = goog.defineClass(null, {
    * @param {Error?} err The error if there was any in the RPC link.
    * @param {?} alerts The request's result from server.
    * @protected
-   * @return {!Alerts}
+   * @return {!longa.gen.dto.Alerts}
    */
   handleAlertsResponse: function(err, alerts) {
     this.handleRawResponse_(err, alerts);
     // TODO: We need fix here, please contact server admin to fix it there.
     this.fixAlertsResponse_(alerts);
-    var a = new Alerts();
+    var a = new longa.gen.dto.Alerts();
     a.fromJSON(alerts);
+    return a;
+  },
+
+  /**
+   * Handles the raw responce from server fro buy_credit.
+   * @param {Error?} err The error if one was creted in the network layer.
+   * @param {?} pp The result from server.
+   * @protected
+   * @return {!longa.gen.dto.BuyCreditResponse}
+   */
+  handleBuyCreditResponse: function(err, pp) {
+    this.handleRawResponse_(err, pp);
+    var a = new longa.gen.dto.BuyCreditResponse();
+    a.fromJSON(pp);
     return a;
   },
 
@@ -342,11 +398,11 @@ longa.rpc_.Main = goog.defineClass(null, {
    * @param {Error?} err The error if one was creating by the network stack.
    * @param {?} profile The raw server response.
    * @protected
-   * @return {!Profile}
+   * @return {!longa.gen.dto.Profile}
    */
   handleProfileResult: function(err, profile) {
     this.handleRawResponse_(err, profile);
-    var p = new Profile();
+    var p = new longa.gen.dto.Profile();
     p.fromJSON(profile);
     return p;
   },
@@ -432,5 +488,3 @@ longa.rpc_.Calls = {
  * @type {longa.rpc_.Main}
  */
 longa.rpc = new longa.rpc_.Main();
-
-});  // goog.scope

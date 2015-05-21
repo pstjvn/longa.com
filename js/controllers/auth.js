@@ -1,9 +1,13 @@
 goog.provide('longa.control.Auth');
 
+goog.require('goog.asserts');
+goog.require('goog.log');
+goog.require('goog.string');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.gen.dto.User');
 goog.require('longa.rpc');
+goog.require('longa.storage');
 goog.require('pstj.control.Control');
 
 goog.scope(function() {
@@ -33,6 +37,18 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
      * @type {longa.gen.dto.LoginDetails}
      */
     this.lastLoginDetails_ = null;
+    /**
+     * Kept reference to the last successful login credentials.
+     * We use this to keep credentials around for when the user
+     * navigates to paypal to finish his purchase.
+     * Upon purchase we store the credentials temporarily on LS and
+     * when the user comes back from paypal we reuse them and clean them up
+     * for a seamless experience for the user.
+     *
+     * @private
+     * @type {longa.gen.dto.LoginDetails}
+     */
+    this.currentLoginCredentials_ = null;
     /**
      * @private
      * @type {goog.debug.Logger}
@@ -88,6 +104,7 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
       longa.storage.storeCredentials(goog.asserts.assertInstanceof(
           this.lastLoginDetails_, longa.gen.dto.LoginDetails));
     }
+    this.currentLoginCredentials_ = this.lastLoginDetails_;
   },
 
   /**
@@ -111,6 +128,32 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
     // Clear the reference as we do not need it anymore.
     this.lastLoginDetails_ = null;
     this.push(longa.ds.Topic.USER_AUTH_CHANGED);
+  },
+
+  /**
+   * Stores the credentials for returning of the user and autologin.
+   * Generates a unique string and stores the credentials under it.
+   * @return {!string} The unique string to use to retrieve credentials.
+   */
+  getPPRecoverKey: function() {
+    if (!goog.isNull(this.currentLoginCredentials_)) {
+      var key = goog.asserts.assertString(goog.string.getRandomString());
+      longa.storage.stashCredentials(
+          goog.asserts.assertInstanceof(this.currentLoginCredentials_,
+              longa.gen.dto.LoginDetails), key);
+      return key;
+    } else {
+      throw new Error('Does not have credentials.');
+    }
+  },
+
+  /**
+   * Attempts to use previous stashed key to recover login info and perform
+   * log in - recover after paypal.
+   * @param {!string} key The key of the stash.
+   */
+  attemptLoginWithKey: function(key) {
+    // TODO: implement this.
   }
 });
 goog.addSingletonGetter(longa.control.Auth);

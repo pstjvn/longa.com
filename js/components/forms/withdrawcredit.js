@@ -1,6 +1,8 @@
 goog.provide('longa.ui.WithdrawCredit');
 
 goog.require('goog.ui.registry');
+goog.require('longa.control.Toaster');
+goog.require('longa.strings');
 goog.require('longa.template');
 goog.require('longa.ui.BuyCredit');
 goog.require('longa.ui.BuyCreditRenderer');
@@ -20,6 +22,48 @@ longa.ui.WithdrawCredit = goog.defineClass(longa.ui.BuyCredit, {
     longa.ui.BuyCredit.call(this, opt_content, opt_renderer, opt_domHelper);
     /** @override */
     this.ownScreen = longa.ds.Screen.BALANCE_WIDHTRAW;
+    /**
+     * Store the last amount we are operating on.
+     * @type {!number}
+     * @private
+     */
+    this.lastAmount_ = 0;
+  },
+
+  /** @override */
+  submitHandler: function() {
+    if (this.getInput().isValid() && !this.getInput().isEmpty()) {
+      this.getSubmitButton().setEnabled(false);
+      this.lastAmount_ = this.getAmount();
+      longa.control.Exchange.getInstance()
+          .withdrawCredit(this.lastAmount_)
+          .then(this.onWithdraw_, this.onFail_, this)
+          .thenAlways(this.restoreButton, this);
+    }
+  },
+
+  /**
+   * Handles successful withdrawal.
+   * @private
+   */
+  onWithdraw_: function() {
+    longa.control.Toaster.getInstance().addToast(
+        longa.strings.onWithdrawSuccess({
+          amount: this.lastAmount_
+        }).toString(), null, null);
+  },
+
+  /**
+   * Handle failed requests.
+   * @param {*=} opt_error
+   * @private
+   */
+  onFail_: function(opt_error) {
+    if (goog.isDefAndNotNull(opt_error)) {
+      longa.control.Toaster.getInstance().addToast(
+          longa.strings.onWithdrawFail(null).toString() +
+          /** @type {!Error} */(opt_error).message, null, null);
+    }
   }
 });
 

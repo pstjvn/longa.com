@@ -31,6 +31,27 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     longa.ui.Form.call(this, opt_content, opt_renderer, opt_domHelper);
+    /**
+     * The 'own' screen number. Used to determine when the instance is
+     * requested to be shown and sync the fab button.
+     * @type {number}
+     * @protected
+     */
+    this.ownScreen = longa.ds.Screen.BALANCE_BUY;
+    /**
+     * Current state of the button.
+     * @type {boolean}
+     */
+    this.buttonShown_ = false;
+    /**
+     * @private
+     * @type {goog.async.Delay}
+     */
+    this.buttonDelay_ = new goog.async.Delay(this.updateFab_, 400, this);
+    /**
+     * @private
+     * @type {goog.async.Delay}
+     */
     this.backDelay_ = new goog.async.Delay(function() {
       this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
     }, 200, this);
@@ -40,6 +61,10 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
      */
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
+    this.control_.listen(longa.ds.Topic.SHOW_SCREEN, this.handleScreenSwitch_);
+    this.registerDisposable(this.buttonDelay_);
+    this.registerDisposable(this.backDelay_);
+    this.registerDisposable(this.control_);
   },
 
   /** @inheritDoc */
@@ -49,6 +74,37 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
         this.handleInputChange);
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         this.handleActionButtons);
+  },
+
+  /**
+   * Handles changes in screen.
+   * @param {number} screen The screen number to show.
+   * @private
+   */
+  handleScreenSwitch_: function(screen) {
+    if (screen == this.ownScreen) {
+      if (!this.buttonShown_) {
+        this.buttonShown_ = true;
+        this.buttonDelay_.start();
+      }
+    } else if (this.buttonShown_) {
+      this.buttonShown_ = false;
+      this.buttonDelay_.start();
+    }
+  },
+
+  /**
+   * Sets the FAB state.
+   * @private
+   */
+  updateFab_: function() {
+    if (this.buttonShown_) {
+      this.getChildAt(this.getChildCount() - 1).addClassName(
+          goog.getCssName('shown'));
+    } else {
+      this.getChildAt(this.getChildCount() - 1).removeClassName(
+          goog.getCssName('shown'));
+    }
   },
 
   /**

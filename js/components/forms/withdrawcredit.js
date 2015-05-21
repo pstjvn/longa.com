@@ -18,6 +18,8 @@ longa.ui.WithdrawCredit = goog.defineClass(longa.ui.BuyCredit, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     longa.ui.BuyCredit.call(this, opt_content, opt_renderer, opt_domHelper);
+    /** @override */
+    this.ownScreen = longa.ds.Screen.BALANCE_WIDHTRAW;
   }
 });
 

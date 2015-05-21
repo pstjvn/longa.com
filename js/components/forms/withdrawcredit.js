@@ -37,7 +37,7 @@ longa.ui.WithdrawCredit = goog.defineClass(longa.ui.BuyCredit, {
       this.lastAmount_ = this.getAmount();
       longa.control.Exchange.getInstance()
           .withdrawCredit(this.lastAmount_)
-          .then(this.onWithdraw_, this.onFail_, this)
+          .then(this.onWithdraw_, null, this)
           .thenAlways(this.restoreButton, this);
     }
   },
@@ -51,19 +51,6 @@ longa.ui.WithdrawCredit = goog.defineClass(longa.ui.BuyCredit, {
         longa.strings.onWithdrawSuccess({
           amount: this.lastAmount_
         }).toString(), null, null);
-  },
-
-  /**
-   * Handle failed requests.
-   * @param {*=} opt_error
-   * @private
-   */
-  onFail_: function(opt_error) {
-    if (goog.isDefAndNotNull(opt_error)) {
-      longa.control.Toaster.getInstance().addToast(
-          longa.strings.onWithdrawFail(null).toString() +
-          /** @type {!Error} */(opt_error).message, null, null);
-    }
   }
 });
 

@@ -5,8 +5,12 @@ goog.require('goog.Promise');
 goog.require('goog.debug');
 goog.require('goog.json');
 goog.require('goog.log');
+goog.require('longa.control.Toaster');
+goog.require('longa.ds.Screen');
+goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.Alerts');
 goog.require('longa.gen.dto.BuyCreditResponse');
+goog.require('longa.gen.dto.Error');
 goog.require('longa.gen.dto.Profile');
 goog.require('longa.gen.dto.ReportList');
 goog.require('longa.gen.dto.User');
@@ -208,6 +212,7 @@ longa.rpc_.Main = goog.defineClass(null, {
         try {
           this.handleRawResponse_(err, result);
         } catch (e) {
+          this.defaultErrorHandler(result);
           reject(e);
         }
         resolve(true);
@@ -462,6 +467,49 @@ longa.rpc_.Main = goog.defineClass(null, {
     goog.array.forEach(goog.asserts.assertArray(alerts['alert']), function(a) {
       a['provider_acctid'] = parseInt(a['provider_acctid'], 10);
     });
+  },
+
+  /**
+   * @param {Object<string, *>} packet The server packet.
+   * @protected
+   */
+  defaultErrorHandler: function(packet) {
+    var error = this.generateErrorStruct_(packet);
+    longa.control.Toaster.getInstance().addToast(
+        error.message, (error.redirect != '' ?
+            goog.bind(function(screen) {
+              longa.control.Toaster.getInstance().push(
+                  longa.ds.Topic.SHOW_SCREEN, screen);
+            }, null, this.resolveScreen_(error.redirect)) : null),
+        null, (error.redirect != '' ? 'FIX IT' : undefined));
+  },
+
+  /**
+   * Resolves server screen names to local screen names.
+   * @param {!string} screen_name
+   * @return {!number}
+   * @private
+   */
+  resolveScreen_: function(screen_name) {
+    switch (screen_name) {
+      case 'LOGIN':
+        return longa.ds.Screen.LOGIN;
+      case 'PROFILE':
+        return longa.ds.Screen.PROFILE;
+      default: throw new Error('Cannot resolve screen name: ' + screen_name);
+    }
+  },
+
+  /**
+   * Generates an Error packget
+   * @private
+   * @param {Object<string, *>} packet The server packet.
+   * @return {!longa.gen.dto.Error}
+   */
+  generateErrorStruct_: function(packet) {
+    var a = new longa.gen.dto.Error();
+    a.fromJSON(packet);
+    return a;
   }
 });
 

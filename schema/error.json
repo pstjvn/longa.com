@@ -1,0 +1,18 @@
+{
+  "$schema": "",
+  "title": "Error",
+  "description": "DTO for errors",
+  "type": "object",
+  "properties": {
+    "msg": {
+      "description": "The server to use for responses.",
+      "type": "string",
+      "$_name": "message"
+    },
+    "redirect": {
+      "type": "string",
+      "description": "If we should navigate internally."
+    }
+  },
+  "required": "$_all"
+}

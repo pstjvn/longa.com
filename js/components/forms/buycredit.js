@@ -51,20 +51,12 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
     this.buttonDelay_ = new goog.async.Delay(this.updateFab_, 400, this);
     /**
      * @private
-     * @type {goog.async.Delay}
-     */
-    this.backDelay_ = new goog.async.Delay(function() {
-      this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
-    }, 200, this);
-    /**
-     * @private
      * @type {pstj.control.Control}
      */
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
     this.control_.listen(longa.ds.Topic.SHOW_SCREEN, this.handleScreenSwitch_);
     this.registerDisposable(this.buttonDelay_);
-    this.registerDisposable(this.backDelay_);
     this.registerDisposable(this.control_);
   },
 
@@ -144,7 +136,7 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
   handleActionButtons: function(e) {
     if (e.target instanceof pstj.material.Button &&
         /** @type {pstj.material.Button} */(e.target).getAction() == 'goback') {
-      this.backDelay_.start();
+      this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
     } else {
       this.submitHandler();
     }
@@ -238,7 +230,9 @@ longa.ui.BuyCreditRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.BuyCredit(model);
+    return longa.template.ExchangeForm({
+      withdraw: false
+    });
   },
 
   /**

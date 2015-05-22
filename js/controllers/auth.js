@@ -145,15 +145,6 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
     } else {
       throw new Error('Does not have credentials.');
     }
-  },
-
-  /**
-   * Attempts to use previous stashed key to recover login info and perform
-   * log in - recover after paypal.
-   * @param {!string} key The key of the stash.
-   */
-  attemptLoginWithKey: function(key) {
-    // TODO: implement this.
   }
 });
 goog.addSingletonGetter(longa.control.Auth);

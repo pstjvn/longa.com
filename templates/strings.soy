@@ -55,3 +55,29 @@
 {template .onWithdrawFail kind="text"}
   {msg desc=""}Withdrawal failed:{sp}{/msg}
 {/template}
+
+/** When returning from paypal payment */
+{template .fromPayPalOK}
+  {@param amount: string}
+  {msg desc=""}Successfully credited with {$amount} LC.{/msg}
+{/template}
+
+/** WHen returning from canceled paypal payment */
+{template .fromPayPalCancel}
+  {msg desc=""}Payment canceled{/msg}
+{/template}
+
+/**
+ * Message when we attempted to log in with stored credentials but we did not
+ * succeed
+ */
+{template .fromPayPalUnknown}
+  {msg desc=""}You seem to come from PayPal session, but we were not able to log you in. Please, try with your credentials!{/msg}
+{/template}
+
+/**
+ * Message for when the user comes from paypal but we used stored credentials.
+ */
+{template .hadKeyButUsedStored}
+  {msg desc=""}You seem to come from PayPal session, but we were not able to verify that, instead you are logged in with your stored credentials.{/msg}
+{/template}

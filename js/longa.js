@@ -1,6 +1,7 @@
 goog.provide('longa.App');
 
 goog.require('goog.Promise');
+goog.require('goog.Uri');
 goog.require('goog.async.Delay');
 goog.require('goog.labs.net.xhr');
 goog.require('goog.log');
@@ -17,6 +18,7 @@ goog.require('longa.ds.Topic');
 goog.require('longa.ds.utils');
 goog.require('longa.rpc');
 goog.require('longa.storage');
+goog.require('longa.strings');
 goog.require('longa.template');
 goog.require('longa.ui.Main');
 goog.require('longa.ui.StartScreen');
@@ -57,6 +59,17 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @private
      */
     this.installStylesPromise_ = null;
+    /**
+     * If a key was used to log in the user (as opposite to regulr login).
+     * @type {boolean}
+     * @private
+     */
+    this.loggedWithKey_ = false;
+    /**
+     * @private
+     * @type {boolean}
+     */
+    this.hadKey_ = false;
     this.init();
   },
 
@@ -100,8 +113,22 @@ longa.App = goog.defineClass(pstj.control.Control, {
     // Start preloading google apis ASAP as it might take over 2 seconds.
     longa.control.viz.load();
 
+    var detail = null;
 
-    var detail = longa.storage.retrieveCredentials();
+    var uri = new goog.Uri(window.location.href);
+    var key = uri.getParameterValue('key');
+    if (goog.isString(key)) {
+      this.hadKey_ = true;
+      detail = longa.storage.unstashCredentials(key);
+      if (goog.isNull(detail)) {
+        detail = longa.storage.retrieveCredentials();
+      } else {
+        this.loggedWithKey_ = true;
+      }
+    } else {
+      detail = longa.storage.retrieveCredentials();
+    }
+
     // If we have stired credentials attempt to load data and then render the
     // app.
     // If not - preload the start screen images and render the start screen.
@@ -115,10 +142,31 @@ longa.App = goog.defineClass(pstj.control.Control, {
               // Start loading data from server and only the show main screen.
               this.mainApp_ = new longa.ui.Main();
               this.mainApp_.render(document.body);
-              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
               // Start preload of FAQ images as they are not requested until
               // FAQ is selected and then they cannot load fast enough.
               this.preloadFaqImages_();
+              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+              if (this.hadKey_) {
+                if (this.loggedWithKey_) {
+                  var uri = new goog.Uri(window.location.href);
+                  var action = uri.getParameterValue('a');
+                  var amount = uri.getParameterValue('amount');
+                  if (action == 'ok') {
+                    longa.control.Toaster.getInstance().addToast(
+                        longa.strings.fromPayPalOK({
+                          amount: amount || '0'
+                        }).toString(), null, null);
+                  } else {
+                    longa.control.Toaster.getInstance().addToast(
+                        longa.strings.fromPayPalCancel(null).toString(),
+                        null, null);
+                  }
+                } else {
+                  longa.control.Toaster.getInstance().addToast(
+                      longa.strings.hadKeyButUsedStored(null).toString(),
+                      null, null);
+                }
+              }
             } else {
               // Login attempted but failed
               // Make sure the styles for the app has been loaded
@@ -132,12 +180,17 @@ longa.App = goog.defineClass(pstj.control.Control, {
                 this.mainApp_ = new longa.ui.Main();
                 this.mainApp_.render(document.body);
                 this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
-                longa.control.Toaster.getInstance().addToast(
-                    longa.template.CannotLoginWithSavedCredentials(
-                        null).toString(),
-                    null, null);
-
-              });
+                if (!this.hadKey_) {
+                  longa.control.Toaster.getInstance().addToast(
+                      longa.template.CannotLoginWithSavedCredentials(
+                          null).toString(),
+                      null, null);
+                } else {
+                  longa.control.Toaster.getInstance().addToast(
+                      longa.strings.fromPayPalUnknown(null).toString(),
+                      null, null);
+                }
+              }, null, this);
             }
           });
       longa.control.Auth.getInstance().login(detail, false);

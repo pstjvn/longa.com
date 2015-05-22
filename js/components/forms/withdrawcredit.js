@@ -68,7 +68,9 @@ longa.ui.WithdrawCreditRenderer = goog.defineClass(longa.ui.BuyCreditRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.WithdrawCredit(model);
+    return longa.template.ExchangeForm({
+      withdraw: true
+    });
   },
 
   /** @override */

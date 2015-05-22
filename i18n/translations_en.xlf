@@ -111,6 +111,10 @@
         <source>Country</source>
         <target/>
       </trans-unit>
+      <trans-unit id="522433964171374012" datatype="html">
+        <source>Shoud be a number</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="533695704331142149" datatype="html">
         <source>Signal Feed is a feed that is created by signal providers to allow investors to follow their signal trade ideas. The signal feeds is managed in real-time and allows investors to act on each signal (buy or sell signal stock or stock option). All data is collected in real-time and is audited to provide the best available performance benchmark. Please, note that historical performance does not guarantee future results.</source>
         <target/>
@@ -647,6 +651,10 @@
         <source>Withdraw LC from your account</source>
         <target/>
       </trans-unit>
+      <trans-unit id="2413090538593854421" datatype="html">
+        <source>You seem to come from PayPal session, but we were not able to verify that, instead you are logged in with your stored credentials.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2427223107800831324" datatype="html">
         <source>Italy</source>
         <target/>
@@ -1116,10 +1124,6 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
-      <trans-unit id="4419652485130789080" datatype="html">
-        <source>Shoud be a natural number</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="4432846451354662736" datatype="html">
         <source>Congo, The Democratic Republic</source>
         <target/>
@@ -1291,6 +1295,10 @@
         <source>request password</source>
         <target/>
         <note priority="1" from="description">button label</note>
+      </trans-unit>
+      <trans-unit id="5141261616544171122" datatype="html">
+        <source>Successfully credited with <x id="AMOUNT"/> LC.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="5144971260883559528" datatype="html">
         <source>Yemen</source>
@@ -1904,6 +1912,10 @@
         <target/>
         <note priority="1" from="description">swiper tile title</note>
       </trans-unit>
+      <trans-unit id="7668573900706947904" datatype="html">
+        <source>Payment canceled</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="7676611321967250180" datatype="html">
         <source>Serbia</source>
         <target/>
@@ -2190,6 +2202,10 @@
         <source>Price</source>
         <target/>
         <note priority="1" from="description">Price label</note>
+      </trans-unit>
+      <trans-unit id="8898077494933529982" datatype="html">
+        <source>You seem to come from PayPal session, but we were not able to log you in. Please, try with your credentials!</source>
+        <target/>
       </trans-unit>
       <trans-unit id="8906971653449314921" datatype="html">
         <source>Longa uses pay-for-performance service model. The service charges are only applied upon profitable transactions. Longa allows signal providers to charge fees (L-Credits) for each 1% of the profit (Profit Charge). Each signal provider can select a different fee model that corresponds to their signal feed quality and expertise. For example: The signal provider selects to charge 1 L-Credit for each 1% profit (Profit Charge). He provides a buy trade signal when the stock is $100 USD and a sell trade signal when the stock is $110. The calculated profit is 10%. Based on the Profit Charge of 1 LC, the service charge will be 10 L-Credits (1 L-Credits = $1 USD) for every subscriber that has subscribed to the signal feed. If there are 100 subscribers subscribed to this signal feed then the Profit Charge will be 1000 LC less the system charges that amount to 40%, so the total will be 600 LC that can be converted to $600 USD. Please, note that signal providers can define higher Profit Charge to increase their income on profitable signal feeds.</source>

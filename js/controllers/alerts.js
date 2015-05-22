@@ -95,6 +95,7 @@ longa.control.Alerts = goog.defineClass(pstj.control.Control, {
       try {
         longa.data.alerts.merge(alerts);
       } catch (e) {
+        goog.log.error(this.logger_, e.message);
         // TODO: show something useful to the user.
       }
     }
@@ -107,8 +108,10 @@ longa.control.Alerts = goog.defineClass(pstj.control.Control, {
    * @param {*} e The error that occured from loading the alerts.
    */
   onFail_: function(e) {
+    goog.log.error(this.logger_, e.message);
     this.createAlertLoader_(this.alertLoadingDelay_);
-    this.push(longa.ds.Topic.CONTROL_ERROR, e);
+    longa.control.Toaster.getInstance().addToast(
+        'Could not update alerts.', null, null);
   },
 
   /**
@@ -151,6 +154,14 @@ longa.control.Alerts = goog.defineClass(pstj.control.Control, {
    */
   onAlertUpdateFired: function() {
     this.get();
+  },
+
+  /**
+   * Loads the old alerts.
+   */
+  getOld: function() {
+    this.destroyAlertLoader_();
+    return longa.rpc.getAlerts(0).then(this.onLoad_, this.onFail_, this);
   },
 
   statics: {

@@ -1753,6 +1753,10 @@
         <target/>
         <note priority="1" from="description">button label</note>
       </trans-unit>
+      <trans-unit id="7048178492826430021" datatype="html">
+        <source>Show new alerts</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="7065118556791646705" datatype="html">
         <source>Cameroon</source>
         <target/>

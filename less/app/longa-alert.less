@@ -1,4 +1,6 @@
+@import "../../../pstj/less/material/layout";
 @import "../../../pstj/less/material/typography";
+@import "colors";
 
 .longa-app-alert {
   /*default from .body1*/
@@ -20,6 +22,19 @@
     opacity: .56;
   }
   &-user {
-    color: #009174;
+    color: @longa-accent-color;
+  }
+}
+
+.longa-app-alerts {
+  &-button-container {
+    &:extend(.center);
+    &:extend(.horizontal);
+    &:extend(.end-justified);
+  }
+
+  &-note {
+    padding-top: 20px;
+    .body2(black);
   }
 }

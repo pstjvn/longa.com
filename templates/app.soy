@@ -39,6 +39,11 @@
   {msg desc="button label"}Go to alerts{/msg}
 {/template}
 
+/** Button label */
+{template .ShowNewAlerts}
+  {msg desc=""}Show new alerts{/msg}
+{/template}
+
 /** Message when login with existing credentials from storgae did not work. */
 {template .CannotLoginWithSavedCredentials}
   {msg desc="error message"}Could not login, please re-enter your credentials{/msg}
@@ -811,17 +816,21 @@
 {template .Alerts}
   <div class="{css longa-app-alerts}">
     <section class="{css longa-app-alerts-section}">
-      <div>{msg desc="Message when no alerts are present for this account"}No new signals for your account.{/msg}</div>
-      {call pstj.material.template.Button}
-        {param icon: 'none' /}
-        {param ink: true /}
-        {param content kind="text"}
-          {msg desc="Button label"}show old alerts{/msg}
-        {/param}
-      {/call}
-    </section class="{css longa-app-alerts-section}">
+      <div class="{css longa-app-alerts-note}">
+        {msg desc="Message when no alerts are present for this account"}No new signals for your account.{/msg}
+      </div>
+      <div is class="{css core-element} {css longa-app-alerts-button-container}">
+        {call pstj.material.template.Button}
+          {param icon: 'none' /}
+          {param ink: true /}
+          {param content kind="text"}
+            {msg desc="Button label"}show old alerts{/msg}
+          {/param}
+        {/call}
+      </div>
+    </section>
+    <section class="{css longa-app-alerts-section}">
       {call pstj.material.template.CoreElement /}
-    <section>
     </section>
   </div>
 {/template}
@@ -831,12 +840,14 @@
   {@param text: string}
   {@param username: string}
   {@param date: string}
-  {@param read: number}
-  <div class="{css longa-app-alert}{if $read == 1}{css longa-app-alert-read}{/if}">
-    <div class="{css longa-app-alert-message}">{$text}</div>
-      <div class="{css longa-app-alert-from}">
-        <div>
-          <span class="{css longa-app-alert-user}">{$username}</span>on{sp}<span>{$date}</span>
+  {@param read: bool}
+  <div class="{css longa-app-alert}{if $read}{sp}{css longa-app-alert-read}{/if}">
+    <div class="{css longa-app-alert-record}">
+      <div class="{css longa-app-alert-message}">{$text}</div>
+        <div class="{css longa-app-alert-from}">
+          <div>
+            <span class="{css longa-app-alert-user}">{$username}</span>{sp}on{sp}<span>{$date}</span>
+          </div>
         </div>
       </div>
     </div>

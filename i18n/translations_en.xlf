@@ -464,6 +464,11 @@
         <source>Longa  utilizes real-time market data quote information and does not manipulate signal  performance. The marketplace collects all trade signals, calculates their  performance, and displays the results on the web site.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="1890300073702152532" datatype="html">
+        <source>E-mail</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="1902685080273086420" datatype="html">
         <source>District of Columbia</source>
         <target/>
@@ -714,11 +719,6 @@
         <source>Djibouti</source>
         <target/>
         <note priority="1" from="description">country name</note>
-      </trans-unit>
-      <trans-unit id="2658914181957293925" datatype="html">
-        <source>PayPal E-main</source>
-        <target/>
-        <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
       <trans-unit id="2686294869399748405" datatype="html">
         <source>Alaska</source>
@@ -2106,6 +2106,11 @@
         <source>Republic of Kosovo</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="8356895804466136765" datatype="html">
+        <source>PayPal E-mail</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
       <trans-unit id="8420291181849337180" datatype="html">
         <source>Venezuela</source>

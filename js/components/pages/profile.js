@@ -1,12 +1,12 @@
 goog.provide('longa.ui.Profile');
 
 goog.require('goog.ui.registry');
-goog.require('pstj.material.Element');
+goog.require('longa.ui.Form');
 goog.require('pstj.material.ElementRenderer');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.Profile = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Form} */
+longa.ui.Profile = goog.defineClass(longa.ui.Form, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -16,7 +16,7 @@ longa.ui.Profile = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    longa.ui.Form.call(this, opt_content, opt_renderer, opt_domHelper);
   }
 });
 
@@ -34,7 +34,14 @@ longa.ui.ProfileRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.ui.Profile(model);
+    return longa.template.RegistrationForm({
+      registration: false
+    });
+  },
+
+  /** @inheritDoc */
+  getStructuralCssClass: function() {
+    return goog.getCssName('longa-registration-form');
   },
 
   statics: {

@@ -16,6 +16,7 @@ goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.ds.utils');
+goog.require('longa.profile');
 goog.require('longa.rpc');
 goog.require('longa.storage');
 goog.require('longa.strings');
@@ -329,7 +330,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
   updateAll: function() {
     goog.Promise.all([
       this.retrieveBalance(),
-      longa.control.Alerts.getInstance().get()
+      longa.control.Alerts.getInstance().get(),
+      longa.profile.get()
     ]).then(function(data) {
       goog.log.info(this.logger_, 'Update all finished');
       this.push(longa.ds.Topic.USER_BALANCE_CHANGE);

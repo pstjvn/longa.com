@@ -1,6 +1,7 @@
 goog.provide('longa.data');
 
 goog.require('longa.ds.Alerts');
+goog.require('longa.gen.dto.Profile');
 goog.require('longa.gen.dto.User');
 
 
@@ -53,3 +54,10 @@ longa.data.preloadFaqImages = [
  * @type {longa.ds.Alerts}
  */
 longa.data.alerts = new longa.ds.Alerts();
+
+
+/**
+ * Global access to profile information.
+ * @type {longa.gen.dto.Profile}
+ */
+longa.data.profile = new longa.gen.dto.Profile();

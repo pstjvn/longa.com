@@ -1426,6 +1426,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5727306858816641681" datatype="html">
+        <source>Your profile was successfully updated.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5814468296071715981" datatype="html">
         <source>Malawi</source>
         <target/>

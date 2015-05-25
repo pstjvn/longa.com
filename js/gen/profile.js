@@ -18,7 +18,7 @@ var a = goog.asserts;
 longa.gen.dto.Profile = goog.defineClass(pstj.ds.DtoBase, {
   constructor: function() {
     pstj.ds.DtoBase.call(this);
-    /**@type {!string} */
+    /**@type {string} */
     this.run = '';
     /**@type {!string} */
     this.firstName = '';
@@ -40,11 +40,16 @@ longa.gen.dto.Profile = goog.defineClass(pstj.ds.DtoBase, {
     this.phone = '';
     /**@type {!string} */
     this.pp_email = '';
+    /**@type {string} */
+    this.password = '';
+    /**@type {string} */
+    this.confirmPassword = '';
   },
 
   /**@override */
   fromJSON: function(map) {
-    this.run = a.assertString(map['run']);
+    this.run = a.assertString((goog.isString(map['run']) ?
+        map['run'] : ''));
     this.firstName = a.assertString(map['fname']);
     this.lastName = a.assertString(map['lname']);
     this.address = a.assertString(map['address']);
@@ -55,6 +60,10 @@ longa.gen.dto.Profile = goog.defineClass(pstj.ds.DtoBase, {
     this.email = a.assertString(map['email']);
     this.phone = a.assertString(map['phone']);
     this.pp_email = a.assertString(map['pp_email']);
+    this.password = a.assertString((goog.isString(map['password']) ?
+        map['password'] : ''));
+    this.confirmPassword = a.assertString((goog.isString(map['cpassword']) ?
+        map['cpassword'] : ''));
     goog.base(this, 'fromJSON', map);
   },
 
@@ -71,7 +80,9 @@ longa.gen.dto.Profile = goog.defineClass(pstj.ds.DtoBase, {
       'company': this.company,
       'email': this.email,
       'phone': this.phone,
-      'pp_email': this.pp_email
+      'pp_email': this.pp_email,
+      'password': this.password,
+      'cpassword': this.confirmPassword
     };
   }
 });

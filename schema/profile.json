@@ -38,7 +38,15 @@
     },
     "pp_email": {
       "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "cpassword": {
+      "type": "string",
+      "$_name": "confirmPassword"
     }
   },
-  "required": "$_all"
+  "required": ["fname", "lname", "address", "city", "state", "country",
+      "company", "email", "phone", "pp_email"]
 }

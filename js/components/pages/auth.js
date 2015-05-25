@@ -84,7 +84,7 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
 
   /**
    * @private
-   * @param {goog.events.Event} e The action event object.
+   * @param {!goog.events.Event} e The action event object.
    */
   handleLoginFormSubmit_: function(e) {
     var login = this.getLoginForm_();
@@ -105,7 +105,7 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
 
   /**
    * @private
-   * @param {pstj.agent.PointerEvent} e The pointer event.
+   * @param {!pstj.agent.PointerEvent} e The pointer event.
    */
   handleTaps_: function(e) {
     e.stopPropagation();
@@ -133,7 +133,7 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
   /**
    * Getter for the pages widget.
    * @protected
-   * @return {longa.ui.Pages}
+   * @return {!longa.ui.Pages}
    */
   getPages: function() {
     return goog.asserts.assertInstanceof(this.getChildAt(0), longa.ui.Pages);

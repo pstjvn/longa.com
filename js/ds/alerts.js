@@ -52,8 +52,20 @@ longa.ds.Alerts = goog.defineClass(longa.gen.dto.Alerts, {
           throw new Error('Alerts returned overlap with existing ones');
         }
       }
+      // If the newest received alert is not read then we need to find
+      // the first N unread alerts to show in the badge.
       if (!this.isRead_(collection.alerts[0])) {
-        this.unreadCount_ = collection.alerts.length;
+        var count = 0;
+        for (var i = 0; i < collection.alerts.length; i++) {
+          if (this.isRead_(collection.alerts[i])) {
+            break;
+          } else {
+            count++;
+          }
+        }
+        this.unreadCount_ = count;
+      } else {
+        this.unreadCount_ = 0;
       }
       goog.array.insertArrayAt(this.alerts, collection.alerts);
       this.handleChange();

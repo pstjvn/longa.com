@@ -5,7 +5,10 @@ goog.require('goog.dom');
 goog.require('goog.style');
 goog.require('goog.ui.registry');
 goog.require('longa.data');
+goog.require('longa.ds.Screen');
+goog.require('longa.ds.Topic');
 goog.require('longa.template');
+goog.require('pstj.control.Control');
 goog.require('pstj.ds.DtoBase.EventType');
 goog.require('pstj.material.MenuItem');
 goog.require('pstj.material.MenuItemRenderer');
@@ -29,6 +32,18 @@ longa.ui.MenuItem = goog.defineClass(pstj.material.MenuItem, {
      * @private
      */
     this.badgeValue_ = '';
+    /**
+     * @final
+     * @private
+     * @type {pstj.control.Control}
+     */
+    this.control_ = new pstj.control.Control(this);
+    this.control_.init();
+    this.control_.listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
+      if (screen == longa.ds.Screen.ALERTS) {
+        this.setBadge('');
+      }
+    });
   },
 
   /**
@@ -130,6 +145,11 @@ longa.ui.MenuItemRenderer = goog.defineClass(pstj.material.MenuItemRenderer, {
   getBadge: function(el) {
     return goog.dom.getElementByClass(goog.getCssName(this.getCssClass(),
         'badge'), el);
+  },
+
+  /** @inheritDoc */
+  getStructuralCssClass: function() {
+    return pstj.material.MenuItemRenderer.CSS_CLASS;
   },
 
   statics: {

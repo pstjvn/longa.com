@@ -907,12 +907,14 @@
   {@param date: string}
   {@param read: bool}
   <div class="{css longa-app-alert}{if $read}{sp}{css longa-app-alert-read}{/if}">
+    {call pstj.material.template.Ripple}
+      {param opacity: 0.25 /}
+    {/call}
     <div class="{css longa-app-alert-record}">
       <div class="{css longa-app-alert-message}">{$text}</div>
-        <div class="{css longa-app-alert-from}">
-          <div>
-            <span class="{css longa-app-alert-user}">{$username}</span>{sp}on{sp}<span>{$date}</span>
-          </div>
+      <div class="{css longa-app-alert-from}">
+        <div>
+          <span class="{css longa-app-alert-user}">{$username}</span>{sp}on{sp}<span>{$date}</span>
         </div>
       </div>
     </div>

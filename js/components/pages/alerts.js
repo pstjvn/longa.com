@@ -7,12 +7,16 @@ goog.require('goog.ui.registry');
 goog.require('longa.control.Alerts');
 goog.require('longa.control.Toaster');
 goog.require('longa.data');
+goog.require('longa.ds.Screen');
+goog.require('longa.ds.Topic');
+goog.require('longa.ds.utils');
 goog.require('longa.template');
 goog.require('longa.ui.Alert');
 goog.require('pstj.control.Control');
 goog.require('pstj.ds.DtoBase.EventType');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.EventMap');
 
 
 /** @extends {pstj.material.Element} */
@@ -40,12 +44,21 @@ longa.ui.Alerts = goog.defineClass(pstj.material.Element, {
      */
     this.currentSection_ = 0;
     /**
+     * The next screen to show on tap && ripple end.
+     * @type {number}
+     * @private
+     */
+    this.nextScreen_ = -1;
+    /**
      * The control used to communicate with the rest of the app.
      * @type {pstj.control.Control}
      * @private
      */
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
+    this.setAutoEventsInternal(
+        pstj.material.EventMap.EventFlag.PRESS |
+        pstj.material.EventMap.EventFlag.TAP);
   },
 
   /** @override  */
@@ -55,6 +68,50 @@ longa.ui.Alerts = goog.defineClass(pstj.material.Element, {
         pstj.ds.DtoBase.EventType.CHANGE, this.onModelChange_);
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         this.handleActionButton_);
+    this.getHandler().listen(this, pstj.material.EventType.RIPPLE_END,
+        this.handleEnd_);
+  },
+
+  /**
+   * @private
+   * @param {!goog.events.Event} e
+   */
+  handleEnd_: function(e) {
+    if (this.nextScreen_ != -1) {
+      this.control_.push(longa.ds.Topic.SHOW_SCREEN, this.nextScreen_);
+      this.nextScreen_ = -1;
+    }
+  },
+
+  /** @override */
+  onPress: function(e) {
+    this.nextScreen_ = -1;
+  },
+
+  /** @override */
+  onTap: function(e) {
+    if (e.target instanceof longa.ui.Alert) {
+      var model = e.target.getModel();
+      if (!goog.isNull(model)) {
+        switch (model.type) {
+          case 'SYSTEM':
+            break;
+          case 'BALANCE':
+            this.nextScreen_ = longa.ds.Screen.BALANCE;
+            break;
+          case 'PROFILE':
+            this.nextScreen_ = longa.ds.Screen.PROFILE;
+            break;
+          case 'SIGNAL':
+            this.nextScreen_ = longa.ds.Screen.SIGNALS;
+            break;
+          case 'PROVIDER':
+            this.nextScreen_ = (longa.ds.utils.isSeller() ?
+                longa.ds.Screen.SERVICE : longa.ds.Screen.FEED);
+            break;
+        }
+      }
+    }
   },
 
   /**

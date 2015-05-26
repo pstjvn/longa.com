@@ -7,10 +7,17 @@
   font-size: 14px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.87);
+  position: relative;
+
+  & > .ripple {
+    background-color: white;
+    color: @longa-secondary-accent-color;
+  }
 
   &-record {
     border-bottom: 1px solid #EAEAEA;
     padding: 5px;
+    position: relative;
   }
   &-alert-message {
     color: rgba(0, 0, 0, 0.87);

@@ -1,10 +1,12 @@
 goog.provide('longa.ui.Alert');
 
+goog.require('goog.asserts');
 goog.require('goog.ui.registry');
 goog.require('longa.gen.dto.Alert');
 goog.require('longa.template');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.Ripple');
 
 
 /** @extends {pstj.material.Element} */
@@ -19,6 +21,29 @@ longa.ui.Alert = goog.defineClass(pstj.material.Element, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    this.setUsePointerAgent(true);
+    this.setAutoEventsInternal(
+        pstj.material.EventMap.EventFlag.PRESS |
+        pstj.material.EventMap.EventFlag.RELEASE);
+  },
+
+  /** @override */
+  onPress: function(e) {
+    this.getRipple().onPress(e);
+  },
+
+  /** @override */
+  onRelease: function(e) {
+    this.getRipple().onRelease(e);
+  },
+
+  /**
+   * @protected
+   * @return {pstj.material.Ripple}
+   */
+  getRipple: function() {
+    return goog.asserts.assertInstanceof(this.getChildAt(0),
+        pstj.material.Ripple);
   },
 
   /**

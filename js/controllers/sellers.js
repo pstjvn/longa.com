@@ -30,7 +30,8 @@ longa.control.Sellers_ = goog.defineClass(pstj.control.Control, {
    * @param {longa.gen.dto.Sellers} sellers
    */
   onGet_: function(sellers) {
-    longa.data.sellers.fromJSON(sellers.toJSON());
+    longa.data.sellers.fromJSON(
+        /** @type {!Object<string, *>} */(sellers.toJSON()));
   },
 
   /**

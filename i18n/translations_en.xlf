@@ -761,6 +761,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="2799975203487923263" datatype="html">
+        <source>Profit(%)</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2805266561663693158" datatype="html">
         <source>Minnesota</source>
         <target/>
@@ -1196,6 +1200,10 @@
         <source>Shuffle all</source>
         <target/>
         <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="4809972024119715225" datatype="html">
+        <source>Subs</source>
+        <target/>
       </trans-unit>
       <trans-unit id="4824839499745448810" datatype="html">
         <source>Repeat all</source>
@@ -2114,6 +2122,10 @@
       </trans-unit>
       <trans-unit id="8217475150762703372" datatype="html">
         <source>Changes to These Terms of Use</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="8232773653071363045" datatype="html">
+        <source>Provider</source>
         <target/>
       </trans-unit>
       <trans-unit id="8260579772640058202" datatype="html">

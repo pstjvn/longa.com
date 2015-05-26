@@ -1,0 +1,82 @@
+@import "../../../pstj/less/material/typography";
+@import "../../../pstj/less/material/layout";
+@import "../../../pstj/less/material/colors/teal";
+
+@border : 1px solid #EAEAEA;
+
+.longa-app-seller-record {
+  &:extend(.flex);
+  background-color: @teal500;
+  color: rgba(255, 255, 255, 0.54);
+  padding-left: 5px;
+
+  &-subhead {
+    &:extend(.horizontal);
+    &:extend(.center);
+    font-size: 16px;
+    font-weight: 600;
+    min-height: 40px;
+  }
+  &-flex-two {
+    .core-flex-grow(2);
+    &:extend(.flex);
+    &:extend(.horizontal);
+    &:extend(.justified);
+  }
+  &-arrow-icon {
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 24px;
+    width: 24px;
+    opacity: 1;
+    fill: #FFF!important;
+  }
+  &-profit, &-subs {
+    &:extend(.flex);
+    &:extend(.horizontal);
+    &:extend(.justified);
+  }
+  &-content {
+    &:extend(.horizontal);
+    &:extend(.center);
+    border-bottom: @border;
+    height: 49px;
+    font-size: 14px;
+  }
+  &-color-coded-trend {
+    width: 5px;
+    height: 100%;
+  }
+  &-color-coded-trend div{
+    height: 100%;
+  }
+  &-cell {
+    &:extend(.flex);
+    &:extend(.vertical);
+    &:extend(.center-justified);
+    padding: 0 2px;
+    line-height: 21px;
+    border-right: @border;
+    height: 49px;
+    &.flex-two{
+      .core-flex-grow(2);
+    }
+    &-row {
+      &:extend(.flex);
+    }
+    &-bold {
+      font-weight: 700;
+      color: #000 !important;
+    }
+    &-span-holder {
+      &:extend(.horizontal);
+      &:extend(.justified);
+    }
+    & span {
+      line-height: 20px;
+      color: #808080;
+    }
+  }
+}

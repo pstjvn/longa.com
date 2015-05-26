@@ -17,6 +17,7 @@ goog.require('longa.ui.Pages');
 goog.require('longa.ui.Profile');
 goog.require('longa.ui.Service');
 goog.require('longa.ui.SideHeader');
+goog.require('longa.ui.SignalFeed');
 goog.require('longa.ui.Terms');
 goog.require('longa.ui.UserAuth');
 goog.require('pstj.control.Control');
@@ -139,6 +140,7 @@ longa.ui.Main = goog.defineClass(pstj.material.Element, {
     this.serviceWrapper.addChild(new longa.ui.Service(), true);
     // 3
     this.signalFeedWrapper = new longa.ui.Page();
+    this.signalFeedWrapper.addChild(new longa.ui.SignalFeed(), true);
     // 4
     this.signalsWrapper = new longa.ui.Page();
     // 5

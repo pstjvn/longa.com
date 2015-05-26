@@ -18,6 +18,7 @@ goog.require('longa.ds.Topic');
 goog.require('longa.ds.utils');
 goog.require('longa.profile');
 goog.require('longa.rpc');
+goog.require('longa.sellers');
 goog.require('longa.service');
 goog.require('longa.storage');
 goog.require('longa.strings');
@@ -192,6 +193,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
                       longa.strings.fromPayPalUnknown(null).toString(),
                       null, null);
                 }
+                longa.sellers.get();
               }, null, this);
             }
           });
@@ -245,6 +247,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
                 }
                 // If showed screen was not FAQ start preloading FAQ images now
                 if (idx != 1) this.preloadFaqImages_();
+                longa.sellers.get();
               }, this));
             });
       }, null, this);
@@ -333,7 +336,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
     var promises = [
       this.retrieveBalance(),
       longa.profile.get(),
-      longa.control.Alerts.getInstance().get()
+      longa.control.Alerts.getInstance().get(),
+      longa.sellers.get()
     ];
 
     if (longa.ds.utils.isSeller()) {

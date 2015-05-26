@@ -1,8 +1,10 @@
 goog.provide('longa.ui.SignalFeed');
 
 goog.require('goog.ui.registry');
+goog.require('longa.template');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.IconContainer');
 
 
 /** @extends {pstj.material.Element} */

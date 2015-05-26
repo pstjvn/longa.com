@@ -1110,6 +1110,32 @@
  * Represents a single record in the signal feed list.
  */
 {template .SignalFeed}
+  <div is class="{css longa-app-feed}">
+    <div class="{css longa-app-seller-record}">
+      <div class="{css longa-app-seller-record-subhead}">
+        <div class="{css longa-app-seller-record-flex-two}">
+          <div>{msg desc=""}Provider{/msg}</div>
+          <div class="{css longa-app-seller-record-arrow-icon}">
+            {call pstj.material.template.IconContainer}
+              {param type: 'none' /}
+            {/call}
+          </div>
+        </div>
+        <div class="{css longa-app-seller-record-profit}">
+          {msg desc=""}Profit(%){/msg}
+          {call pstj.material.template.IconContainer}
+            {param type: 'none' /}
+          {/call}
+        </div>
+        <div class="{css longa-app-seller-record-subs}">
+          {msg desc=""}Subs{/msg}
+          {call pstj.material.template.IconContainer}
+            {param type: 'none' /}
+          {/call}
+        </div>
+      </div>
+    </div>
+  </div>
 {/template}
 
 /** Customized menu item with badge */

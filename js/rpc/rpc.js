@@ -13,6 +13,7 @@ goog.require('longa.gen.dto.BuyCreditResponse');
 goog.require('longa.gen.dto.Error');
 goog.require('longa.gen.dto.Profile');
 goog.require('longa.gen.dto.ReportList');
+goog.require('longa.gen.dto.Service');
 goog.require('longa.gen.dto.User');
 goog.require('longa.gen.dto.UserBalance');
 goog.require('pstj.resource');
@@ -301,6 +302,55 @@ longa.rpc_.Main = goog.defineClass(null, {
   },
 
   /**
+   * RPC: /service
+   * @return {!goog.Promise<!longa.gen.dto.Service>}
+   */
+  getService: function() {
+    goog.log.fine(this.logger_, 'Retriving service info');
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': 'service'
+      }, goog.bind(function(err, result) {
+        try {
+          var service = this.handleServiceResult(err, result);
+        } catch (e) {
+          goog.log.error(this.logger_, 'Cannot retirve service' +
+              e.message);
+          reject(e);
+          return;
+        }
+        goog.log.info(this.logger_, 'Received service');
+        resolve(service);
+      }, this));
+    }, this);
+  },
+
+  /**
+   * RPC call: /profile (POST)
+   * Update the user profile on the server.
+   * @param {!longa.gen.dto.Service} service
+   * @return {!goog.Promise<!longa.gen.dto.Service>}
+   */
+  updateService: function(service) {
+    goog.log.info(this.logger_, 'Updating profile');
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.post(/** @type {Object<string, *>} */(service.toJSON()),
+          goog.bind(function(err, result) {
+            try {
+              var Service = this.handleServiceResult(err, result);
+            } catch (e) {
+              goog.log.error(this.logger_, 'Cannot update Service: ' +
+                  e.message);
+              reject(e);
+              return;
+            }
+            goog.log.info(this.logger_, 'Service updated');
+            resolve(Service);
+          }, this));
+    }, this);
+  },
+
+  /**
    * Recovers the account.
    * @param {string} email
    * @return {!goog.Promise<boolean>}
@@ -409,6 +459,19 @@ longa.rpc_.Main = goog.defineClass(null, {
     this.handleRawResponse_(err, profile);
     var p = new longa.gen.dto.Profile();
     p.fromJSON(profile);
+    return p;
+  },
+
+  /**
+   * Handles the receiving of service info.
+   * @param {Error?} err The error that might occured on network stack.
+   * @param {?} service The server response.
+   * @return {!longa.gen.dto.Service}
+   */
+  handleServiceResult: function(err, service) {
+    this.handleRawResponse_(err, service);
+    var p = new longa.gen.dto.Service();
+    p.fromJSON(service);
     return p;
   },
 

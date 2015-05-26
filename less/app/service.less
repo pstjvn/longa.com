@@ -1,0 +1,37 @@
+@import "../../../pstj/less/material/togglebutton";
+@import "../../../pstj/less/material/input";
+@import "../../../pstj/less/material/layout";
+
+.longa-app-service {
+  & > &-container {
+    max-width: 400px;
+    padding: 10px 5px 0 5px;
+
+    & > .longa-app-service-main-input > .material-input {
+      width: 100%;
+    }
+
+    & > .longa-app-service-button {
+      &:extend(.horizontal);
+      &:extend(.center);
+      &:extend(.end-justified);
+    }
+
+    & > .core-item {
+      &:extend(.horizontal);
+      &:extend(.center);
+
+      & > .material-input  {
+        width: 5em;
+        & > .material-input-body > input {
+          text-align: right;
+        }
+      }
+
+      & > label {
+        .subhead(black);
+        &:extend(.flex);
+      }
+    }
+  }
+}

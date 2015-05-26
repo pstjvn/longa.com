@@ -1,0 +1,39 @@
+{
+  "$schema": "",
+  "title": "Service",
+  "description": "Describes the service for provider",
+  "type": "object",
+  "properties": {
+    "run": {
+      "type": "string"
+    },
+    "descr": {
+      "type": "string",
+      "$_name": "description"
+    },
+    "min_balance": {
+      "type": "number",
+      "$_name": "minimumBalanceRequired"
+    },
+    "pip_charge": {
+      "type": "number",
+      "$_name": "profitCharge"
+    },
+    "serv_status": {
+      "type": "number",
+      "$_type": "boolean",
+      "$_name": "status"
+    },
+    "serv_id": {
+      "type": "string",
+      "$_type": "number",
+      "$_name": "serviceid"
+    },
+    "paid": {
+      "type": "number",
+      "$_type": "boolean"
+    }
+  },
+  "required": ["descr", "min_balance", "pip_charge", "serv_status", "serv_id",
+      "paid"]
+}

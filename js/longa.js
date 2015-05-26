@@ -18,6 +18,7 @@ goog.require('longa.ds.Topic');
 goog.require('longa.ds.utils');
 goog.require('longa.profile');
 goog.require('longa.rpc');
+goog.require('longa.service');
 goog.require('longa.storage');
 goog.require('longa.strings');
 goog.require('longa.template');
@@ -328,11 +329,18 @@ longa.App = goog.defineClass(pstj.control.Control, {
    * Force update all data.
    */
   updateAll: function() {
-    goog.Promise.all([
+
+    var promises = [
       this.retrieveBalance(),
-      longa.control.Alerts.getInstance().get(),
-      longa.profile.get()
-    ]).then(function(data) {
+      longa.profile.get(),
+      longa.control.Alerts.getInstance().get()
+    ];
+
+    if (longa.ds.utils.isSeller()) {
+      promises.push(longa.service.get());
+    }
+
+    goog.Promise.all(promises).then(function(data) {
       goog.log.info(this.logger_, 'Update all finished');
       this.push(longa.ds.Topic.USER_BALANCE_CHANGE);
     }, null, this);

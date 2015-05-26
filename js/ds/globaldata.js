@@ -2,6 +2,7 @@ goog.provide('longa.data');
 
 goog.require('longa.ds.Alerts');
 goog.require('longa.gen.dto.Profile');
+goog.require('longa.gen.dto.Service');
 goog.require('longa.gen.dto.User');
 
 
@@ -61,3 +62,10 @@ longa.data.alerts = new longa.ds.Alerts();
  * @type {longa.gen.dto.Profile}
  */
 longa.data.profile = new longa.gen.dto.Profile();
+
+
+/**
+ * Reference the current user's service definition (for providers).
+ * @type {?longa.gen.dto.Service}
+ */
+longa.data.service = new longa.gen.dto.Service();

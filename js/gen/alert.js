@@ -55,7 +55,7 @@ longa.gen.dto.Alert = goog.defineClass(pstj.ds.DtoBase, {
       'alert_date': this.date,
       'provider_acctid': this.accountid,
       'username': this.username,
-      'read': parseFloat(this.read)
+      'read': (this.read ? 1 : 0)
     };
   }
 });

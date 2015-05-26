@@ -80,6 +80,10 @@
         <source>User type</source>
         <target/>
       </trans-unit>
+      <trans-unit id="297931957957346976" datatype="html">
+        <source>Paid:</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="359421217372792936" datatype="html">
         <source>St. Vincent And The Grenadines</source>
         <target/>
@@ -242,6 +246,10 @@
         <source>Iraq</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="1070401079061838445" datatype="html">
+        <source>Service successfully updated.</source>
+        <target/>
       </trans-unit>
       <trans-unit id="1075324242640516651" datatype="html">
         <source>Barbados</source>
@@ -425,6 +433,10 @@
         <source>California</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="1685914895958853160" datatype="html">
+        <source>Profit Charge (LC/1%):</source>
+        <target/>
       </trans-unit>
       <trans-unit id="1736943888981108041" datatype="html">
         <source>Monaco</source>
@@ -1223,6 +1235,11 @@
         <source>Investors  can only see: free signals, signals that they have subscribed for, or signals  that represent closed transactions. To take advantage of new, open transaction  signals that require payment, investors need to have L-Credit balance in their  accounts.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="4902817035128594900" datatype="html">
+        <source>Description</source>
+        <target/>
+        <note priority="1" from="description">placeholder text</note>
+      </trans-unit>
       <trans-unit id="4909001730829314884" datatype="html">
         <source>Make money from stock investments</source>
         <target/>
@@ -1577,6 +1594,11 @@
         <source>Longa is a unique marketplace because it provides performance information about trade signal feeds that are audited. In other words, investors can be assured that they follow signal feeds that provide the listed return on investment, instead of “trusting” a web site that makes unaudited performance claims. In addition, all investors can verify the signal transaction history on all signal feeds and thus perform a self-audit.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="6370642728789544052" datatype="html">
+        <source>Number</source>
+        <target/>
+        <note priority="1" from="description">error text</note>
+      </trans-unit>
       <trans-unit id="6385636805555176186" datatype="html">
         <source>Cocos (Keeling) Islands</source>
         <target/>
@@ -1584,6 +1606,10 @@
       </trans-unit>
       <trans-unit id="6398478403623732402" datatype="html">
         <source>YOU  UNDERSTAND AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR SOLE  RISK AND THAT THE WEBSITE WWW.LONGA.COM IS PROVIDED ON AN "AS IS" AND  "AS AVAILABLE" BASIS WITHOUT WARRANTY OF ANY KIND. YOU EXPRESSLY  ACKNOWLEDGE AND AGREE THAT YOUR USE OF THE WEBSITE WWW.LONGA.COM IS AT YOUR  SOLE RISK AND THAT THE ENTIRE RISK AS TO SATISFACTORY QUALITY, PERFORMANCE,  ACCURACY AND EFFORT IS WITH YOU. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE  LAW, THE MATERIALS, PRODUCTS AND ANY SERVICES OFFERED OR RENDERED ON  WWW.LONGA.COM ARE PROVIDED “AS IS” AND "AS AVAILABLE", WITH ALL  FAULTS AND WITHOUT WARRANTY OF ANY KIND, AND INTELSOFT EOOD HEREBY DISCLAIMS  ALL WARRANTIES AND CONDITIONS WITH RESPECT TO THE PRODUCTS AND ANY SERVICES,  EITHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, THE  IMPLIED WARRANTIES AND/OR CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY  QUALITY, OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET ENJOYMENT,  AND NON-INFRINGEMENT OF THIRD PARTY RIGHTS.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6411146992437375044" datatype="html">
+        <source>Service update failed, please try again.</source>
         <target/>
       </trans-unit>
       <trans-unit id="6432306763191789600" datatype="html">
@@ -1607,6 +1633,10 @@
         <source>St. Pierre and Miquelon</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="6485584367494925101" datatype="html">
+        <source>Min. User Credit (LC):</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6503934920192125236" datatype="html">
         <source>Username is required' </source>
@@ -2106,6 +2136,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="8338901959583813434" datatype="html">
+        <source>Enable:</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="8351664229424095812" datatype="html">
         <source>Republic of Kosovo</source>
         <target/>
@@ -2233,6 +2267,11 @@
         <source>Guadeloupe</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="8957388222136791621" datatype="html">
+        <source>Use ##.#</source>
+        <target/>
+        <note priority="1" from="description">error text</note>
       </trans-unit>
       <trans-unit id="8992404420292617875" datatype="html">
         <source>North Carolina</source>

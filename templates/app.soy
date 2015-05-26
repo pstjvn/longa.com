@@ -804,7 +804,72 @@
 
 /** SignalFeed */
 {template .Service}
-  <div class="{css longa-app-service}"></div>
+  <div class="{css longa-app-service}">
+    <div class="{css longa-app-service-container}">
+      <div class="{css longa-app-service-main-input}">
+        {call pstj.material.template.Input}
+          {param label kind="text"}
+            {msg desc="placeholder text"}Description{/msg}
+          {/param}
+          {param name: 'descr' /}
+          {param type: 'text' /}
+          {param value: '' /}
+        {/call}
+      </div>
+      <div class="{css core-item}">
+        <label>{msg desc=""}Enable:{/msg}</label>
+        {call pstj.material.template.ToggleButton}
+          {param name: 'serv_status' /}
+        {/call}
+      </div>
+      <div class="{css core-item}">
+        <label>{msg desc=""}Paid:{/msg}</label>
+        {call pstj.material.template.ToggleButton}
+          {param name: 'paid' /}
+        {/call}
+      </div>
+      <div class="{css core-item}">
+        <label>{msg desc=""}Profit Charge (LC/1%):{/msg}</label>
+        {call pstj.material.template.Input}
+          {param error kind="text"}
+            {msg desc="error text"}Use ##.#{/msg}
+          {/param}
+          {param pattern kind="text"}
+            {literal}^[\d]{1,2}(\.\d)?${/literal}
+          {/param}
+          {param label: '' /}
+          {param name: 'pip_charge' /}
+          {param type: 'number' /}
+          {param value: '' /}
+        {/call}
+      </div>
+      <div class="{css core-item}">
+        <label>{msg desc=""}Min. User Credit (LC):{/msg}</label>
+        {call pstj.material.template.Input}
+          {param error kind="text"}
+            {msg desc="error text"}Number{/msg}
+          {/param}
+          {param label: '' /}
+          {param pattern kind="text"}
+            {literal}^[\d]+${/literal}
+          {/param}
+          {param name: 'min_balance' /}
+          {param type: 'number' /}
+          {param value: '' /}
+        {/call}
+      </div>
+      <div class="{css longa-app-service-button}">
+        {call pstj.material.template.Button}
+          {param icon: 'none' /}
+          {param content kind="text"}
+            {msg desc="button label"}Update{/msg}
+          {/param}
+          {param ink: true /}
+          {param recenter: true /}
+        {/call}
+      </div>
+    </div>
+  </div>
 {/template}
 
 /** Balance */

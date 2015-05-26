@@ -1,0 +1,17 @@
+{
+  "$schema": "",
+  "title": "Sellers",
+  "description": "Describes the alert listr",
+  "type": "object",
+  "properties": {
+    "seller": {
+      "type": "array",
+      "$_name": "sellers",
+      "items" : {
+        "type": "object",
+        "$_reference": "sellerbalance"
+      }
+    }
+  },
+  "required": ["seller"]
+}

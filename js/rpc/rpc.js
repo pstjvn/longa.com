@@ -13,6 +13,7 @@ goog.require('longa.gen.dto.BuyCreditResponse');
 goog.require('longa.gen.dto.Error');
 goog.require('longa.gen.dto.Profile');
 goog.require('longa.gen.dto.ReportList');
+goog.require('longa.gen.dto.Sellers');
 goog.require('longa.gen.dto.Service');
 goog.require('longa.gen.dto.User');
 goog.require('longa.gen.dto.UserBalance');
@@ -374,6 +375,31 @@ longa.rpc_.Main = goog.defineClass(null, {
   },
 
   /**
+   * Loads the seller records.
+   * Can be used for logged and not logged users.
+   * @return {!goog.Promise<!longa.gen.dto.Sellers>}
+   */
+  getSellerRecords: function() {
+    goog.log.info(this.logger_, 'Attempt load seller records');
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': 'seller'
+      }, goog.bind(function(err, result) {
+        try {
+          var alerts = this.handleSellerResult(err, result);
+        } catch (e) {
+          goog.log.error(this.logger_, 'Cannot get sellers: ' +
+              e.message);
+          reject(e);
+          return;
+        }
+        goog.log.info(this.logger_, 'Received sellers.');
+        resolve(alerts);
+      }, this));
+    }, this);
+  },
+
+  /**
    * Default RPC handler for login attempts.
    *
    * @param {Error?} err The error if there was any in the RPC link.
@@ -431,6 +457,20 @@ longa.rpc_.Main = goog.defineClass(null, {
     this.fixAlertsResponse_(alerts);
     var a = new longa.gen.dto.Alerts();
     a.fromJSON(alerts);
+    return a;
+  },
+
+  /**
+   * Handles the receiving of seller records.
+   * @param {Error?} err The error if any, on rpc link level.
+   * @param {?} sellers The response from the server.
+   * @return {!longa.gen.dto.Sellers}
+   * @protected
+   */
+  handleSellerResult: function(err, sellers) {
+    this.handleRawResponse_(err, sellers);
+    var a = new longa.gen.dto.Sellers();
+    a.fromJSON(sellers);
     return a;
   },
 

@@ -40,7 +40,7 @@ longa.gen.dto.BuyCreditResponse = goog.defineClass(pstj.ds.DtoBase, {
     this.sid = '';
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.server = a.assertString(map['server']);
     this.invoiceId = a.assertString(map['invoice']);
@@ -49,7 +49,7 @@ longa.gen.dto.BuyCreditResponse = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'server': this.server,

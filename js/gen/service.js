@@ -18,23 +18,23 @@ var a = goog.asserts;
 longa.gen.dto.Service = goog.defineClass(pstj.ds.DtoBase, {
   constructor: function() {
     pstj.ds.DtoBase.call(this);
-    /**@type {string} */
+    /** @type {string} */
     this.run = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.description = '';
-    /**@type {!number} */
+    /** @type {!number} */
     this.minimumBalanceRequired = 0;
-    /**@type {!number} */
+    /** @type {!number} */
     this.profitCharge = 0;
-    /**@type {!boolean} */
+    /** @type {!boolean} */
     this.status = false;
-    /**@type {!number} */
+    /** @type {!number} */
     this.serviceid = 0;
-    /**@type {!boolean} */
+    /** @type {!boolean} */
     this.paid = false;
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.run = a.assertString((goog.isString(map['run']) ?
         map['run'] : ''));
@@ -47,7 +47,7 @@ longa.gen.dto.Service = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'run': this.run,

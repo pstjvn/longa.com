@@ -30,14 +30,14 @@ longa.gen.dto.Error = goog.defineClass(pstj.ds.DtoBase, {
     this.redirect = '';
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.message = a.assertString(map['msg']);
     this.redirect = a.assertString(map['redirect']);
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'msg': this.message,

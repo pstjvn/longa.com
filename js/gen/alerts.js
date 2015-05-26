@@ -20,13 +20,13 @@ var a = goog.asserts;
 longa.gen.dto.Alerts = goog.defineClass(pstj.ds.DtoBase, {
   constructor: function() {
     pstj.ds.DtoBase.call(this);
-    /**@type {!Array<longa.gen.dto.Alert>} */
+    /** @type {!Array<!longa.gen.dto.Alert>} */
     this.alerts = [];
-    /**@type {!number} */
+    /** @type {!number} */
     this.delay = 0;
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     goog.array.clear(this.alerts);
     goog.array.forEach(a.assertArray(map['alert']), function(item) {
@@ -38,10 +38,12 @@ longa.gen.dto.Alerts = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
-      'alert': this.alerts,
+      'alert': goog.array.map(this.alerts, function(item) {
+        return item.toJSON();
+      }),
       'delay': this.delay
     };
   }

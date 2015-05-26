@@ -66,7 +66,7 @@ longa.gen.dto.UserBalance = goog.defineClass(longa.gen.dto.Balance, {
     this.usertype = '';
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.balance = a.assertNumber(map['balance']);
     this.credit = a.assertNumber(map['credit']);
@@ -80,7 +80,7 @@ longa.gen.dto.UserBalance = goog.defineClass(longa.gen.dto.Balance, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     var exports = {
       'balance': this.balance,
@@ -93,8 +93,9 @@ longa.gen.dto.UserBalance = goog.defineClass(longa.gen.dto.Balance, {
       'service_charge': this.serviceCharges,
       'usertype': this.usertype
     };
-    return goog.object.extend(exports,
+    goog.object.extend(exports,
         a.assertObject(goog.base(this, 'toJSON')));
+    return exports;
   }
 });
 });  // goog.scope

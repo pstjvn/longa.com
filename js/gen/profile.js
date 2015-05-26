@@ -18,35 +18,35 @@ var a = goog.asserts;
 longa.gen.dto.Profile = goog.defineClass(pstj.ds.DtoBase, {
   constructor: function() {
     pstj.ds.DtoBase.call(this);
-    /**@type {string} */
+    /** @type {string} */
     this.run = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.firstName = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.lastName = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.address = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.city = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.state = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.country = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.company = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.email = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.phone = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.pp_email = '';
-    /**@type {string} */
+    /** @type {string} */
     this.password = '';
-    /**@type {string} */
+    /** @type {string} */
     this.confirmPassword = '';
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.run = a.assertString((goog.isString(map['run']) ?
         map['run'] : ''));
@@ -67,7 +67,7 @@ longa.gen.dto.Profile = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'run': this.run,

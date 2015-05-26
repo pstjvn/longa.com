@@ -18,23 +18,23 @@ var a = goog.asserts;
 longa.gen.dto.Alert = goog.defineClass(pstj.ds.DtoBase, {
   constructor: function() {
     pstj.ds.DtoBase.call(this);
-    /**@type {!number} */
+    /** @type {!number} */
     this.id = 0;
-    /**@type {!string} */
+    /** @type {!string} */
     this.text = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.type = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.date = '';
-    /**@type {!number} */
+    /** @type {!number} */
     this.accountid = 0;
-    /**@type {!string} */
+    /** @type {!string} */
     this.username = '';
-    /**@type {!boolean} */
+    /** @type {!boolean} */
     this.read = false;
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.id = a.assertNumber(map['alert_id']);
     this.text = a.assertString(map['alert_text']);
@@ -46,7 +46,7 @@ longa.gen.dto.Alert = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'alert_id': this.id,

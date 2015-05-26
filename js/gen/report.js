@@ -45,7 +45,7 @@ longa.gen.dto.ReportRecord = goog.defineClass(pstj.ds.DtoBase, {
     this.memberCount = 0;
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.date = (new Date(a.assertString(map['date']))) || this.date;
     this.profitLossRatio = a.assertNumber(map['pl_all_time']);
@@ -55,7 +55,7 @@ longa.gen.dto.ReportRecord = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'date': this.date.toString(),

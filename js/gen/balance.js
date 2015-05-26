@@ -91,7 +91,7 @@ longa.gen.dto.Balance = goog.defineClass(pstj.ds.DtoBase, {
     this.averageTransactionDuration = 0;
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.firstSignalDate = a.assertString(map['first_signal_date']);
     this.firstSignalTime = a.assertString(map['first_signal_time']);
@@ -110,7 +110,7 @@ longa.gen.dto.Balance = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'first_signal_date': this.firstSignalDate,

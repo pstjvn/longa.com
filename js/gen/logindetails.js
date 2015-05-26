@@ -35,7 +35,7 @@ longa.gen.dto.LoginDetails = goog.defineClass(pstj.ds.DtoBase, {
     this.run = '';
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.username = a.assertString(map['username']);
     this.password = a.assertString(map['password']);
@@ -43,7 +43,7 @@ longa.gen.dto.LoginDetails = goog.defineClass(pstj.ds.DtoBase, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     return {
       'username': this.username,

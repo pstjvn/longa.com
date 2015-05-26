@@ -19,15 +19,15 @@ var a = goog.asserts;
 longa.gen.dto.RegistrationDetails = goog.defineClass(longa.gen.dto.Profile, {
   constructor: function() {
     longa.gen.dto.Profile.call(this);
-    /**@type {!string} */
+    /** @type {!string} */
     this.password = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.rpassword = '';
-    /**@type {!string} */
+    /** @type {!string} */
     this.type = '';
   },
 
-  /**@override */
+  /** @override */
   fromJSON: function(map) {
     this.password = a.assertString(map['password']);
     this.rpassword = a.assertString(map['rpassword']);
@@ -35,15 +35,16 @@ longa.gen.dto.RegistrationDetails = goog.defineClass(longa.gen.dto.Profile, {
     goog.base(this, 'fromJSON', map);
   },
 
-  /**@override */
+  /** @override */
   toJSON: function() {
     var exports = {
       'password': this.password,
       'rpassword': this.rpassword,
       'type': parseFloat(this.type)
     };
-    return goog.object.extend(exports,
+    goog.object.extend(exports,
         a.assertObject(goog.base(this, 'toJSON')));
+    return exports;
   }
 });
 });  // goog.scope

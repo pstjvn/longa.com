@@ -2,6 +2,7 @@ goog.provide('longa.data');
 
 goog.require('longa.ds.Alerts');
 goog.require('longa.gen.dto.Profile');
+goog.require('longa.gen.dto.Sellers');
 goog.require('longa.gen.dto.Service');
 goog.require('longa.gen.dto.User');
 
@@ -69,3 +70,10 @@ longa.data.profile = new longa.gen.dto.Profile();
  * @type {?longa.gen.dto.Service}
  */
 longa.data.service = new longa.gen.dto.Service();
+
+
+/**
+ * Global reference for the existing sellers.
+ * @type {!longa.gen.dto.Sellers}
+ */
+longa.data.sellers = new longa.gen.dto.Sellers();

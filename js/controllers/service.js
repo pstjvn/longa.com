@@ -37,15 +37,18 @@ longa.control.Service_ = goog.defineClass(pstj.control.Control, {
 
   /**
    * @param {!longa.gen.dto.Service} service
+   * @return {!longa.gen.dto.Service}
    * @private
    */
   onGet_: function(service) {
     longa.data.service.fromJSON(/** @type {!Object<string, *>} */(
         service.toJSON()));
+    return service;
   },
 
   /**
    * @param {!longa.gen.dto.Service} service
+   * @return {!longa.gen.dto.Service}
    * @private
    */
   onPut_: function(service) {
@@ -54,6 +57,7 @@ longa.control.Service_ = goog.defineClass(pstj.control.Control, {
     longa.data.service.serviceid = service.serviceid;
     longa.control.Toaster.getInstance().addToast(
         longa.strings.onServiceUpdate(null).toString(), null, null);
+    return service;
   },
 
   /**

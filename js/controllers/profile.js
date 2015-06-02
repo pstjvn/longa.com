@@ -32,11 +32,13 @@ longa.control.Profile = goog.defineClass(pstj.control.Control, {
 
   /**
    * @private
-   * @param {longa.gen.dto.Profile} profile
+   * @param {!longa.gen.dto.Profile} profile
+   * @return {!longa.gen.dto.Profile}
    */
   onGet_: function(profile) {
     longa.data.profile.fromJSON(/** @type {!Object<string, *>} */(
         profile.toJSON()));
+    return profile;
   },
 
   /**

@@ -17,8 +17,8 @@ longa.ds.Screen = {
   TERMS: 8,
 
   // Composited screens
-  FEED_DETAILS: 22,
-  FEED_SIGNALS: 23,
+  FEED_DETAILS: 32,
+  FEED_SIGNALS: 33,
 
   BALANCE_BUY: 12,
   BALANCE_WIDHTRAW: 13,

@@ -100,6 +100,7 @@ longa.ui.BalanceRenderer = goog.defineClass(longa.ui.PagesRenderer, {
     return longa.template.Balance(model);
   },
 
+  /** @override */
   getStructuralCssClass: function() {
     return goog.getCssName('longa-app-pages');
   },

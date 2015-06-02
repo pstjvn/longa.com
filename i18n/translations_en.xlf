@@ -71,6 +71,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="245496684904952556" datatype="html">
+        <source>Since:</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="284282390173344035" datatype="html">
         <source>Malaysia</source>
         <target/>
@@ -428,6 +432,10 @@
         <source>The ultimate stock signal marketplace</source>
         <target/>
         <note priority="1" from="description">swiper tile title</note>
+      </trans-unit>
+      <trans-unit id="1664772723812490793" datatype="html">
+        <source>Subs:</source>
+        <target/>
       </trans-unit>
       <trans-unit id="1684303595047907341" datatype="html">
         <source>California</source>
@@ -1015,6 +1023,10 @@
         <source>Virginia</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="3841062822975654974" datatype="html">
+        <source>Charge:</source>
+        <target/>
       </trans-unit>
       <trans-unit id="3847673789207378086" datatype="html">
         <source>Spain</source>
@@ -1765,6 +1777,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6942172372747197720" datatype="html">
+        <source>Open:</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6971759191811698526" datatype="html">
         <source>Cayman Islands</source>
         <target/>
@@ -1872,6 +1888,10 @@
         <source>Unable to load the content, please try again later.</source>
         <target/>
         <note priority="1" from="description">error text</note>
+      </trans-unit>
+      <trans-unit id="7349530031233006058" datatype="html">
+        <source>Total:</source>
+        <target/>
       </trans-unit>
       <trans-unit id="7355609594533651682" datatype="html">
         <source>Viet Nam</source>

@@ -1279,3 +1279,80 @@
     </div>
   </div>
 {/template}
+
+/** template for the feed pages */
+{template .Feeds}
+  <div is class="{css longa-app-feed-pages}" animate>
+    <div is class="{css longa-app-page} {css animation-left-right}">
+      {call .SignalFeed /}
+    </div>
+    <!-- the provider balance page holder -->
+    <div is class="{css longa-app-page} {css animation-right-left}">
+    </div>
+    <!-- the list of signals for a particular seller -->
+    <div is class="{css longa-app-page} {css animation-right-left}">
+    </div>
+  </div>
+{/template}
+
+/** Template for a provider record */
+{template .ProviderRecord}
+  <div is class="{css longa-app-seller-record}" use-pointer>
+    <div class="{css longa-app-seller-record-content}">
+      {call .Trend}
+        {param value: 0 /}
+      {/call}
+      <div class="{css longa-app-seller-record-cell} {css flex-two}">
+        <div>
+          <div class="{css longa-app-seller-record-cell-row}">
+            <div class="{css longa-app-seller-record-icon}">
+              {call pstj.material.template.IconContainer}
+                {param type: 'none' /}
+              {/call}
+            </div>
+            <span class="{css longa-app-seller-record-cell-bold} {css longa-app-seller-record-username}">healthcare</span>
+          </div>
+          <div class="{css longa-app-seller-record-cell-row}">
+            <span>{msg desc=""}Since:{/msg}{sp}<span>
+            <span class="{css longa-app-seller-record-active-since}">03 Oct 2014</span>
+          </div>
+        </div>
+      </div>
+      <div class="{css longa-app-seller-record-cell}">
+        <div>
+          <div class="{css longa-app-seller-record-cell-row}">
+            <div class="{css longa-app-seller-record-cell-span-holder}">
+              <span>{msg desc=""}Total:{/msg}{sp}</span>
+              <span class="{css longa-app-seller-record-cell-bold} {css longa-app-seller-record-total}">32.9</span>
+            </div>
+          </div>
+          <div class="{css longa-app-seller-record-cell-row}">
+            <div class="{css longa-app-seller-record-cell-span-holder}">
+              <span>{msg desc=""}Open:{/msg}{sp}</span>
+              <span class="{css longa-app-seller-record-cell-bold} {css longa-app-seller-record-open}">32.9</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="{css longa-app-seller-record-cell}">
+        <div>
+          <div class="{css longa-app-seller-record-cell-row}">
+            <div class="{css longa-app-seller-record-cell-span-holder}">
+              <span>{msg desc=""}Subs:{/msg}{sp}</span>
+              <span class="{css longa-app-seller-record-cell-bold} {css longa-app-seller-record-subscribers}">0</span>
+            </div>
+          </div>
+          <div class="{css longa-app-seller-record-cell-row}">
+            <div class="{css longa-app-seller-record-cell-span-holder}">
+              <span>{msg desc=""}Charge:{/msg}{sp}</span>
+              <span class="{css longa-app-seller-record-cell-bold} {css longa-app-seller-record-charge}">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {call pstj.material.template.Ripple}
+      {param opacity: 0.25 /}
+    {/call}
+  </div>
+{/template}

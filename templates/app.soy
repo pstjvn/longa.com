@@ -1111,27 +1111,48 @@
  */
 {template .SignalFeed}
   <div is class="{css longa-app-feed}">
-    <div class="{css longa-app-seller-record}">
-      <div class="{css longa-app-seller-record-subhead}">
-        <div class="{css longa-app-seller-record-flex-two}">
-          <div>{msg desc=""}Provider{/msg}</div>
-          <div class="{css longa-app-seller-record-arrow-icon}">
+    {call .ListHeader /}
+    <div is class="{css core-element}">
+      <div is class="{css longa-app-prl} {css material-list}">
+        <div class="{css material-list-scroll-target}"></div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+
+/** Separate the header from the page content builder */
+{template .ListHeader}
+  <div is class="{css longa-app-list-header} {css core-tap}">
+    <div class="{css longa-app-list-header-subhead}">
+      <div class="{css longa-app-list-header-item} {css flex-2}">
+        <div is class="{css core-element}" use-pointer>
+          <div class="{css flex-1}">{msg desc=""}Provider{/msg}</div>
+          <div class="{css longa-app-list-header-arrow-icon}">
             {call pstj.material.template.IconContainer}
               {param type: 'none' /}
             {/call}
           </div>
         </div>
-        <div class="{css longa-app-seller-record-profit}">
-          {msg desc=""}Profit(%){/msg}
-          {call pstj.material.template.IconContainer}
-            {param type: 'none' /}
-          {/call}
+      </div>
+      <div class="{css longa-app-list-header-item} {css flex-1}">
+        <div is class="{css core-element}" use-pointer>
+          <div class="{css flex-1}">{msg desc=""}Profit(%){/msg}</div>
+          <div class="{css longa-app-list-header-arrow-icon}">
+            {call pstj.material.template.IconContainer}
+              {param type: 'none' /}
+            {/call}
+          </div>
         </div>
-        <div class="{css longa-app-seller-record-subs}">
-          {msg desc=""}Subs{/msg}
-          {call pstj.material.template.IconContainer}
-            {param type: 'none' /}
-          {/call}
+      </div>
+      <div class="{css longa-app-list-header-item} {css flex-1}">
+        <div is class="{css core-element}" use-pointer>
+          <div class="{css flex-1}">{msg desc=""}Subs{/msg}</div>
+          <div class="{css longa-app-list-header-arrow-icon}">
+            {call pstj.material.template.IconContainer}
+              {param type: 'none' /}
+            {/call}
+          </div>
         </div>
       </div>
     </div>

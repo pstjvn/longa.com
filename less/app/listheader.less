@@ -1,0 +1,32 @@
+@import "../../../pstj/less/material/colors/teal";
+@import "../../../pstj/less/material/typography";
+@import "../../../pstj/less/material/icon";
+@import "../../../pstj/less/material/icons/arrow-drop";
+
+.longa-app-list-header {
+  background-color: @teal500;
+  padding-left: 5px;
+  height: 40px;
+
+  & > &-subhead {
+    &:extend(.horizontal);
+    &:extend(.center);
+    .listheader(white);
+
+    & > .longa-app-list-header-item {
+      .horizontal();
+      .center();
+
+      & > .core-element {
+        height: 40px;
+        .horizontal();
+        .center();
+        .flex-1();
+      }
+    }
+  }
+}
+
+.longa-app-list-header-arrow-icon > .material-icon-container > svg {
+  fill: white;
+}

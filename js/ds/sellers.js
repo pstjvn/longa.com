@@ -6,21 +6,18 @@ goog.require('pstj.ds.Sortable');
 
 
 /**
- * @extends {pstj.ds.Sortable<TYPE>}
+ * @extends {pstj.ds.Sortable<!longa.gen.dto.SellerBalance>}
  * @private
- * @template TYPE
  */
 longa.ds.Sellers_ = goog.defineClass(pstj.ds.Sortable, {
-  /**
-   * @param {!pstj.ds.DtoBase} data_source The data source to sync to.
-   */
+  /** @param {!pstj.ds.DtoBase} data_source */
   constructor: function(data_source) {
     pstj.ds.Sortable.call(this, data_source);
   },
 
-  /** @override */
+  /** @inheritDoc */
   getList: function() {
-    return /** @type {!longa.gen.dto.Sellers} */ (this.dataSource).sellers;
+    return /** @type {!longa.gen.dto.Sellers} */(this.dataSource).sellers;
   },
 
   /** @override */
@@ -67,7 +64,7 @@ longa.ds.Sellers_ = goog.defineClass(pstj.ds.Sortable, {
  * Single instance, used to reference the sorted and ready to display
  * list of sellers (with their balance data).
  *
- * @type {!longa.ds.Sellers_<!longa.gen.dto.SellerBalance>}
+ * @type {!longa.ds.Sellers_}
  * @final
  */
 longa.ds.sellers = new longa.ds.Sellers_(longa.data.sellers);

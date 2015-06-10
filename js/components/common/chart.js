@@ -1,9 +1,15 @@
+/**
+ * @fileoverview Provides an element that is able to render the reporting
+ * data for an account as a chart.
+ */
+
 goog.provide('longa.ui.Chart');
+goog.provide('longa.ui.ChartRenderer');
 
 goog.require('goog.array');
 goog.require('goog.ui.registry');
-goog.require('longa.control.viz');
 goog.require('longa.gen.dto.ReportList');
+goog.require('longa.preload');
 goog.require('longa.strings');
 goog.require('longa.template');
 goog.require('pstj.material.Element');
@@ -71,7 +77,7 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
    * @private
    */
   updateChart_: function() {
-    if (!this.nodata_) {
+    if (!this.nodata_ && !goog.isNull(this.chart)) {
       this.showOverlay_(false);
       longa.ui.Chart.Options['title'] = longa.ui.Chart.Names_[
           this.selectedIndex_];
@@ -178,10 +184,12 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
   /** @override */
   enterDocument: function() {
     goog.base(this, 'enterDocument');
-    longa.control.viz.load().then(function() {
+    longa.preload.installVizualizationApis().then(function() {
       this.chart = new google.visualization.LineChart(
           this.getContentElement());
-    }, null, this);
+    }, null, this).thenCatch(function() {
+      this.showOverlay_(true);
+    }, this);
   },
 
   statics: {

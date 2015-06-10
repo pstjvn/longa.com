@@ -188,6 +188,10 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
       this.chart = new google.visualization.LineChart(
           this.getContentElement());
     }, null, this).thenCatch(function() {
+      goog.dom.setTextContent(
+          this.getElementByClass(
+              goog.getCssName(this.getRenderer().getCssClass(), 'message')),
+          longa.strings.loadingViz(null).toString());
       this.showOverlay_(true);
     }, this);
   },

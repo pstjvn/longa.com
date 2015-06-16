@@ -27,7 +27,7 @@
       "$_name": "maximumWithdrawal"
     },
     "pip_charge": {
-      "description": "How much was paied in PIP charges for all time",
+      "description": "How much was payed in PIP charges for all time",
       "type": "number",
       "$_name": "allTimeChargesForProfit"
     },

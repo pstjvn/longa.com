@@ -1,12 +1,18 @@
-goog.provide('longa.ui.UserAuth');
+/**
+ * @fileoverview Provides
+ */
 
-goog.require('goog.async.Delay');
+goog.provide('longa.ui.UserAuth');
+goog.provide('longa.ui.UserAuthRenderer');
+
 goog.require('goog.style');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
-goog.require('pstj.control.Control');
+goog.require('longa.ds.utils');
+goog.require('longa.template.components');
+goog.require('longa.ui.Control');
 goog.require('pstj.material.Button');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
@@ -15,8 +21,8 @@ goog.require('pstj.material.IconContainer');
 goog.require('pstj.material.icon');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.UserAuth = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Control} */
+longa.ui.UserAuth = goog.defineClass(longa.ui.Control, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -26,33 +32,11 @@ longa.ui.UserAuth = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
-    /**
-     * Flag for the delayed pushes.
-     * @type {boolean}
-     * @private
-     */
-    this.pushLogin_ = false;
-    /**
-     * @private
-     * @type {goog.async.Delay}
-     */
-    this.delay_ = new goog.async.Delay(function() {
-      if (this.pushLogin_) {
-        this.control_.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
-      } else {
-        this.control_.push(longa.ds.Topic.USER_AUTH_FORGET);
-      }
-    }, 100, this);
-    /**
-     * @private
-     * @type {pstj.control.Control}
-     */
-    this.control_ = new pstj.control.Control(this);
-    this.control_.init();
-    this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED,
+    longa.ui.Control.call(this, opt_content, opt_renderer, opt_domHelper);
+
+    // Configure controller.
+    this.getController().listen(longa.ds.Topic.USER_AUTH_CHANGED,
         this.setVisibleSectionByUser);
-    this.registerDisposable(this.delay_);
   },
 
   /**
@@ -92,17 +76,24 @@ longa.ui.UserAuth = goog.defineClass(pstj.material.Element, {
   },
 
   /**
-   * Handles the clicks on the buttons.
+   * Handles the action events from pressed buttons. The buttons must have
+   * names actions.
+   *
    * @param {goog.events.Event} e The ACTION event.
    * @private
    */
   handleAction_: function(e) {
-    if (e.target == this.getChildAt(0)) {
-      this.pushLogin_ = true;
-    } else {
-      this.pushLogin_ = false;
+    var button = goog.asserts.assertInstanceof(e.target, pstj.material.Button);
+    switch (button.getAction()) {
+      case 'login':
+        this.getController().push(
+            longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+        break;
+      case 'logout':
+        this.getController().push(longa.ds.Topic.USER_AUTH_FORGET);
+        break;
+      default: throw new Error('Unknown action name: ' + button.getAction());
     }
-    this.delay_.start();
   }
 });
 
@@ -113,14 +104,14 @@ longa.ui.UserAuthRenderer = goog.defineClass(pstj.material.ElementRenderer, {
     pstj.material.ElementRenderer.call(this);
   },
 
-  /** @override */
+  /** @inheritDoc */
   getCssClass: function() {
     return longa.ui.UserAuthRenderer.CSS_CLASS;
   },
 
-  /** @override */
+  /** @inheritDoc */
   getTemplate: function(model) {
-    return longa.template.UserAuth(model);
+    return longa.template.components.UserAuth(model);
   },
 
   statics: {

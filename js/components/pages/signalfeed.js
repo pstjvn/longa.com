@@ -1,14 +1,26 @@
+/**
+ * @fileoverview Dummy wraper for the provider record list.
+ *
+ * It also hosts the sorting widget used to filter the data records.
+ */
 goog.provide('longa.ui.SignalFeed');
+goog.provide('longa.ui.SignalFeedRenderer');
 
 goog.require('goog.ui.registry');
+goog.require('longa.ds.Screen');
+goog.require('longa.ds.Topic');
+goog.require('longa.ds.sellers');
 goog.require('longa.template');
+goog.require('longa.ui.ListHeader');
+goog.require('longa.ui.ProviderRecordList');
+goog.require('pstj.control.Control');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
-goog.require('pstj.material.IconContainer');
+goog.require('pstj.material.EventMap');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.SignalFeed = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Control} */
+longa.ui.SignalFeed = goog.defineClass(longa.ui.Control, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -18,7 +30,31 @@ longa.ui.SignalFeed = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    longa.ui.Control.call(this, opt_content, opt_renderer, opt_domHelper);
+    this.setAutoEventsInternal(pstj.material.EventMap.EventFlag.TAP);
+  },
+
+  /**
+   * Set the data model on the sorting list header.
+   * @override
+   */
+  enterDocument: function() {
+    goog.base(this, 'enterDocument');
+    this.getChildAt(0).setModel(longa.ds.sellers);
+    this.getChildAt(1).getChildAt(0).setModel(longa.ds.sellers);
+    this.getHandler().listen(this.getChildAt(1).getChildAt(0),
+        pstj.material.EventType.RIPPLE_END,
+        this.onListAnimationEnd_);
+  },
+
+  /**
+   * Handles the ripple animation end as we want to swich screens at this point.
+   * @param {goog.events.Event} e The RIPPLE_END event.
+   * @protected
+   */
+  onListAnimationEnd_: function(e) {
+    this.getController().push(longa.ds.Topic.SHOW_SCREEN,
+        longa.ds.Screen.FEED_DETAILS);
   }
 });
 

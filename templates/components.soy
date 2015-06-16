@@ -1,0 +1,262 @@
+{namespace longa.template.components}
+
+/**
+ * Provides the template for a custom element that changes its appearence
+ * based on the user logging state.
+ *
+ * When the user is logged in the view represents the user and option to logout.
+ * When no user is logged in the view provides a button to trigger logging view.
+ */
+{template .UserAuth}
+	<div is class="{css longa-app-userauth}">
+    <section>
+      <div is class="{css material-button} {css material-button-raised} {css material-button-tactile}" ink use-pointer icon="user" action="login">
+        {call pstj.material.template.Shadow /}
+        {call pstj.material.template.IconContainer}
+          {param type: 'none' /}
+        {/call}
+        {call pstj.material.template.ButtonContent}
+          {param content kind="text"}{msg desc="button label"}Login{/msg}{/param}
+        {/call}
+        {call pstj.material.template.Ripple}
+          {param recenter: false /}
+          {param opacity: 0.30 /}
+        {/call}
+      </div>
+    </section>
+    <section>
+      {call pstj.material.template.IconContainer}
+        {param type: 'user' /}
+      {/call}
+      <div class="{css longa-app-userauth-username}"></div>
+      <div class="{css longa-app-userauth-usertype} {css investor}">
+        <span class="{css investor}">{msg desc=""}(Investor){/msg}</span>
+        <span class="{css seller}">{msg desc=""}(Provider){/msg}</span>
+      </div>
+      {call pstj.material.template.IconButton}
+        {param icon: 'exit-to-app' /}
+        {param action: 'logout' /}
+      {/call}
+    </section>
+	</div>
+{/template}
+
+/**
+ * The live main header item - switches the label for main view.
+ */
+{template .MainHeader}
+  <div is class="{css longa-main-header}">
+    <div class="{css longa-main-header-button}">
+      <div is class="{css material-button} {css material-button-tactile}" ink use-pointer icon="menu">
+        {call pstj.material.template.Shadow /}
+        {call pstj.material.template.IconContainer}
+          {param type: 'menu' /}
+        {/call}
+        {call pstj.material.template.ButtonContent /}
+        {call pstj.material.template.Ripple}
+          {param recenter: true /}
+          {param opacity: 0.30 /}
+        {/call}
+      </div>
+    </div>
+    <div class="{css longa-main-header-tiles}">
+      <div is class="{css longa-app-pages}" animate>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Login{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Balance{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Define service{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Signal feed{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}My signals{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Alerts{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Profile{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}FAQ{/msg}</div></div>
+        <div is class="{css longa-app-page} {css animation-top-down}"><div>{msg desc="header label"}Terms of service{/msg}</div></div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * The user authentication wrapped as page / activity.
+ */
+{template .Authentication}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}">
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call longa.template.Auth /}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * Wraps the balance pages into a page / activity.
+ */
+{template .BalancePages}
+  <div is class="{css longa-app-page}">
+    {call longa.template.Balance /}
+  </div>
+{/template}
+
+/**
+ * Wrapped service as activity.
+ */
+{template .Service}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}">
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call longa.template.Service /}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * Wrpas the own signals list as activity.
+ */
+{template .MySignals}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}">
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * Wrapped signal feeds page.
+ */
+{template .SignalFeed}
+  <div is class="{css longa-app-page}">
+    {call longa.template.Feeds /}
+  </div>
+{/template}
+
+/**
+ * Wrapped alerts page.
+ */
+{template .Alerts}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}">
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call longa.template.Alerts /}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * Wrapped profile page.
+ */
+{template .Profile}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}">
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call longa.template.RegistrationForm}
+                {param registration: false /}
+              {/call}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * The frequently asked questions wrapped as activity page.
+ */
+{template .Faq}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}" waterfall>
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call longa.template.Faq /}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * Terms of service wrapped as activity page.
+ */
+{template .Tos}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}" waterfall>
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call longa.template.Terms /}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+/** Template to copy/paste for activities. */
+{template .WrapAsPage}
+  <div is class="{css longa-app-page}">
+    <div is class="{css material-header-panel} {css noop} {css flex}">
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}

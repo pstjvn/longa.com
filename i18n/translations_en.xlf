@@ -489,6 +489,10 @@
         <target/>
         <note priority="1" from="description">input hint/placeholder</note>
       </trans-unit>
+      <trans-unit id="1900682391388003202" datatype="html">
+        <source>Min. Credit To subscribe (LC)</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1902685080273086420" datatype="html">
         <source>District of Columbia</source>
         <target/>
@@ -768,6 +772,10 @@
         <source>Trinidad and Tobago</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="2770313316071560659" datatype="html">
+        <source>Profit Charge (LC/1%)</source>
+        <target/>
       </trans-unit>
       <trans-unit id="2799975203487923263" datatype="html">
         <source>Profit(%)</source>
@@ -1734,6 +1742,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6798907133560211703" datatype="html">
+        <source>Provider ID</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6839230987909572003" datatype="html">
         <source>Croatia</source>
         <target/>
@@ -1889,6 +1901,11 @@
         <target/>
         <note priority="1" from="description">error text</note>
       </trans-unit>
+      <trans-unit id="7339269221114096145" datatype="html">
+        <source>View signals</source>
+        <target/>
+        <note priority="1" from="description">view signals button label</note>
+      </trans-unit>
       <trans-unit id="7349530031233006058" datatype="html">
         <source>Total:</source>
         <target/>
@@ -1958,6 +1975,11 @@
         <source>Select item</source>
         <target/>
         <note priority="1" from="description">Select item</note>
+      </trans-unit>
+      <trans-unit id="7585075215571067264" datatype="html">
+        <source>subscribe</source>
+        <target/>
+        <note priority="1" from="description">Widthraw button label</note>
       </trans-unit>
       <trans-unit id="7586179551119829690" datatype="html">
         <source>Bangladesh</source>
@@ -2186,6 +2208,10 @@
         <source>Venezuela</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="8425952159409472291" datatype="html">
+        <source>Loading visualization APIs</source>
+        <target/>
       </trans-unit>
       <trans-unit id="8450859729620670981" datatype="html">
         <source>Price (in USD):</source>

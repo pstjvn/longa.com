@@ -11,6 +11,7 @@ goog.require('pstj.control.Control');
 
 /**
  * @extends {pstj.control.Control}
+ * @deprecated Use the preloader.
  * @private
  */
 longa.control.Viz_ = goog.defineClass(pstj.control.Control, {
@@ -107,6 +108,7 @@ longa.control.viz.promise_ = null;
 
 /**
  * Returns a promise that will be fulfilled when APIs are loaded.
+ * @deprecated Use the preloader instead.
  * @return {!goog.Promise<boolean>}
  */
 longa.control.viz.load = function() {

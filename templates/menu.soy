@@ -1,0 +1,99 @@
+{namespace longa.template.menu}
+
+
+/**
+ * Provides the customized menu for the app's sidebar.
+ */
+{template .Menu}
+  <div is class="{css longa-app-menu}">
+    <div class="{css longa-app-menu-separator}"></div>
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}Login{/msg}{/param}
+    {/call}
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}Balance{/msg}{/param}
+    {/call}
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}Define service{/msg}{/param}
+    {/call}
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}Signal feed{/msg}{/param}
+    {/call}
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}My signals{/msg}{/param}
+    {/call}
+    {call .MenuItem}
+      {param badge: '' /}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}Alerts{/msg}{/param}
+    {/call}
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}Profile{/msg}{/param}
+    {/call}
+    <div class="{css longa-app-menu-separator}"></div>
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}FAQ{/msg}{/param}
+    {/call}
+    {call pstj.material.template.MenuItem}
+      {param icon: 'none' /}
+      {param content kind="text"}{msg desc="menu item label"}Terms of service{/msg}{/param}
+    {/call}
+  </div>
+{/template}
+
+/**
+ * Provides the custom menu item in the main menu - a menu item that reflects
+ * the number of new alerts for the currently logged in user.
+ */
+{template .MenuItem}
+  {@param badge: string}
+  {@param icon: string}
+  {@param? content: string}
+  <div is class="{css longa-menu-item} {css material-menu-item} {css core-tap}" use-pointer>
+    {call pstj.material.template.IconContainer}
+      {param type: $icon /}
+    {/call}
+    <div class="{css material-menu-item-content}">
+      {call pstj.material.template.Item}
+        {param content: $content /}
+      {/call}
+    </div>
+    <div class="{css longa-menu-item-badge}">{$badge}</div>
+  </div>
+{/template}
+
+/**
+ * Puts the sidebar in a scrolling container for smaller screens this allows the
+ * user to scroll down to see the whole menu.
+ *
+ * In styling make sure the header panel's header is set to 0px.
+ *
+ * This is deprecated as we no longer need the menu to scroll, instead we scroll
+ * the whole sidebar.
+ *
+ * Use .Menu directly
+ */
+{template .SidebarMenu}
+  <div class="{css longa-app-sidebar-menu} {css flex} {css vertical}">
+    <div is class="{css material-header-panel} {css flex}" waterfall>
+      <div class="{css material-header-panel-outer-container}">
+        {call pstj.material.template.HeaderPanelHeader /}
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call .Menu /}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}

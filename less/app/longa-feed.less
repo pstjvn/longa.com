@@ -1,14 +1,46 @@
-@import "../../../pstj/less/material/typography";
-@import "../../../pstj/less/material/layout";
 @import "../../../pstj/less/material/colors/teal";
+@import "../../../pstj/less/material/layout";
+@import "../../../pstj/less/material/list";
+@import "../../../pstj/less/material/typography";
+@import "colors";
+@import "listheader";
 
 @border : 1px solid #EAEAEA;
+
+.longa-app-feed {
+  &:extend(.fit);
+  &:extend(.vertical);
+
+  & > .core-element {
+    &:extend(.flex);
+    position: relative;
+  }
+}
+
+// Hides the icon in record when not subscribed.
+.longa-app-seller-record-icon > .material-icon-container-empty {
+  display: none;
+}
+.longa-app-seller-record-icon > .material-icon-container {
+  width: 24px;
+  height: 24px;
+  & > svg {
+    fill: @longa-checked;
+  }
+}
 
 .longa-app-seller-record {
   &:extend(.flex);
   background-color: @teal500;
   color: rgba(255, 255, 255, 0.54);
-  padding-left: 5px;
+  width: 100%;
+
+  // Tweak the ripple
+  & > .ripple {
+    z-index: -1;
+    background-color: white;
+    color: @longa-secondary-accent-color;
+  }
 
   &-subhead {
     &:extend(.horizontal);
@@ -45,13 +77,6 @@
     height: 49px;
     font-size: 14px;
   }
-  &-color-coded-trend {
-    width: 5px;
-    height: 100%;
-  }
-  &-color-coded-trend div{
-    height: 100%;
-  }
   &-cell {
     &:extend(.flex);
     &:extend(.vertical);
@@ -65,6 +90,7 @@
     }
     &-row {
       &:extend(.flex);
+      &:extend(.horizontal);
     }
     &-bold {
       font-weight: 700;
@@ -78,5 +104,38 @@
       line-height: 20px;
       color: #808080;
     }
+  }
+  &-username {
+    &:extend(.horizontal);
+    &:extend(.center-center);
+  }
+}
+
+.longa-app-seller-record-cell-span-holder {
+  .flex-1();
+}
+
+.longa-app-trend {
+  width: 5px;
+  height: 100%;
+}
+.longa-app-trend div{
+  height: 100%;
+}
+
+.longa-app-feed-pages-button {
+  position: absolute;
+  transition: transform 200ms linear;
+  transform: scale(0);
+
+  &.up {
+    top: 1em;
+    left: 1em;
+    transform: scale(1);
+  }
+
+  &.down {
+    bottom: 1em;
+    right: 1em;
   }
 }

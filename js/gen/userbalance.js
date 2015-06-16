@@ -45,7 +45,7 @@ longa.gen.dto.UserBalance = goog.defineClass(longa.gen.dto.Balance, {
      */
     this.maximumWithdrawal = 0;
     /**
-     * How much was paied in PIP charges for all time
+     * How much was payed in PIP charges for all time
      * @type {!number}
      */
     this.allTimeChargesForProfit = 0;

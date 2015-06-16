@@ -12,6 +12,7 @@
 @import "../../pstj/less/reset";
 @import "../../pstj/less/widgets/swiper";
 @import "app/auth";
+@import "app/colors";
 @import "app/buycredit";
 @import "app/errormessage";
 @import "app/faq";
@@ -114,4 +115,46 @@ label {
     &:extend(.horizontal);
     &:extend(.end-justified);
   }
+}
+
+
+// The drawer header portion
+.longa-app-drawer-header {
+  background-color: @longa-accent-color;
+  height: 60px;
+}
+
+
+// Tweaks that allow only the menu to scroll instead of all the sidebar.
+.longa-app-sidebar {
+  position: relative;
+  height: 100%;
+  display: block;
+}
+
+// Fixes the scrolling header panel in sidebar menu
+.longa-app-sidebar-menu > .material-header-panel > .material-header-panel-outer-container > div.material-header-panel-header {
+  height: 0px;
+}
+
+// Fix the main header to have the same background as the header panel.
+.longa-main-header {
+  background-color: @longa-accent-color;
+}
+
+// Makes the header panels to not really have headers. This is mostly design
+// flaw instead of actual need...
+.material-header-panel.noop >
+    .material-header-panel-outer-container >
+        .material-header-panel-header{
+  height: 0px;
+}
+
+// Makes the content fit under the main header.
+.longa-app-content-pages {
+  position: relative;
+}
+
+.longa-registration-form {
+  margin: 10px auto;
 }

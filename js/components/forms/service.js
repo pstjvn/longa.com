@@ -1,4 +1,5 @@
 goog.provide('longa.ui.Service');
+goog.provide('longa.ui.ServiceRenderer');
 
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');

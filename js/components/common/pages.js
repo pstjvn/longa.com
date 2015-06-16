@@ -1,16 +1,23 @@
+/**
+ * @fileoverview Provides pages widget that can host any number of 'page' items
+ * and switch between them, possibly animating the transition.
+ */
+
 goog.provide('longa.ui.Pages');
 goog.provide('longa.ui.PagesRenderer');
 
 goog.require('goog.math.Size');
 goog.require('goog.style');
 goog.require('goog.ui.registry');
+goog.require('longa.template.pages');
+goog.require('longa.ui.Control');
 goog.require('longa.ui.Page');
-goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.HeaderPanel');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.Pages = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Control} */
+longa.ui.Pages = goog.defineClass(longa.ui.Control, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -20,7 +27,7 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    longa.ui.Control.call(this, opt_content, opt_renderer, opt_domHelper);
     /**
      * The size od the parent element.
      * @type {goog.math.Size}
@@ -99,7 +106,7 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
         this.getHandler().listenOnce(
             this.getChildAt(this.nextIndexToApply_).getElementStrict(),
             goog.events.EventType.TRANSITIONEND,
-            this.removeTransitionState_);
+            this.onTransitionEnd);
         this.getRaf().start();
       } else {
         this.getRaf().fire();
@@ -120,8 +127,12 @@ longa.ui.Pages = goog.defineClass(pstj.material.Element, {
     if (el.hasAttribute('animate')) this.useAnimation_ = true;
   },
 
-  /** @private */
-  removeTransitionState_: function() {
+  /**
+   * Handles the end of the transition for a subpage.
+   * @param {goog.events.Event} e The DOM transition end event.
+   * @protected
+   */
+  onTransitionEnd: function(e) {
     this.setTransitioning(false);
   },
 
@@ -156,7 +167,7 @@ longa.ui.PagesRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.Pages(model);
+    return longa.template.pages.Pages(model);
   },
 
   /**

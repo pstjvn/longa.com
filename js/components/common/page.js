@@ -1,14 +1,25 @@
+/**
+ * @fileoverview Provides virtual page to be embedded in 'Pages' widget.
+ *
+ * A page can be selected (potentially animating the transition).
+ *
+ * Pages that are not currently selected are by default styles with
+ * 'display:none' to make the layout tree smaller.
+ */
+
 goog.provide('longa.ui.Page');
+goog.provide('longa.ui.PageRenderer');
 
 goog.require('goog.array');
 goog.require('goog.ui.Component.State');
 goog.require('goog.ui.registry');
-goog.require('pstj.material.Element');
+goog.require('longa.template.pages');
+goog.require('longa.ui.Control');
 goog.require('pstj.material.ElementRenderer');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.Page = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Control} */
+longa.ui.Page = goog.defineClass(longa.ui.Control, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -18,7 +29,7 @@ longa.ui.Page = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    longa.ui.Control.call(this, opt_content, opt_renderer, opt_domHelper);
     this.setSupportedState(goog.ui.Component.State.SELECTED, true);
   },
 
@@ -49,7 +60,7 @@ longa.ui.PageRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.Page(model);
+    return longa.template.pages.Page(model);
   },
 
   statics: {

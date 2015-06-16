@@ -1,4 +1,15 @@
+/**
+ * @fileoverview Provides custom menu item that can reflect a value in the
+ * UI.
+ *
+ * Similar to iOS badges with counter, this menu item reflects the number of
+ * new (unread) alerts currently loaded.
+ *
+ * TODO: Extract the badge related logic into a new element that can be reused.
+ */
+
 goog.provide('longa.ui.MenuItem');
+goog.provide('longa.ui.MenuItemRenderer');
 
 goog.require('goog.asserts');
 goog.require('goog.dom');
@@ -7,7 +18,7 @@ goog.require('goog.ui.registry');
 goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
-goog.require('longa.template');
+goog.require('longa.template.menu');
 goog.require('pstj.control.Control');
 goog.require('pstj.ds.DtoBase.EventType');
 goog.require('pstj.material.MenuItem');
@@ -73,7 +84,7 @@ longa.ui.MenuItem = goog.defineClass(pstj.material.MenuItem, {
   decorateInternal: function(el) {
     goog.base(this, 'decorateInternal', el);
     var value = goog.dom.getTextContent(
-        this.getRenderer().getBadge(el));
+        this.getRenderer().getBadgeElement(el));
     if (goog.string.isEmptyOrWhitespace(value)) {
       this.setBadge('');
     } else {
@@ -115,7 +126,7 @@ longa.ui.MenuItemRenderer = goog.defineClass(pstj.material.MenuItemRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.MenuItem(model);
+    return longa.template.menu.MenuItem(model);
   },
 
   /** @override */
@@ -131,7 +142,7 @@ longa.ui.MenuItemRenderer = goog.defineClass(pstj.material.MenuItemRenderer, {
    */
   setBadge: function(control) {
     var value = control.getBadge();
-    var el = this.getBadge(control.getElement());
+    var el = this.getBadgeElement(control.getElement());
     goog.style.setElementShown(el, !goog.string.isEmptyOrWhitespace(value));
     goog.dom.setTextContent(el, value);
   },
@@ -142,7 +153,7 @@ longa.ui.MenuItemRenderer = goog.defineClass(pstj.material.MenuItemRenderer, {
    * @return {Element}
    * @protected
    */
-  getBadge: function(el) {
+  getBadgeElement: function(el) {
     return goog.dom.getElementByClass(goog.getCssName(this.getCssClass(),
         'badge'), el);
   },

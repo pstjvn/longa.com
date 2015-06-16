@@ -1,4 +1,5 @@
 goog.provide('longa.ui.UserBalance');
+goog.provide('longa.ui.UserBalanceRenderer');
 
 goog.require('goog.asserts');
 goog.require('goog.async.Delay');
@@ -6,6 +7,7 @@ goog.require('goog.log');
 goog.require('goog.ui.registry');
 goog.require('longa.control.Report');
 goog.require('longa.control.viz');
+goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.UserBalance');
@@ -34,50 +36,51 @@ longa.ui.UserBalance = goog.defineClass(pstj.material.Element, {
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
     /**
-     * Flag - set by the action handler to denote to the delayed switcher
-     * to which screen to go next.
-     *
-     * @type {boolean}
-     * @private
-     */
-    this.showBuy_ = false;
-    /**
-     * Delayed screen switch pusher - we utilize it to make the UI better
-     * apprehended.
-     *
-     * @type {goog.async.Delay}
-     * @private
-     */
-    this.delay_ = new goog.async.Delay(function() {
-      if (this.showBuy_) {
-        this.control_.push(longa.ds.Topic.SHOW_SCREEN,
-            longa.ds.Screen.BALANCE_BUY);
-      } else {
-        this.control_.push(longa.ds.Topic.SHOW_SCREEN,
-            longa.ds.Screen.BALANCE_WIDHTRAW);
-      }
-    }, 100, this);
-    /**
      * Control instance to use to talk to the control bus.
      *
      * @private
-     * @type {pstj.control.Control}
+     * @type {!pstj.control.Control}
+     * @final
      */
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
 
-    // Make sure to clean up
-    this.registerDisposable(this.delay_);
     this.registerDisposable(this.control_);
+  },
+
+  /**
+   * Accessor for the controller object
+   * @return {!pstj.control.Control}
+   */
+  getController: function() {
+    return this.control_;
   },
 
   /** @inheritDoc */
   enterDocument: function() {
     goog.base(this, 'enterDocument');
+    // If we already have a model, load the reporting for it.
+    if (!goog.isNull(this.getModel())) {
+      this.loadReportingData(this.getAccountID());
+    }
+
     this.getHandler().listen(this, goog.ui.Component.EventType.CHANGE,
         this.handleRadioGroupChange);
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         this.handleAction);
+  },
+
+  /**
+   * Getter for the account id in the model for this component. In our case
+   * it is the globally logged in user.
+   *
+   * If you use different DTO or datasource you need to override this.
+   *
+   * @protected
+   * @return {!number}
+   */
+  getAccountID: function() {
+    return longa.data.user.accountid;
   },
 
   /**
@@ -89,16 +92,16 @@ longa.ui.UserBalance = goog.defineClass(pstj.material.Element, {
     if (e.target instanceof pstj.material.Button) {
       switch (e.target.getAction()) {
         case 'buy':
-          this.showBuy_ = true;
-          this.delay_.start();
+          this.control_.push(longa.ds.Topic.SHOW_SCREEN,
+              longa.ds.Screen.BALANCE_BUY);
           break;
         case 'widthraw':
-          var model = longa.data.balance;
+          var model = this.getModel();
           if (!goog.isNull(model)) {
             if (goog.asserts.assertInstanceof(model, longa.gen.dto.UserBalance)
                 .balance > 0) {
-              this.showBuy_ = false;
-              this.delay_.start();
+              this.control_.push(longa.ds.Topic.SHOW_SCREEN,
+                  longa.ds.Screen.BALANCE_WIDHTRAW);
             } else {
               longa.control.Toaster.getInstance().addToast(
                   longa.strings.NoSufficientBalanceForWidthdrawal(
@@ -106,6 +109,8 @@ longa.ui.UserBalance = goog.defineClass(pstj.material.Element, {
             }
           }
           break;
+        default: throw new Error('Unhandled button action: ' +
+            e.target.getAction());
       }
     }
   },
@@ -152,11 +157,11 @@ longa.ui.UserBalance = goog.defineClass(pstj.material.Element, {
 
   /**
    * Tell the balance sheet to load a new reporting set.
+   * @param {!number} acctid The account id to load report for.
    */
-  loadReportingData: function() {
+  loadReportingData: function(acctid) {
     goog.Promise.all([
-      longa.control.Report.getInstance().loadReport(longa.data.user.accountid),
-      longa.control.viz.load()
+      longa.control.Report.getInstance().loadReport(acctid)
     ]).then(function(results) {
       var data = /** @type {!longa.gen.dto.ReportList} */ (results[0]);
       this.getChart().setModel(data);
@@ -169,12 +174,13 @@ longa.ui.UserBalance = goog.defineClass(pstj.material.Element, {
 longa.ui.UserBalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   constructor: function() {
     pstj.material.ElementRenderer.call(this);
-    /**
-     * @private
-     * @type {goog.debug.Logger}
-     */
-    this.logger_ = goog.log.getLogger('longa.ui.UserBalanceRenderer');
   },
+
+  /**
+   * @protected
+   * @type {goog.debug.Logger}
+   */
+  logger: goog.log.getLogger('longa.ui.UserBalanceRenderer'),
 
   /** @override */
   getCssClass: function() {
@@ -183,7 +189,8 @@ longa.ui.UserBalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.UserBalance(model);
+    return longa.template.UserBalance(goog.asserts.assertInstanceof(
+        model, longa.gen.dto.UserBalance));
   },
 
   /** @override */
@@ -191,11 +198,8 @@ longa.ui.UserBalanceRenderer = goog.defineClass(pstj.material.ElementRenderer, {
     var model = instance.getModel();
     if (!goog.isNull(model)) {
       return goog.asserts.assertInstanceof(model, longa.gen.dto.UserBalance);
-    } else if (!goog.isNull(longa.data.balance)) {
-      return goog.asserts.assertInstanceof(longa.data.balance,
-          longa.gen.dto.UserBalance);
     } else {
-      goog.log.warning(this.logger_, 'Rendering Balance sheet with empty data');
+      goog.log.warning(this.logger, 'Rendering Balance sheet with empty data');
       return new longa.gen.dto.UserBalance();
     }
   },

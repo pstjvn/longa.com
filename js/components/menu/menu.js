@@ -1,19 +1,27 @@
+/**
+ * @fileoverview Provides the sidebar menu for the app.
+ *
+ * The app menu contains custom menu items as well, make sure to require
+ * custom menu items in the require list so they can be correctly decorated.
+ */
+
 goog.provide('longa.ui.Menu');
+goog.provide('longa.ui.MenuRenderer');
 
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
 goog.require('longa.ds.UserType');
 goog.require('longa.ds.utils');
+goog.require('longa.template.menu');
+goog.require('longa.ui.Control');
 goog.require('longa.ui.MenuItem');
-goog.require('pstj.control.Control');
-goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
 goog.require('pstj.material.MenuItem');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.Menu = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Control} */
+longa.ui.Menu = goog.defineClass(longa.ui.Control, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -23,41 +31,40 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
+    longa.ui.Control.call(this, opt_content, opt_renderer, opt_domHelper);
     /**
-     * Reference to the current selection.
+     * Reference to the current selection (selected child - menu item).
+     *
      * @type {goog.ui.Component}
      * @private
      */
     this.selectedChild_ = null;
-    this.control_ = new pstj.control.Control();
-    this.control_.init();
+
     // Allow us to match the menu to the currently used screen
-    this.control_.listen(longa.ds.Topic.SHOW_SCREEN, goog.bind(
-        function(screen) {
-          if (screen > 99) {
-            this.clearSelection();
-            return;
-          } else if (screen > 9) {
-            screen = parseInt(screen.toString()[0], 10);
-          }
-          this.getChildAt(goog.asserts.assertNumber(screen)).setSelected(true);
-        }, this));
-
-
+    this.getController().listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
+      if (screen > 99) {
+        this.clearSelection();
+        return;
+      } else if (screen > 9) {
+        screen = parseInt(screen.toString()[0], 10);
+      }
+      this.getChildAt(goog.asserts.assertNumber(screen)).setSelected(true);
+    });
     // Force update of menus visible to match the current user when AUTH
     // is changed.
-    this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED, goog.bind(
-        function() {
-          this.updateVisibleMenusPerUsertype();
-        }, this));
+    this.getController().listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+      this.updateVisibleMenusPerUsertype();
+    });
   },
 
   /** @override */
   addMaterialChildren: function() {
     goog.base(this, 'addMaterialChildren');
-    // Hide the login
+
+    // The first child in the menu is the login. We use custom control to
+    // trigger that so we hide it here.
     this.getChildAt(0).setVisible(false);
+
     // Find the default selected child
     for (var i = 0; i < this.getChildCount(); i++) {
       if (this.getChildAt(i).isSelected()) {
@@ -71,9 +78,18 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
   /**
    * Grabs the global user currently set and updates the menus to match the
    * user type.
+   *
+   * When the user is unknown (not logged in) we only enable public data
+   * related menus.
+   *
+   * We also differentiate between user types and show / hide only the relevant
+   * menu items.
+   *
+   * @protected
    */
   updateVisibleMenusPerUsertype: function() {
     var usertype = longa.ds.utils.getCurrentUserType();
+
     // enable all menus first and then disable the ones we need.
     if (usertype == longa.ds.UserType.UNKNONW) {
       this.disableAuthedMenus(true);
@@ -117,8 +133,9 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
 
   /**
    * We handle the selection so only a single item can be selected at a time.
-   * @param {goog.events.Event} e The SELECTED event.
+   *
    * @protected
+   * @param {goog.events.Event} e The SELECTED event.
    */
   handleSelectionEvent: function(e) {
     if (e.target != this.selectedChild_) {
@@ -127,13 +144,19 @@ longa.ui.Menu = goog.defineClass(pstj.material.Element, {
       }
       this.selectedChild_ = goog.asserts.assertInstanceof(e.target,
           goog.ui.Component);
-      this.control_.push(longa.ds.Topic.SHOW_SCREEN,
+      this.getController().push(longa.ds.Topic.SHOW_SCREEN,
           this.indexOfChild(this.selectedChild_));
     }
   },
 
   /**
-   * Clear the selection, used when a view that is not in the menu is displayed.
+   * We are calling this method when a view that is not in the menu is
+   * being displayed.
+   *
+   * In our case this category is either the 'login' or one of the user
+   * dependent entries.
+   *
+   * @protected
    */
   clearSelection: function() {
     if (!goog.isNull(this.selectedChild_)) {
@@ -157,7 +180,7 @@ longa.ui.MenuRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(model) {
-    return longa.template.Menu(model);
+    return longa.template.menu.Menu(model);
   },
 
   statics: {
@@ -169,6 +192,7 @@ longa.ui.MenuRenderer = goog.defineClass(pstj.material.ElementRenderer, {
   }
 });
 goog.addSingletonGetter(longa.ui.MenuRenderer);
+
 
 // Register for default renderer.
 goog.ui.registry.setDefaultRenderer(longa.ui.Menu,

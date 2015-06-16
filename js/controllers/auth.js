@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Provides global controller for managing user authentication.
+ *
+ * TODO: convert this control to global ns (longa.auth)
+ */
+
 goog.provide('longa.control.Auth');
 
 goog.require('goog.asserts');

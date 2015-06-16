@@ -1,4 +1,5 @@
 goog.provide('longa.ui.Balance');
+goog.provide('longa.ui.BalanceRenderer');
 
 goog.require('goog.array');
 goog.require('goog.ui.registry');
@@ -26,17 +27,11 @@ longa.ui.Balance = goog.defineClass(longa.ui.Pages, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     longa.ui.Pages.call(this, opt_content, opt_renderer, opt_domHelper);
-    /**
-     * @private
-     * @type {pstj.control.Control}
-     */
-    this.control_ = new pstj.control.Control(this);
-    this.control_.init();
-    this.control_.listen(longa.ds.Topic.SHOW_SCREEN, this.switchScreens);
-    this.control_.listen(longa.ds.Topic.USER_BALANCE_CHANGE,
+    this.getController().listen(longa.ds.Topic.SHOW_SCREEN, this.switchScreens);
+    this.getController().listen(longa.ds.Topic.USER_BALANCE_CHANGE,
         this.onUserBalanaceChange);
     // prevent the newly logged in user to see the previous user's data.
-    this.control_.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+    this.getController().listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
       if (!longa.ds.utils.isKnownUser()) {
         this.destroyMainBalanceSheet_();
       }
@@ -68,8 +63,8 @@ longa.ui.Balance = goog.defineClass(longa.ui.Pages, {
     this.destroyMainBalanceSheet_();
     if (!goog.isNull(longa.data.balance)) {
       var balance = new longa.ui.UserBalance();
+      balance.setModel(longa.data.balance);
       this.getChildAt(0).addChild(balance, true);
-      balance.loadReportingData();
     }
   },
 

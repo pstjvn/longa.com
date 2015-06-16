@@ -35,6 +35,9 @@ longa.ds.Topic = {
   // The DTO for user balance has changed.
   USER_BALANCE_CHANGE: 'user-balance-change',
   // Used when a control encounters an error and cannot resolve it on its own.
-  CONTROL_ERROR: 'control-error'
+  CONTROL_ERROR: 'control-error',
+
+  // Used to announce a user selected a particular feed.
+  FEED_SELECTED: 'feed-select'
 
 };

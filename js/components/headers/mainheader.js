@@ -1,18 +1,19 @@
 goog.provide('longa.ui.MainHeader');
+goog.provide('longa.ui.MainHeaderRenderer');
 
+goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');
 goog.require('longa.ds.Topic');
-goog.require('longa.template');
+goog.require('longa.template.components');
+goog.require('longa.ui.Control');
 goog.require('longa.ui.Page');
 goog.require('longa.ui.Pages');
-goog.require('pstj.control.Control');
-goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
 goog.require('pstj.material.IconContainer');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.MainHeader = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Control} */
+longa.ui.MainHeader = goog.defineClass(longa.ui.Control, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -22,17 +23,10 @@ longa.ui.MainHeader = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
-    /**
-     * @private
-     * @const
-     * @type {pstj.control.Control}
-     */
-    this.control_ = new pstj.control.Control(this);
-    this.control_.init();
+    longa.ui.Control.call(this, opt_content, opt_renderer, opt_domHelper);
     // Handle the screen changes - basically figure out which main screen it is
     // and update the header.
-    this.control_.listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
+    this.getController().listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
       if (screen > 99) {
         // This is login -> select the first
         this.getChildAt(1).setSelectedIndex(0);
@@ -52,7 +46,7 @@ longa.ui.MainHeader = goog.defineClass(pstj.material.Element, {
     goog.base(this, 'enterDocument');
     this.getHandler()
       .listen(this, goog.ui.Component.EventType.ACTION, function(e) {
-          this.control_.push(longa.ds.Topic.SHOW_MENU);
+          this.getController().push(longa.ds.Topic.SHOW_MENU);
         });
   }
 });
@@ -66,7 +60,7 @@ longa.ui.MainHeaderRenderer = goog.defineClass(pstj.material.ElementRenderer, {
 
   /** @override */
   getTemplate: function(m) {
-    return longa.template.MainHeader(m);
+    return longa.template.components.MainHeader(m);
   },
 
   /** @override */

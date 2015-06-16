@@ -1,4 +1,10 @@
+/**
+ * @fileoverview Provides the Authentication UI components. Contains login
+ * screen, registration form and 'forgotten password' recovery form.
+ */
+
 goog.provide('longa.ui.Auth');
+goog.provide('longa.ui.AuthRenderer');
 
 goog.require('goog.dom.classlist');
 goog.require('goog.dom.dataset');
@@ -7,18 +13,19 @@ goog.require('longa.control.Auth');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.LoginDetails');
 goog.require('longa.template');
+goog.require('longa.ui.Control');
 goog.require('longa.ui.LoginForm');
 goog.require('longa.ui.Page');
 goog.require('longa.ui.Pages');
 goog.require('longa.ui.RecoverForm');
 goog.require('longa.ui.RegistrationForm');
 goog.require('pstj.material.Button');
-goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
+goog.require('pstj.material.HeaderPanel');
 
 
-/** @extends {pstj.material.Element} */
-longa.ui.Auth = goog.defineClass(pstj.material.Element, {
+/** @extends {longa.ui.Control} */
+longa.ui.Auth = goog.defineClass(longa.ui.Control, {
   /**
    * @param {goog.ui.ControlContent=} opt_content Text caption or DOM structure
    *     to display as the content of the control (if any).
@@ -28,15 +35,10 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
    *     document interaction.
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
-    pstj.material.Element.call(this, opt_content, opt_renderer, opt_domHelper);
-    /**
-     * The controller for this widget.
-     * @type {!longa.control.Auth}
-     * @protected
-     */
-    this.control = longa.control.Auth.getInstance();
-    this.control.setScope(this);
-    this.control.listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
+    longa.ui.Control.call(this, opt_content, opt_renderer, opt_domHelper);
+
+    // Handle show screen signals - handles 3 screens (login, register, recover)
+    this.getController().listen(longa.ds.Topic.SHOW_SCREEN, function(screen) {
       goog.asserts.assertNumber(screen);
       if (screen > 99 && screen < 103) {
         var s = screen - 100;
@@ -44,33 +46,24 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
       }
     });
 
-    this.control.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+    // When user changes enable the login form
+    this.getController().listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
       // Basically - reenable login screen action button once we complete.
       this.getLoginForm_().setEnabled(true);
     });
 
-    this.control.listen(longa.ds.Topic.USER_AUTH_FAILED, function(err) {
+    // when user auth fails show the recovery form.
+    this.getController().listen(longa.ds.Topic.USER_AUTH_FAILED, function(err) {
       goog.asserts.assertInstanceof(err, Error);
       this.getLoginForm_().showRecoveryLink(true);
       this.getLoginForm_().setError(err.message);
     });
 
     // Configure for logging out automatically.
-    this.control.listen(longa.ds.Topic.USER_AUTH_FORGET, function() {
+    this.getController().listen(longa.ds.Topic.USER_AUTH_FORGET, function() {
       this.getLoginForm_().clear();
-      this.control.logout();
+      longa.control.Auth.getInstance().logout();
     });
-  },
-
-  /** @override */
-  addMaterialChildren: function() {
-    goog.base(this, 'addMaterialChildren');
-    // this.loginPage = goog.asserts.assertInstanceof(
-    //     this.getChildAt(0).getChildAt(0), longa.ui.Page);
-    // this.registrationPage = goog.asserts.assertInstanceof(
-    //     this.getChildAt(0).getChildAt(1), longa.ui.Page);
-    // this.recoverPage = goog.asserts.assertInstanceof(
-    //     this.getChildAt(0).getChildAt(2), longa.ui.Page);
   },
 
   /** @override */
@@ -96,7 +89,8 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
         var detail = new longa.gen.dto.LoginDetails();
         detail.username = login.getUsername();
         detail.password = login.getPassword();
-        this.control.login(detail, login.isKeepCredentials());
+        longa.control.Auth.getInstance().login(
+            detail, login.isKeepCredentials());
       } else {
         login.setError('Username/password must be valid');
       }
@@ -113,15 +107,15 @@ longa.ui.Auth = goog.defineClass(pstj.material.Element, {
     if (goog.dom.classlist.contains(el, goog.getCssName('linklike'))) {
       switch (goog.dom.dataset.get(el, 'request')) {
         case 'register':
-          this.control.push(longa.ds.Topic.SHOW_SCREEN,
+          this.getController().push(longa.ds.Topic.SHOW_SCREEN,
               longa.ds.Screen.REGISTER);
           break;
         case 'recovery':
-          this.control.push(longa.ds.Topic.SHOW_SCREEN,
+          this.getController().push(longa.ds.Topic.SHOW_SCREEN,
               longa.ds.Screen.RECOVER);
           break;
         case 'login':
-          this.control.push(longa.ds.Topic.SHOW_SCREEN,
+          this.getController().push(longa.ds.Topic.SHOW_SCREEN,
               longa.ds.Screen.LOGIN);
           break;
         default: throw new Error(

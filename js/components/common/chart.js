@@ -58,6 +58,7 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
      * @private
      */
     this.nodata_ = true;
+    this.lastPromise_ = null;
   },
 
   /**
@@ -125,6 +126,7 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
 
   /** @override */
   setModel: function(model) {
+    if (!goog.isNull(this.lastPromise_)) this.lastPromise_.cancel();
     if (goog.isNull(model)) {
       this.nodata_ = true;
       goog.array.clear(this.sets_);
@@ -139,6 +141,7 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
 
       if (goog.array.isEmpty(model.items)) {
         this.nodata_ = true;
+        this.updateChart_();
       } else {
         this.nodata_ = false;
 
@@ -171,14 +174,19 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
           this.sets_[3].push([record.date, record.memberCount]);
         }, this);
 
-
-        goog.array.forEach(this.sets_, function(dataset, index) {
-          this.dataTables_.push(google.visualization.arrayToDataTable(
-              /** @type {!Array<Array<*>>} */(dataset)));
-        }, this);
+        this.lastPromise_ = longa.preload.installVizualizationApis().then(
+            this.composeDataTable_, null, this);
       }
-      this.updateChart_();
     }
+  },
+
+  /** @private */
+  composeDataTable_: function() {
+    goog.array.forEach(this.sets_, function(dataset, index) {
+      this.dataTables_.push(google.visualization.arrayToDataTable(
+          /** @type {!Array<Array<*>>} */(dataset)));
+    }, this);
+    this.updateChart_();
   },
 
   /** @override */

@@ -1,6 +1,8 @@
 goog.provide('longa.ui.Terms');
+goog.provide('longa.ui.TermsRenderer');
 
 goog.require('goog.ui.registry');
+goog.require('longa.template');
 goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
 

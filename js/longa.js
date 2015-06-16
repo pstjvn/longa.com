@@ -1,36 +1,36 @@
+/**
+ * @fileoverview Provides the main application controller.
+ *
+ * It is responsible for initializing the UI and managing the sessions
+ * (for example retruning from paypal etc).
+ *
+ * It is also responsible for pre-loading and tweaking the timing of
+ * loading elements. This role however should be delegated to service worker.
+ */
+
 goog.provide('longa.App');
 
 goog.require('goog.Promise');
 goog.require('goog.Uri');
-goog.require('goog.async.Delay');
-goog.require('goog.labs.net.xhr');
 goog.require('goog.log');
-goog.require('goog.net.ImageLoader');
-goog.require('goog.style');
 goog.require('goog.ui.Component.EventType');
 goog.require('longa.control.Alerts');
 goog.require('longa.control.Auth');
 goog.require('longa.control.Toaster');
-goog.require('longa.control.viz');
 goog.require('longa.data');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.ds.utils');
+goog.require('longa.preload');
 goog.require('longa.profile');
 goog.require('longa.rpc');
 goog.require('longa.sellers');
 goog.require('longa.service');
 goog.require('longa.storage');
 goog.require('longa.strings');
-goog.require('longa.template');
-goog.require('longa.ui.Main');
+goog.require('longa.ui.App');
 goog.require('longa.ui.StartScreen');
 goog.require('pstj.control.Control');
-
-
-goog.scope(function() {
-var rpc = longa.rpc;
-var T = longa.ds.Topic;
 
 
 /** @extends {pstj.control.Control} */
@@ -38,30 +38,22 @@ longa.App = goog.defineClass(pstj.control.Control, {
   constructor: function() {
     pstj.control.Control.call(this);
     /**
-     * @type {goog.debug.Logger}
-     * @private
      * @final
+     * @private
+     * @type {goog.debug.Logger}
      */
     this.logger_ = goog.log.getLogger('longa.App');
     /**
-     * The main view (app)
-     * @type {longa.ui.Main}
-     * @private
+     * @type {longa.ui.App}
+     * @protected
      */
-    this.mainApp_ = null;
+    this.activities = new longa.ui.App();
     /**
      * The start screen we need to show on each launch.
-     * @type {longa.ui.StartScreen}
-     * @private
+     * @type {!longa.ui.StartScreen}
+     * @protected
      */
-    this.startScreen_ = null;
-    /**
-     * A promise that will resolve only when the styles get successfully
-     * installed on the page.
-     * @type {goog.Promise<boolean>}
-     * @private
-     */
-    this.installStylesPromise_ = null;
+    this.startScreen = new longa.ui.StartScreen();
     /**
      * If a key was used to log in the user (as opposite to regulr login).
      * @type {boolean}
@@ -73,14 +65,20 @@ longa.App = goog.defineClass(pstj.control.Control, {
      * @type {boolean}
      */
     this.hadKey_ = false;
+    /**
+     * @private
+     * @type {!number}
+     */
+    this.loginListenerKey_ = -1;
     this.init();
   },
 
   /** @override */
   init: function() {
     goog.base(this, 'init');
-    goog.log.fine(this.logger_, 'Initializing the Longa contrtoller');
-    rpc.configure({
+
+    // Initializes the transport layer / rpc.
+    longa.rpc.configure({
       // The run variable name as in /cgi-bin/stock.cgi?{run}=...
       run: 'run',
       // The path of the cgi exe as in {/cgi-bin/stock.cgi}?...
@@ -90,34 +88,164 @@ longa.App = goog.defineClass(pstj.control.Control, {
       crossdomain: false
     });
 
-
     // Load custom style for app by returning a promise of the
     // installation (with a timeout of 16 ms so we are sure the
     // browser had the time to parse those styles).
-    var source = '';
-    if (COMPILED) {
-      if (goog.isString(goog.global['APP_STYLES_DEBUG'])) {
-        source = goog.asserts.assertString(goog.global['APP_STYLES_DEBUG']);
-      } else {
-        source = goog.asserts.assertString(goog.global['APP_STYLES_COMPILED']);
-      }
-    } else {
-      source = goog.asserts.assertString(goog.global['APP_STYLES']);
-    }
-    this.installStylesPromise_ = goog.labs.net.xhr.get(source)
-        .then(function(response) {
-          return new goog.Promise(function(resolve, reject) {
-            goog.style.installStyles(response);
-            setTimeout(function() {
-              resolve(true);
-            });
-          });
-        });
+    longa.preload.installStyles();
     // Start preloading google apis ASAP as it might take over 2 seconds.
-    longa.control.viz.load();
+    longa.preload.installVizualizationApis().thenCatch(function(e) {
+      // Notify user that we cound not use the vizualization.
+      longa.control.Toaster.getInstance().addToast(
+          longa.strings.CannotLoadGoogleAPIs(null).toString(), null, null);
+    });
 
+    var details = this.initLoginState_();
+    // If we have some credentails we have to attempt login.
+    if (!goog.isNull(details)) {
+      this.loginListenerKey_ = this.listen(
+          longa.ds.Topic.USER_AUTH_CHANGED,
+          this.loginListener_);
+      longa.control.Auth.getInstance().login(details, false);
+      // Now that we are waiting for the login response use the time to
+      // render the screen as we are exepcted to always land there after this
+      // action.
+      this.activities.render(document.body);
+    } else {
+      // We need both the images and the styles.
+      goog.Promise.all([
+        longa.preload.installStyles(),
+        longa.preload.preloadStartScreenImages()
+      ]).then(this.showStartScreen_, null, this);
+    }
+
+    // Subsribe to login/logout - if a user logged in retrieve the details.
+    this.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
+      if (longa.ds.utils.isKnownUser()) {
+        // User just logged in.
+        this.updateAll();
+        this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+      } else {
+        this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+      }
+    });
+
+    // Subscribe for handling error from other controls.
+    this.listen(longa.ds.Topic.CONTROL_ERROR, function(error) {
+      goog.asserts.assertInstanceof(error, Error);
+      this.handleError(error);
+    });
+  },
+
+  /**
+   * This handler is called only once when we attempt to load the user
+   * credentials while loading the application. It is handling the
+   * USER_AUTH_CHANGE event.
+   *
+   * @private
+   */
+  loginListener_: function() {
+    // Remove the listener as it is always a one time listener!
+    this.cancel(this.loginListenerKey_);
+    // If we successully logged in
+    if (longa.ds.utils.isKnownUser()) {
+      longa.preload.preloadFaqImages();
+      this.removeLoader_();
+      this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
+      this.handleInitialLoginFromPaypal_();
+    } else { // We attempted login but it failed.
+      // Wait for the installation of styles and the preloading of
+      // FAQ images and then show the login activity.
+      goog.Promise.all([
+        longa.preload.installStyles(),
+        longa.preload.preloadFaqImages()
+      ]).then(function(_) {
+        this.removeLoader_();
+        this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
+        this.handleInitialLoginFromPaypalFailure_();
+        longa.sellers.get();
+      }, null, this);
+    }
+  },
+
+  /**
+   * Assuming no login details could be used to login, we show the start screen
+   * and preload the rest of the app in the background.
+   *
+   * @private
+   */
+  showStartScreen_: function() {
+    this.removeLoader_();
+    this.startScreen.render(document.body);
+    this.getHandler()
+        .listenOnce(this.startScreen, goog.ui.Component.EventType.ACTION,
+            this.startScreenActionHandler_);
+    // While the user is orienting use the low activity frame to render the main
+    // app and preload the faq images.
+    this.activities.render(document.body);
+    longa.preload.preloadFaqImages();
+  },
+
+  /**
+   * Method to handle user login from paypal (with a previously stored key).
+   *
+   * @private
+   */
+  handleInitialLoginFromPaypal_: function() {
+    // If coming from paypal
+    if (this.hadKey_) {
+      // And we managed to log in with that credentials (i.e. we are the same
+      // user)
+      if (this.loggedWithKey_) {
+        var uri = new goog.Uri(window.location.href);
+        var action = uri.getParameterValue('a');
+        var amount = uri.getParameterValue('amount');
+        if (action == 'ok') {
+          longa.control.Toaster.getInstance().addToast(
+              longa.strings.fromPayPalOK({
+                amount: amount || '0'
+              }).toString(), null, null);
+        } else {
+          longa.control.Toaster.getInstance().addToast(
+              longa.strings.fromPayPalCancel(null).toString(),
+              null, null);
+        }
+      } else {
+        // We had a key but we could not login with it...
+        longa.control.Toaster.getInstance().addToast(
+            longa.strings.hadKeyButUsedStored(null).toString(),
+            null, null);
+      }
+    }
+  },
+
+  /**
+   * Handles an usuccessful attempt to login with a key (from paypal).
+   *
+   * @private
+   */
+  handleInitialLoginFromPaypalFailure_: function() {
+    if (!this.hadKey_) {
+      longa.control.Toaster.getInstance().addToast(
+          longa.strings.CannotLoginWithSavedCredentials(null).toString(),
+          null, null);
+    } else {
+      longa.control.Toaster.getInstance().addToast(
+          longa.strings.fromPayPalUnknown(null).toString(),
+          null, null);
+    }
+  },
+
+  /**
+   * Figure out the user status, if we are coming from redirection (paypal)
+   * and if we have stored credentials. From the resolve of this query
+   * depends what we will load and show to the user.
+   *
+   * @private
+   * @return {?longa.gen.dto.LoginDetails}
+   */
+  initLoginState_: function() {
+    // Figure out how did we ended up here (paypal etc).
     var detail = null;
-
     var uri = new goog.Uri(window.location.href);
     var key = uri.getParameterValue('key');
     if (goog.isString(key)) {
@@ -132,140 +260,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
       detail = longa.storage.retrieveCredentials();
     }
 
-    // If we have stired credentials attempt to load data and then render the
-    // app.
-    // If not - preload the start screen images and render the start screen.
-    if (!goog.isNull(detail)) {
-      // Show some sort of loading indicator.
-      var loginlistenerkey = this.listen(longa.ds.Topic.USER_AUTH_CHANGED,
-          function() {
-            this.cancel(loginlistenerkey);
-            if (longa.ds.utils.isKnownUser()) {
-              this.removeLoader_();
-              // Start loading data from server and only the show main screen.
-              this.mainApp_ = new longa.ui.Main();
-              this.mainApp_.render(document.body);
-              // Start preload of FAQ images as they are not requested until
-              // FAQ is selected and then they cannot load fast enough.
-              this.preloadFaqImages_();
-              this.push(longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.BALANCE);
-              if (this.hadKey_) {
-                if (this.loggedWithKey_) {
-                  var uri = new goog.Uri(window.location.href);
-                  var action = uri.getParameterValue('a');
-                  var amount = uri.getParameterValue('amount');
-                  if (action == 'ok') {
-                    longa.control.Toaster.getInstance().addToast(
-                        longa.strings.fromPayPalOK({
-                          amount: amount || '0'
-                        }).toString(), null, null);
-                  } else {
-                    longa.control.Toaster.getInstance().addToast(
-                        longa.strings.fromPayPalCancel(null).toString(),
-                        null, null);
-                  }
-                } else {
-                  longa.control.Toaster.getInstance().addToast(
-                      longa.strings.hadKeyButUsedStored(null).toString(),
-                      null, null);
-                }
-              }
-            } else {
-              // Login attempted but failed
-              // Make sure the styles for the app has been loaded
-              // and then show login with fail.
-              goog.Promise.all([
-                this.installStylesPromise_,
-                this.preloadFaqImages_()
-              ]).then(function(_) {
-                goog.log.info(this.logger_, 'Images were preloaded: ' + _[1]);
-                this.removeLoader_();
-                this.mainApp_ = new longa.ui.Main();
-                this.mainApp_.render(document.body);
-                this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
-                if (!this.hadKey_) {
-                  longa.control.Toaster.getInstance().addToast(
-                      longa.template.CannotLoginWithSavedCredentials(
-                          null).toString(),
-                      null, null);
-                } else {
-                  longa.control.Toaster.getInstance().addToast(
-                      longa.strings.fromPayPalUnknown(null).toString(),
-                      null, null);
-                }
-                longa.sellers.get();
-              }, null, this);
-            }
-          });
-      longa.control.Auth.getInstance().login(detail, false);
-    } else {
-      // Wait for styles and start screen images.
-      goog.Promise.all([
-        this.installStylesPromise_,
-        this.preloadStartScreenImages_()
-      ]).then(function() {
-        // we are sure the images has loaded and the
-        // styles has been applied.
-        //
-        // remove the loader and render the start screen.
-        this.startScreen_ = new longa.ui.StartScreen();
-        this.removeLoader_();
-        this.startScreen_.render(document.body);
-        // When the user selects an action from the start screen...
-        this.getHandler().listenOnce(this.startScreen_,
-            goog.ui.Component.EventType.ACTION,
-            function(e) {
-              // Select the screen to show after start screen.
-              var idx = this.startScreen_.indexOfChild(e.target);
-              // if the user selected to go to FAQ we need to preload those
-              // images first
-              var promises = [];
-              if (idx == 1) promises.push(this.preloadFaqImages_());
-              // also wait for at least 200ms so the button animation is played
-              // correclty
-              promises.push(new goog.Promise(function(resolve, reject) {
-                setTimeout(function() {
-                  resolve(null);
-                }, 200);
-              }, this));
-              // When composite from above is resolved show main screen.
-              goog.Promise.all(promises).then(goog.bind(function() {
-                if (goog.isNull(this.mainApp_)) {
-                  this.mainApp_ = new longa.ui.Main();
-                }
-                this.startScreen_.dispose();
-                this.mainApp_.render(document.body);
-                if (idx == 1) {
-                  // skip
-                  this.push(T.SHOW_SCREEN, longa.ds.Screen.FAQ);
-                } else if (idx == 3) {
-                  // sign up
-                  this.push(T.SHOW_SCREEN, longa.ds.Screen.REGISTER);
-                } else if (idx == 4) {
-                  // log in
-                  this.push(T.SHOW_SCREEN, longa.ds.Screen.LOGIN);
-                }
-                // If showed screen was not FAQ start preloading FAQ images now
-                if (idx != 1) this.preloadFaqImages_();
-                longa.sellers.get();
-              }, this));
-            });
-      }, null, this);
-    }
-
-    // Subsribe to login/logout - if a user logged in retrieve the details.
-    this.listen(longa.ds.Topic.USER_AUTH_CHANGED, function() {
-      if (longa.ds.utils.isKnownUser()) {
-        // User just logged in.
-        this.updateAll();
-      }
-    });
-
-    // Subscribe for handling error from other controls.
-    this.listen(longa.ds.Topic.CONTROL_ERROR, function(error) {
-      goog.asserts.assertInstanceof(error, Error);
-      this.handleError(error);
-    });
+    return detail;
   },
 
   /**
@@ -277,6 +272,34 @@ longa.App = goog.defineClass(pstj.control.Control, {
     document.head.removeChild(document.head.querySelector('#loadercss'));
   },
 
+
+  /**
+   * Handles the user interaction with the start screen. Basically removes the
+   * start screen and shows the corresponding activity.
+   *
+   * @private
+   * @param {goog.events.Event} e
+   */
+  startScreenActionHandler_: function(e) {
+    var idx = this.startScreen.indexOfChild(
+        /** @type {goog.ui.Component} */(e.target));
+    // At this point we are sure that we have the styles so we can just
+    // show the activities screen.
+    goog.dispose(this.startScreen);
+    if (idx == 1) this.push(longa.ds.Topic.SHOW_SCREEN,
+        longa.ds.Screen.FAQ);
+    else if (idx == 3) this.push(longa.ds.Topic.SHOW_SCREEN,
+        longa.ds.Screen.REGISTER);
+    else if (idx == 4) this.push(longa.ds.Topic.SHOW_SCREEN,
+        longa.ds.Screen.LOGIN);
+    // At this point if the faq is not shown (idx != 1) then we
+    // need to preload them. We have nothing to wait for, so we just
+    // invoke it to start the image loader.
+    longa.preload.preloadFaqImages();
+    // Load the sellers as they are always available regardless of state.
+    longa.sellers.get();
+  },
+
   /**
    * Starts preloading of the images for the start screen.
    *
@@ -285,17 +308,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
    *     images have been loaded.
    */
   preloadStartScreenImages_: function() {
-    var il = new goog.net.ImageLoader();
-    goog.array.forEach(longa.data.preloadImages, function(uri, i) {
-      il.addImage(i.toString(), uri);
-    });
-    return new goog.Promise(function(resolve, reject) {
-      this.getHandler().listenOnce(il, goog.net.EventType.COMPLETE,
-          function(_) {
-            resolve(true);
-          });
-      il.start();
-    }, this);
+    return longa.preload.preloadStartScreenImages();
   },
 
   /**
@@ -305,27 +318,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
    * if the timeout passed out.
    */
   preloadFaqImages_: function() {
-    var il = new goog.net.ImageLoader();
-    goog.array.forEach(longa.data.preloadFaqImages, function(uri, i) {
-      il.addImage(i.toString(), uri);
-    });
-    return new goog.Promise(function(resolve, reject) {
-      var resolved = false;
-      setTimeout(function() {
-        if (!resolved) {
-          resolved = true;
-          resolve(false);
-        }
-      });
-      this.getHandler().listenOnce(il, goog.net.EventType.COMPLETE,
-          function(_) {
-            if (!resolved) {
-              resolved = true;
-              resolve(true);
-            }
-          });
-      il.start();
-    }, this);
+    return longa.preload.preloadFaqImages();
   },
 
   /**
@@ -354,17 +347,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
    * Attempts to retrieve the balance of the currently logged in user.
    */
   retrieveBalance: function() {
-    goog.log.info(this.logger_, 'Attempting balance retrieval');
-    return rpc.getBalance().then(
+    return longa.rpc.getBalance().then(
         this.onBalanceReceived, this.onBalanaceFailed, this);
-  },
-
-  /**
-   * Attempt to load the profile initially.
-   */
-  retrieveProfile: function() {
-    return rpc.getProfile()
-        .then(this.onProfileUpdate, this.onProfileFailure, this);
   },
 
   /**
@@ -389,25 +373,6 @@ longa.App = goog.defineClass(pstj.control.Control, {
   },
 
   /**
-   * Handles the receiving of a profile update / get request.
-   * @param {!longa.gen.dto.Profile} profile
-   * @protected
-   */
-  onProfileUpdate: function(profile) {
-    goog.log.info(this.logger_, 'Retrieved the profile: ' +
-        goog.debug.expose(profile));
-  },
-
-  /**
-   * Handles the error from loading the profile.
-   * @protected
-   * @param {*} e The error that occured from loading the profile.
-   */
-  onProfileFailure: function(e) {
-    this.handleError(e);
-  },
-
-  /**
    * Handles an error.
    *
    * This initial implementation only logs the error.
@@ -420,4 +385,3 @@ longa.App = goog.defineClass(pstj.control.Control, {
         (goog.isObject(e) ? e.message : ''));
   }
 });
-});  // goog.scope

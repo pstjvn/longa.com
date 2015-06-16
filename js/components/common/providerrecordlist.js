@@ -103,7 +103,6 @@ longa.ui.ProviderRecordList = goog.defineClass(pstj.material.List, {
    * @private
    */
   handleModelChange_: function(e) {
-    console.log('Model change detected, update list view');
     this.updateModelLength();
     this.initialize();
   },

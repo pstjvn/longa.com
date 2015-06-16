@@ -32,20 +32,14 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
      * @type {pstj.material.Fab}
      */
     this.button_ = null;
-    /**
-     * @private
-     * @type {pstj.control.Control}
-     */
-    this.control_ = new pstj.control.Control(this);
-    this.control_.init();
-    this.control_.listen(longa.ds.Topic.FEED_SELECTED, function(model) {
+    this.getController().listen(longa.ds.Topic.FEED_SELECTED, function(model) {
       // When a new model is selected we immediately want to re-render the
       // provider balance sheet. The switching to the sheet should be done
       // when animation of ripple ends.
       this.renderProviderBalanceSheet(
           /** @type {!longa.gen.dto.SellerBalance} */ (model));
     });
-    this.control_.listen(longa.ds.Topic.SHOW_SCREEN, function(s) {
+    this.getController().listen(longa.ds.Topic.SHOW_SCREEN, function(s) {
       if (s == longa.ds.Screen.FEED) {
         if (this.selectedIndex != 0) {
           // the button is either visible up or down, do nothing
@@ -106,13 +100,15 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
    * @return {!goog.ui.Component}
    */
   getBalanceSheetContainer: function() {
-    return this.getChildAt(1).getChildAt(0).getChildAt(1);
+    return goog.asserts.assertInstanceof(
+        this.getChildAt(1).getChildAt(0).getChildAt(1), goog.ui.Component);
   },
 
   /** @inheritDoc */
   addMaterialChildren: function() {
     goog.base(this, 'addMaterialChildren');
-    this.button_ = this.getChildAt(3);
+    this.button_ = goog.asserts.assertInstanceof(this.getChildAt(3),
+        pstj.material.Fab);
   }
 });
 

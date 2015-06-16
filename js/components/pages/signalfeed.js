@@ -11,10 +11,10 @@ goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.ds.sellers');
 goog.require('longa.template');
+goog.require('longa.ui.Control');
 goog.require('longa.ui.ListHeader');
 goog.require('longa.ui.ProviderRecordList');
 goog.require('pstj.control.Control');
-goog.require('pstj.material.Element');
 goog.require('pstj.material.ElementRenderer');
 goog.require('pstj.material.EventMap');
 

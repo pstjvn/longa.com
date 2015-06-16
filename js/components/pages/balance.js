@@ -64,17 +64,31 @@ longa.ui.Balance = goog.defineClass(longa.ui.Pages, {
     if (!goog.isNull(longa.data.balance)) {
       var balance = new longa.ui.UserBalance();
       balance.setModel(longa.data.balance);
-      this.getChildAt(0).addChild(balance, true);
+      this.getBalanceHolder().addChild(balance, true);
     }
   },
 
   /** @private */
   destroyMainBalanceSheet_: function() {
-    if (this.getChildAt(0).hasChildren()) {
+    if (this.getBalanceHolder().hasChildren()) {
       goog.array.forEach(this.getChildAt(0).removeChildren(), function(el) {
         goog.dispose(el);
       });
     }
+  },
+
+  /**
+   * Returns the actual element where the balance is rendered.
+   *
+   * @protected
+   * @return {goog.ui.Component}
+   */
+  getBalanceHolder: function() {
+    if (this.isInDocument()) {
+      return this.getChildAt(0)
+          .getChildAt(0)
+          .getChildAt(1);
+    } else return null;
   }
 });
 

@@ -46,6 +46,8 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
           // simply animate out the pages and after that remove
           // down class (button goes up without animation) and
           // apply scale down class (button is animated to 0px).
+          goog.dom.classlist.remove(this.button_.getElement(), 'up');
+          goog.dom.classlist.remove(this.button_.getElement(), 'down');
         }
         this.setSelectedIndex(0);
       } else if (s == longa.ds.Screen.FEED_DETAILS) {
@@ -61,9 +63,8 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
           // animate the button down together with page transition and
           // when button transition ends apply down class.
           goog.dom.classlist.swap(this.button_.getElement(), 'up', 'down');
-          var pos = goog.style.getClientPosition(this.button_.getElement());
+          goog.style.getClientPosition(this.button_.getElement());
           goog.dom.classlist.swap(this.button_.getElement(), 'down', 'up');
-          console.log(pos);
         }
         this.setSelectedIndex(2);
       }
@@ -109,6 +110,21 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
     goog.base(this, 'addMaterialChildren');
     this.button_ = goog.asserts.assertInstanceof(this.getChildAt(3),
         pstj.material.Fab);
+  },
+
+  /** @override */
+  enterDocument: function() {
+    goog.base(this, 'enterDocument');
+    this.getHandler().listen(this.button_, goog.ui.Component.EventType.ACTION,
+        function() {
+          if (this.selectedIndex == 1) {
+            this.getController().push(longa.ds.Topic.SHOW_SCREEN,
+                longa.ds.Screen.FEED);
+          } else if (this.selectedIndex == 2) {
+            this.getController().push(longa.ds.Topic.SHOW_SCREEN,
+                longa.ds.Screen.FEED_DETAILS);
+          }
+        });
   }
 });
 

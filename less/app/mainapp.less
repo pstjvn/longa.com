@@ -130,4 +130,17 @@
   }
 }
 
+.longa-app-pages-transition.animation-slide-from-right > .longa-app-page.longa-app-page-selected ~ .longa-app-page:not(.longa-app-page-slelected) {
+  transform: translateX(100%);
+}
+
+.longa-app-pages-transition.animation-slide-from-right > .longa-app-page:not(.longa-app-page-selected) {
+ transform: translateX(-100%);
+}
+
+.longa-app-pages-transition.animation-slide-from-right > .longa-app-page.longa-app-page-selected {
+  transform: translateX(0);
+}
+
+
 

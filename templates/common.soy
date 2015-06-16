@@ -1407,12 +1407,12 @@
 
 /** template for the feed pages */
 {template .Feeds}
-  <div is class="{css longa-app-feed-pages}" animate>
-    <div is class="{css longa-app-page} {css animation-left-right}">
+  <div is class="{css longa-app-feed-pages} {css animation-slide-from-right}" animate>
+    <div is class="{css longa-app-page}">
       {call .SignalFeed /}
     </div>
     <!-- the provider balance page holder -->
-    <div is class="{css longa-app-page} {css animation-right-left}">
+    <div is class="{css longa-app-page}">
         <div is class="{css material-header-panel} {css noop}" waterfall>
           <div class="{css material-header-panel-outer-container}">
           {call pstj.material.template.HeaderPanelHeader /}
@@ -1427,9 +1427,9 @@
         </div>
     </div>
     <!-- the list of signals for a particular seller -->
-    <div is class="{css longa-app-page} {css animation-right-left}">
+    <div is class="{css longa-app-page}">
     </div>
-    <div is class="{css material-fab} {css material-button-tactile} {css longa-app-feed-pages-button}" icon="back-arrow">
+    <div is class="{css material-fab} {css material-button-tactile} {css material-fab-raised} {css material-fab-transition} {css longa-app-feed-pages-button}" icon="back-arrow" use-pointer ink>
       {call pstj.material.template.Shadow /}
       {call pstj.material.template.IconContainer}
         {param type: 'back-arrow' /}

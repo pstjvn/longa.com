@@ -1590,14 +1590,14 @@
   {@param openPrice: number}
   {@param closePrice: number}
   {@param change: number}
-  //{@param charge: number}
-  //{@param type: string}
-  //{@param status: bool}
-  //{@param currentPrice: number}
-  //{@param seller: bool}
-  //{@param openTimestamp: string}
-  //{@param closeTimestamp: string}
-  <div is class="{css longa-app-signal-record} {css horizontal}">
+  {@param charge: number}
+  {@param type: string}
+  {@param status: bool}
+  {@param currentPrice: number}
+  {@param seller: bool}
+  {@param openTimestamp: string}
+  {@param closeTimestamp: string}
+  <div is class="{css longa-app-signal-record}">
     <div class="{css longa-app-signal-record-content} {css horizontal}">
       {call .Trend}
         {param value: change /}
@@ -1631,16 +1631,59 @@
             <span class="{css longa-app-signal-record-open}">{$openPrice}</span>
           </div>
         </div>
-        <div class="{css longa-app-signal-record-row}">
-          <div class="{css longa-app-signal-record-span-holder}">
-            <!-- close -->
-            <span>{msg desc=""}Close:{/msg}</span>
-            <span class="{css longa-app-signal-record-close}">{$closePrice}</span>
+        {if $status == 1}
+          <div class="{css longa-app-signal-record-row}">
+            <div class="{css longa-app-signal-record-span-holder}">
+              <!-- close -->
+              <span>{msg desc=""}Close:{/msg}</span>
+              <span class="{css longa-app-signal-record-close}">{$closePrice}</span>
+            </div>
           </div>
-        </div>
+        {/if}
       </div>
     </div>
-    <div class="{css longa-app-signal-record-details}"></div>
+    <div class="{css longa-app-signal-record-details}">
+      <div class="{css horizontal}">
+        <span class="{css flex}">{msg desc="label"}Type:{/msg}</span>
+        <span class="{css flex}">{$type}</span>
+      </div>
+      <div class="{css horizontal}">
+        <span class="{css flex}">{msg desc="label"}Open Time:{/msg}</span>
+        <span class="{css flex}">{$openTimestamp}</span>
+      </div>
+      // If still open show current price.
+      {if $status == 0}
+        <div class="{css horizontal}">
+          <span class="{css flex}">{msg desc="label"}Current Price:{/msg}</span>
+          <span class="{css flex}">{$currentPrice}</span>
+        </div>
+      {/if}
+      // If closed, show close time and charges
+      {if $status == 1}
+        <div class="{css horizontal}">
+          <span class="{css flex}">{msg desc="label"}Close Time:{/msg}</span>
+          <span class="{css flex}">{$closeTimestamp}</span>
+        </div>
+        <div class="{css horizontal}">
+          <span class="{css flex}">{msg desc="label"}Service Charge:{/msg}</span>
+          <span class="{css flex}">{$charge}</span>
+        </div>
+      {/if}
+      // If open and we are the seller, show close button.
+      {if $status == 0 and $seller == true}
+        <div class="{css horizontal} {css end-justified}">
+          {call pstj.material.template.Button}
+            {param icon: 'none' /}
+            {param content kind="text"}
+              {msg desc="button label"}close signal{/msg}
+            {/param}
+            {param ink: true /}
+            {param action: 'closesignal'/}
+            {param tactile: true /}
+          {/call}
+        </div>
+      {/if}
+    </div>
   </div>
 {/template}
 

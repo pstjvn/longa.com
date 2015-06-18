@@ -507,7 +507,12 @@ longa.rpc_.Main = goog.defineClass(null, {
   handleNewSignalResponse_: function(err, result) {
     this.handleRawResponse_(err, result);
     var signal = new longa.gen.dto.Signal();
-    signal.fromJSON(result);
+    try {
+      signal.fromJSON(result);
+    } catch (e) {
+      result['msg'] = longa.strings.TradingClosed(null).toString();
+      throw e;
+    }
     return signal;
   },
 

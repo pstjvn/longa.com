@@ -33,9 +33,7 @@ longa.ui.AddSignal = goog.defineClass(longa.ui.BuyCredit, {
 
   /** @override */
   handleInputChange: function(e) {
-    if (e.target instanceof pstj.material.Input) {
-      this.getSubmitButton().setEnabled(!e.target.isEmpty());
-    }
+    return;
   },
 
   /** @override */
@@ -52,7 +50,6 @@ longa.ui.AddSignal = goog.defineClass(longa.ui.BuyCredit, {
         this.setEnabled(true);
         return;
       }
-
       longa.signals.addSignal(ns).thenAlways(this.restoreButton, this);
     }
   },

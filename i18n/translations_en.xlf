@@ -228,6 +228,10 @@
         <source>How are the service fees calculated?</source>
         <target/>
       </trans-unit>
+      <trans-unit id="953443490986170194" datatype="html">
+        <source>Signal will be pushed when tradning day starts</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="956678847762152494" datatype="html">
         <source>France</source>
         <target/>
@@ -772,6 +776,11 @@
         <source>Current Balance (LC)</source>
         <target/>
       </trans-unit>
+      <trans-unit id="2736556170366900089" datatype="html">
+        <source>Type:</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
       <trans-unit id="2748434989225518032" datatype="html">
         <source>Where investors meet successful signal traders</source>
         <target/>
@@ -1307,6 +1316,11 @@
         <target/>
         <note priority="1" from="description">header label</note>
       </trans-unit>
+      <trans-unit id="4990240469581000174" datatype="html">
+        <source>Current Price:</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
       <trans-unit id="4993388869070895224" datatype="html">
         <source>If  the investors do not have sufficient L-Credit balance in their accounts they  will not receive paid signals in real-time. That is the reason all investors  that have subscribed to paid trade signals should maintain L-Credit balance of  at least 10 L-Credits.</source>
         <target/>
@@ -1591,6 +1605,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="6156986776114452879" datatype="html">
+        <source>Open Time:</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
       <trans-unit id="6173123073967909836" datatype="html">
         <source>Switzerland</source>
         <target/>
@@ -1838,6 +1857,11 @@
         <target/>
         <note priority="1" from="description">Widthraw button label</note>
       </trans-unit>
+      <trans-unit id="6980383792139955064" datatype="html">
+        <source>close signal</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
       <trans-unit id="7012227002133419149" datatype="html">
         <source>Togo</source>
         <target/>
@@ -1857,6 +1881,11 @@
         <source>Sign up</source>
         <target/>
         <note priority="1" from="description">button label</note>
+      </trans-unit>
+      <trans-unit id="7034669586067499458" datatype="html">
+        <source>Service Charge:</source>
+        <target/>
+        <note priority="1" from="description">label</note>
       </trans-unit>
       <trans-unit id="7048178492826430021" datatype="html">
         <source>Show new alerts</source>
@@ -2181,6 +2210,11 @@
         <source>New Hampshire</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="8073451553992015656" datatype="html">
+        <source>Close Time:</source>
+        <target/>
+        <note priority="1" from="description">label</note>
       </trans-unit>
       <trans-unit id="8075656321439678912" datatype="html">
         <source>Valid email is required</source>

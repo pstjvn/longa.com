@@ -9,6 +9,7 @@ goog.require('longa.ds.Alerts');
 goog.require('longa.gen.dto.Profile');
 goog.require('longa.gen.dto.Sellers');
 goog.require('longa.gen.dto.Service');
+goog.require('longa.gen.dto.Signals');
 goog.require('longa.gen.dto.User');
 goog.require('longa.gen.dto.UserBalance');
 
@@ -56,3 +57,10 @@ longa.data.service = new longa.gen.dto.Service();
  * @type {!longa.gen.dto.Sellers}
  */
 longa.data.sellers = new longa.gen.dto.Sellers();
+
+
+/**
+ * Global reference to current user's list of signals.
+ * @type {!longa.gen.dto.Signals}
+ */
+longa.data.mysignals = new longa.gen.dto.Signals();

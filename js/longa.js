@@ -26,6 +26,7 @@ goog.require('longa.profile');
 goog.require('longa.rpc');
 goog.require('longa.sellers');
 goog.require('longa.service');
+goog.require('longa.signals');
 goog.require('longa.storage');
 goog.require('longa.strings');
 goog.require('longa.ui.App');
@@ -330,7 +331,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
       this.retrieveBalance(),
       longa.profile.get(),
       longa.control.Alerts.getInstance().get(),
-      longa.sellers.get()
+      longa.sellers.get(),
+      longa.signals.get()
     ];
 
     if (longa.ds.utils.isSeller()) {

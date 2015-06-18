@@ -1,23 +1,23 @@
-goog.provide('longa.ds.Sellers_');
-goog.provide('longa.ds.sellers');
+/**
+ * @fileoverview Provides sortable interface for static list of signals
+ * generated from DTO.
+ */
+goog.provide('longa.ds.Signals');
+goog.provide('longa.ds.mysignals');
 
 goog.require('longa.data');
 goog.require('pstj.ds.Sortable');
 
 
-/**
- * @extends {pstj.ds.Sortable<!longa.gen.dto.SellerBalance>}
- * @private
- */
-longa.ds.Sellers_ = goog.defineClass(pstj.ds.Sortable, {
-  /** @param {!pstj.ds.DtoBase} data_source */
+/** @extends {pstj.ds.Sortable<!longa.gen.dto.Signal>} */
+longa.ds.Signals = goog.defineClass(pstj.ds.Sortable, {
   constructor: function(data_source) {
     pstj.ds.Sortable.call(this, data_source);
   },
 
-  /** @inheritDoc */
+  /** @override */
   getList: function() {
-    return /** @type {!longa.gen.dto.Sellers} */(this.dataSource).sellers;
+    return /** @type {!longa.gen.dto.Signals} */(this.dataSource).signals;
   },
 
   /** @override */
@@ -26,9 +26,9 @@ longa.ds.Sellers_ = goog.defineClass(pstj.ds.Sortable, {
     switch (key) {
       case 0:
         list.sort(function(a, b) {
-          if (a.username < b.username) {
+          if (a.symbol < b.symbol) {
             return (asc) ? -1 : 1;
-          } else if (a.username > b.username) {
+          } else if (a.symbol > b.symbol) {
             return (asc) ? 1 : -1;
           }
           return 0;
@@ -36,9 +36,9 @@ longa.ds.Sellers_ = goog.defineClass(pstj.ds.Sortable, {
         break;
       case 1:
         list.sort(function(a, b) {
-          if (a.profitLossRatio < b.profitLossRatio) {
+          if (a.change < b.change) {
             return (asc) ? -1 : 1;
-          } else if (a.profitLossRatio > b.profitLossRatio) {
+          } else if (a.change > b.change) {
             return (asc) ? 1 : -1;
           }
           return 0;
@@ -46,9 +46,9 @@ longa.ds.Sellers_ = goog.defineClass(pstj.ds.Sortable, {
         break;
       case 2:
         list.sort(function(a, b) {
-          if (a.memberCount < b.memberCount) {
+          if (a.openPrice < b.openPrice) {
             return (asc) ? -1 : 1;
-          } else if (a.memberCount > b.memberCount) {
+          } else if (a.openPrice > b.openPrice) {
             return (asc) ? 1 : -1;
           }
           return 0;
@@ -62,9 +62,9 @@ longa.ds.Sellers_ = goog.defineClass(pstj.ds.Sortable, {
 
 /**
  * Single instance, used to reference the sorted and ready to display
- * list of sellers (with their balance data).
+ * list of signals for the current user.
  *
- * @type {!longa.ds.Sellers_}
+ * @type {!longa.ds.Signals}
  * @final
  */
-longa.ds.sellers = new longa.ds.Sellers_(longa.data.sellers);
+longa.ds.mysignals = new longa.ds.Signals(longa.data.mysignals);

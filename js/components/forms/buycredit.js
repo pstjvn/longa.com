@@ -51,7 +51,7 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
     this.buttonDelay_ = new goog.async.Delay(this.updateFab_, 400, this);
     /**
      * @private
-     * @type {pstj.control.Control}
+     * @type {!pstj.control.Control}
      */
     this.control_ = new pstj.control.Control(this);
     this.control_.init();
@@ -67,6 +67,14 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
         this.handleInputChange);
     this.getHandler().listen(this, goog.ui.Component.EventType.ACTION,
         this.handleActionButtons);
+  },
+
+  /**
+   * Work around until we can refactor this code.
+   * @return {!pstj.control.Control}
+   */
+  getController: function() {
+    return this.control_;
   },
 
   /**
@@ -160,7 +168,7 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
    * @protected
    */
   restoreButton: function() {
-    this.getSubmitButton().setEnabled(true);
+    this.setEnabled(true);
     this.getInput().setValue('');
   },
 

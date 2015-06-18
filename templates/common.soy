@@ -869,10 +869,6 @@
   </div>
 {/template}
 
-/** Balance */
-{template .Signals}
-  <div class="{css longa-app-signals}"></div>
-{/template}
 
 /** Balance */
 {template .Alerts}
@@ -1220,6 +1216,85 @@
   </div>
 {/template}
 
+/**
+ * Template for a list of signals to be embeded in a view. The list is a simple
+ * container and an be put in any scrollable view.
+ */
+{template .SignalList}
+  <div id class="{css longa-app-signal-list}"></div>
+{/template}
+
+/**
+ * Provides the 'signals' page, it is constructed as a nested pages holder and
+ * encompases the signal list and the new signal form.
+ */
+{template .Signals}
+  <div is class="{css longa-app-signal-pages} {css longa-app-pages} {css animation-slide-from-right}" animate>
+    <div is class="{css longa-app-page} {css longa-app-signals-page}">
+      <div is class="{css material-header-panel}" waterfall>
+        <div class="{css material-header-panel-outer-container}">
+          <div is class="{css material-header-panel-header} {css longa-sort-header}">
+            <div is class="{css longa-app-list-header} {css core-tap}">
+              <div class="{css longa-app-list-header-subhead}">
+                <div class="{css longa-app-list-header-item} {css flex-3}">
+                  <div is class="{css core-element}" use-pointer>
+                    <div class="{css flex-1}">{msg desc=""}Symbol{/msg}</div>
+                    <div class="{css longa-app-list-header-arrow-icon}">
+                      {call pstj.material.template.IconContainer}
+                        {param type: 'none' /}
+                      {/call}
+                    </div>
+                  </div>
+                </div>
+                <div class="{css longa-app-list-header-item} {css flex-1}">
+                  <div is class="{css core-element}" use-pointer>
+                    <div class="{css flex-1}">{msg desc=""}P/L{/msg}</div>
+                    <div class="{css longa-app-list-header-arrow-icon}">
+                      {call pstj.material.template.IconContainer}
+                        {param type: 'none' /}
+                      {/call}
+                    </div>
+                  </div>
+                </div>
+                <div class="{css longa-app-list-header-item} {css flex-2}">
+                  <div is class="{css core-element}" use-pointer>
+                    <div class="{css flex-1}">{msg desc=""}Price{/msg}</div>
+                    <div class="{css longa-app-list-header-arrow-icon}">
+                      {call pstj.material.template.IconContainer}
+                        {param type: 'none' /}
+                      {/call}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div is class="{css material-header-panel-main}" use-scroll>
+            <div class="{css material-header-panel-main-container}">
+              <div class="{css material-header-panel-main-content}">
+                <div is class="{css longa-app-my-signals}"></div>
+              </div>
+            </div>
+            <div class="{css material-drop-shadow}"></div>
+          </div>
+        </div>
+      </div>
+      <div is class="{css material-fab} {css material-fab-tactile} {css material-fab-raised} {css material-fab-transition}" icon="plus-static" use-pointer action="add" ink>
+        {call pstj.material.template.Shadow /}
+        {call pstj.material.template.IconContainer}
+          {param type: 'plus-static' /}
+        {/call}
+        {call pstj.material.template.Ripple}
+          {param recenter: true /}
+        {/call}
+      </div>
+    </div>
+    <div is class="{css longa-app-page}">
+      {call .AddSignal /}
+    </div>
+  </div>
+{/template}
+
 /** Template for the list of providers shown on 'FEED' */
 {template .SignalFeed}
   <div is class="{css longa-app-feed}">
@@ -1378,6 +1453,69 @@
   </div>
 {/template}
 
+/**
+ * Template for the form for adding a new signal (providers).
+ */
+{template .AddSignal}
+  <div is class="{css longa-app-addsignal}">
+    <div>
+      {call .ErrorMessage /}
+    </div>
+    <div is class="{css core-element} {css longa-app-buy-credit-header}">
+      <div>
+        {msg desc=""}Add new signal{/msg}
+      </div>
+    </div>
+    <section>
+      {call pstj.material.template.Input}
+        {param label kind="text"}
+          {msg desc=""}Stock index{/msg}
+        {/param}
+        {param name: 'symbol' /}
+        {param type: 'text' /}
+        {param value: '' /}
+      {/call}
+      <label>{msg desc=""}Signal type{/msg}:</label>
+      <div is class="{css material-radio-group}" value="1" name="type">
+        {call pstj.material.template.RadioButton}
+          {param content kind="html"}
+            {msg desc="label on radio button - investor"}Buy&rarr;sell{/msg}
+          {/param}
+          {param name: 'type' /}
+          {param value: '0' /}
+        {/call}
+        {call pstj.material.template.RadioButton}
+          {param content kind="html"}
+            {msg desc="label on radio button - signal provider"}Sell&rarr;buy{/msg}
+          {/param}
+          {param name: 'type' /}
+          {param value: '1' /}
+        {/call}
+      </div>
+      <div is class="{css core-item} {css longa-app-buy-credit-button}">
+        {call pstj.material.template.Button}
+          {param icon: 'none' /}
+          {param content kind="text"}
+            {msg desc="button label"}push signal{/msg}
+          {/param}
+          {param ink: true /}
+          {param recenter: true /}
+          {param action: 'submit' /}
+        {/call}
+      </div>
+    </section>
+    <div is class="{css material-fab} {css material-fab-transition} {css material-fab-raised} {css material-fab-tactile} {css longa-app-buy-credit-back-button}" ink action="goback" use-pointer icon="back-arrow">
+      {call pstj.material.template.Shadow /}
+      {call pstj.material.template.IconContainer}
+        {param type: 'back-arrow' /}
+      {/call}
+      {call pstj.material.template.Ripple}
+        {param recenter: true /}
+      {/call}
+    </div>
+  </div>
+{/template}
+
 /** Themplate for the Pages component. */
 {template .Balance}
   <div is class="{css longa-app-balance-pages}" animate>
@@ -1438,6 +1576,71 @@
         {param recenter: true /}
       {/call}
     </div>
+  </div>
+{/template}
+
+/**
+ * A single signal instance. The template will be rendered to provide
+ * collapsable view of the signal details.
+ */
+{template .Signal}
+  //{@param id: number}
+  {@param username: string}
+  {@param symbol: string}
+  {@param openPrice: number}
+  {@param closePrice: number}
+  {@param change: number}
+  //{@param charge: number}
+  //{@param type: string}
+  //{@param status: bool}
+  //{@param currentPrice: number}
+  //{@param seller: bool}
+  //{@param openTimestamp: string}
+  //{@param closeTimestamp: string}
+  <div is class="{css longa-app-signal-record} {css horizontal}">
+    <div class="{css longa-app-signal-record-content} {css horizontal}">
+      {call .Trend}
+        {param value: change /}
+      {/call}
+      <div class="{css longa-app-signal-record-cell} {css flex-3}">
+        <div class="{css longa-app-signal-record-row}">
+          <div class="{css longa-app-signal-record-span-holder}">
+            <span class="{css longa-app-signal-record-stockname}">{$symbol}</span>
+          </div>
+        </div>
+        <div class="{css longa-app-signal-record-row}">
+          <div class="{css longa-app-signal-record-span-holder}">
+            <!-- The provider name -->
+            <span class="{css longa-app-signal-record-provider}">{$username}</span>
+          </div>
+        </div>
+      </div>
+      <div class="{css longa-app-signal-record-cell} {css flex-1}">
+        <div class="{css longa-app-signal-record-row}">
+          <div class="{css longa-app-signal-record-span-holder}">
+            <!-- Profit/loss -->
+            <span class="{css longa-app-signal-record-pl}">{$change}%</span>
+          </div>
+        </div>
+      </div>
+      <div class="{css longa-app-signal-record-cell} {css flex-2}">
+        <div class="{css longa-app-signal-record-row}">
+          <div class="{css longa-app-signal-record-span-holder}">
+            <!-- Open -->
+            <span>{msg desc=""}Open{/msg}</span>
+            <span class="{css longa-app-signal-record-open}">{$openPrice}</span>
+          </div>
+        </div>
+        <div class="{css longa-app-signal-record-row}">
+          <div class="{css longa-app-signal-record-span-holder}">
+            <!-- close -->
+            <span>{msg desc=""}Close:{/msg}</span>
+            <span class="{css longa-app-signal-record-close}">{$closePrice}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="{css longa-app-signal-record-details}"></div>
   </div>
 {/template}
 

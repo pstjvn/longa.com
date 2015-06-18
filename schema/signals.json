@@ -1,0 +1,17 @@
+{
+  "$schema": "",
+  "title": "Signals",
+  "description": "Describes a list of signals",
+  "type": "object",
+  "properties": {
+    "signal": {
+      "type": "array",
+      "$_name": "signals",
+      "items" : {
+        "type": "object",
+        "$_reference": "signal"
+      }
+    }
+  },
+  "required": "$_all"
+}

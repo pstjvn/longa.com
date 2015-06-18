@@ -15,6 +15,8 @@ goog.require('longa.gen.dto.Profile');
 goog.require('longa.gen.dto.ReportList');
 goog.require('longa.gen.dto.Sellers');
 goog.require('longa.gen.dto.Service');
+goog.require('longa.gen.dto.Signal');
+goog.require('longa.gen.dto.Signals');
 goog.require('longa.gen.dto.User');
 goog.require('longa.gen.dto.UserBalance');
 goog.require('pstj.resource');
@@ -223,6 +225,27 @@ longa.rpc_.Main = goog.defineClass(null, {
   },
 
   /**
+   * RPC: /open_signal
+   * @param {!longa.gen.dto.NewSignal} cfg
+   * @return {!goog.Promise<!longa.gen.dto.Signal>}
+   */
+  addSignal: function(cfg) {
+    return new goog.Promise(function(reject, resolve) {
+      this.resource_.post(/** @type {Object} */(
+          cfg.toJSON()),
+          goog.bind(function(err, result) {
+            try {
+              var response = this.handleNewSignalResponse_(err, result);
+            } catch (e) {
+              this.defaultErrorHandler(result);
+              reject(e);
+            }
+            resolve(response);
+          }, this));
+    }, this);
+  },
+
+  /**
    * RPC call: /alert
    * @param {number=} opt_beginAfter The alert ID after which to begin the
    *    collection.
@@ -248,6 +271,37 @@ longa.rpc_.Main = goog.defineClass(null, {
         }
         goog.log.info(this.logger_, 'Received alerts.');
         resolve(alerts);
+      }, this));
+    }, this);
+  },
+
+  /**
+   * RPC: /signals
+   * Provides means to retrieve tranding signals list (own or for a specific
+   * account).
+   *
+   * @param {number=} opt_forAccountId If provided should be an account who's
+   * list of signals we want to retrieve.
+   * @return {!goog.Promise<!longa.gen.dto.Signals>}
+   */
+  getSignals: function(opt_forAccountId) {
+    return new goog.Promise(function(resolve, reject) {
+      var request = {};
+      request['run'] = 'signal';
+      if (goog.isNumber(opt_forAccountId)) {
+        request['s_acctid'] = opt_forAccountId;
+      }
+
+      this.resource_.get(request, goog.bind(function(err, result) {
+        try {
+          var signals = this.handleSignalsResponse(err, result);
+        } catch (e) {
+          goog.log.error(this.logger_, 'Cannot get signals');
+          reject(e);
+          return;
+        }
+        goog.log.info(this.logger_, 'Received signals list');
+        resolve(signals);
       }, this));
     }, this);
   },
@@ -443,6 +497,20 @@ longa.rpc_.Main = goog.defineClass(null, {
     return rl;
   },
 
+
+  /**
+   * Handles the respose when creating a new signal in the system.
+   * @param {?Error} err The network layer error if any.
+   * @param {?} result The response from server.
+   * @return {!longa.gen.dto.Signal}
+   */
+  handleNewSignalResponse_: function(err, result) {
+    this.handleRawResponse_(err, result);
+    var signal = new longa.gen.dto.Signal();
+    signal.fromJSON(result);
+    return signal;
+  },
+
   /**
    * Handles the receiving of alert list.
    *
@@ -458,6 +526,20 @@ longa.rpc_.Main = goog.defineClass(null, {
     var a = new longa.gen.dto.Alerts();
     a.fromJSON(alerts);
     return a;
+  },
+
+  /**
+   * Handles the server response for signal listing.
+   * @param {Error?} err The error if one occured while networking.
+   * @param {?} result The response from the server.
+   * @return {!longa.gen.dto.Signals}
+   * @protected
+   */
+  handleSignalsResponse: function(err, result) {
+    this.handleRawResponse_(err, result);
+    var signals = new longa.gen.dto.Signals();
+    signals.fromJSON(result);
+    return signals;
   },
 
   /**

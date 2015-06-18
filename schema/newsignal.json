@@ -1,0 +1,18 @@
+{
+  "$schema": "",
+  "title": "NewSignal",
+  "description": "Describes a new signal to be created.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "run": {
+      "type": "string"
+    }
+  },
+  "required": "$_all"
+}

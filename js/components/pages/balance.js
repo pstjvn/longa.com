@@ -71,9 +71,10 @@ longa.ui.Balance = goog.defineClass(longa.ui.Pages, {
   /** @private */
   destroyMainBalanceSheet_: function() {
     if (this.getBalanceHolder().hasChildren()) {
-      goog.array.forEach(this.getChildAt(0).removeChildren(), function(el) {
-        goog.dispose(el);
-      });
+      goog.array.forEach(this.getBalanceHolder().removeChildren(),
+          function(el) {
+            goog.dispose(el);
+          });
     }
   },
 

@@ -65,7 +65,6 @@ longa.ui.Service = goog.defineClass(longa.ui.Form, {
       if (child instanceof pstj.material.Input) {
         var value = child.getValue();
         if (child.type == 'number') {
-          console.log('Parsing value', value);
           value = (value == '' ? 0 : parseFloat(value));
         }
         map[child.name] = value;

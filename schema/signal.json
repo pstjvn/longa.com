@@ -1,0 +1,57 @@
+{
+  "$schema": "",
+  "title": "Signal",
+  "description": "Describes a single signal for buy/sell",
+  "type": "object",
+  "properties": {
+    "signal_id": {
+      "type": "number",
+      "$_name": "id"
+    },
+    "username": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "open": {
+      "type": "number",
+      "$_name": "openPrice"
+    },
+    "close": {
+      "type": "number",
+      "$_name": "closePrice"
+    },
+    "pl_change": {
+      "type": "number",
+      "$_name": "change"
+    },
+    "charge": {
+      "type": "number"
+    },
+    "type": {
+      "type": "string"
+    },
+    "status": {
+      "type": "number",
+      "$_type": "boolean"
+    },
+    "cur_price": {
+      "type": "number",
+      "$_name": "currentPrice"
+    },
+    "seller": {
+      "type": "boolean"
+    },
+    "open_time": {
+      "type": "string",
+      "$_name": "openTimestamp"
+    },
+    "close_time": {
+      "type": "string",
+      "$_name": "closeTimestamp"
+    }
+  },
+  "required": ["signal_id", "username", "symbol", "open", "pl_change",
+      "charge", "type", "status", "cur_price", "seller", "open_time"]
+}

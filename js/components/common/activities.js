@@ -17,6 +17,7 @@ goog.require('longa.ui.Feeds');
 goog.require('longa.ui.Pages');
 goog.require('longa.ui.PagesRenderer');
 goog.require('longa.ui.Service');
+goog.require('longa.ui.Signals');
 goog.require('longa.ui.Terms');
 
 

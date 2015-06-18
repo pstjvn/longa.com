@@ -88,6 +88,11 @@
         <source>Paid:</source>
         <target/>
       </trans-unit>
+      <trans-unit id="299700522080346029" datatype="html">
+        <source>push signal</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
+      </trans-unit>
       <trans-unit id="359421217372792936" datatype="html">
         <source>St. Vincent And The Grenadines</source>
         <target/>
@@ -237,6 +242,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="1025837268519600074" datatype="html">
+        <source>Close:</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="1030353017011027428" datatype="html">
         <source>Trade signal provider is a stock analyst or stock trader that have knowledge of the stock market and have good investment ideas that provides to the investment community. These ideas are realized using 'trade signal feeds'. These providers may select to provide the trade signals for free or charge for them. Please, note that the signal provider is not a licensed professional, and the trade signals are provided as an investment suggestion and not as a professional investment advise.</source>
         <target/>
@@ -274,6 +283,11 @@
         <source>Massachusetts</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="1154061032299417247" datatype="html">
+        <source>Buy&amp;rarr;sell</source>
+        <target/>
+        <note priority="1" from="description">label on radio button - investor</note>
       </trans-unit>
       <trans-unit id="1188282719459309656" datatype="html">
         <source>Colombia</source>
@@ -824,6 +838,11 @@
         <source>Latvia</source>
         <target/>
         <note priority="1" from="description">country name</note>
+      </trans-unit>
+      <trans-unit id="2917053437932082265" datatype="html">
+        <source>Sell&amp;rarr;buy</source>
+        <target/>
+        <note priority="1" from="description">label on radio button - signal provider</note>
       </trans-unit>
       <trans-unit id="2921868700206229107" datatype="html">
         <source>Profit/Loss - This month</source>
@@ -1426,6 +1445,10 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="5422771820879856056" datatype="html">
+        <source>P/L</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5437300236667984915" datatype="html">
         <source>South Carolina</source>
         <target/>
@@ -1473,6 +1496,10 @@
       </trans-unit>
       <trans-unit id="5727306858816641681" datatype="html">
         <source>Your profile was successfully updated.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5769686349699024463" datatype="html">
+        <source>Invalid symbol</source>
         <target/>
       </trans-unit>
       <trans-unit id="5814468296071715981" datatype="html">
@@ -1542,6 +1569,10 @@
         <target/>
         <note priority="1" from="description">hint for checkbox</note>
       </trans-unit>
+      <trans-unit id="6073021822737897646" datatype="html">
+        <source>Stock index</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="6091717472385598959" datatype="html">
         <source>(Investor)</source>
         <target/>
@@ -1583,6 +1614,10 @@
         <source>Indiana</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="6264061720068485036" datatype="html">
+        <source>Add new signal</source>
+        <target/>
       </trans-unit>
       <trans-unit id="6268459440891516871" datatype="html">
         <source>Chile</source>
@@ -2152,6 +2187,10 @@
         <target/>
         <note priority="1" from="description">Error on input</note>
       </trans-unit>
+      <trans-unit id="8106025670158480144" datatype="html">
+        <source>Symbol</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="8147072510678737075" datatype="html">
         <source>Mexico</source>
         <target/>
@@ -2306,7 +2345,6 @@
       <trans-unit id="8894377483833272091" datatype="html">
         <source>Price</source>
         <target/>
-        <note priority="1" from="description">Price label</note>
       </trans-unit>
       <trans-unit id="8898077494933529982" datatype="html">
         <source>You seem to come from PayPal session, but we were not able to log you in. Please, try with your credentials!</source>
@@ -2330,6 +2368,10 @@
         <source>Use ##.#</source>
         <target/>
         <note priority="1" from="description">error text</note>
+      </trans-unit>
+      <trans-unit id="8972730671873032087" datatype="html">
+        <source>Signal type</source>
+        <target/>
       </trans-unit>
       <trans-unit id="8992404420292617875" datatype="html">
         <source>North Carolina</source>

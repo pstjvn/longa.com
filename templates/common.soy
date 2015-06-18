@@ -1221,7 +1221,7 @@
  * container and an be put in any scrollable view.
  */
 {template .SignalList}
-  <div id class="{css longa-app-signal-list}"></div>
+  <div is class="{css longa-app-signal-list}"></div>
 {/template}
 
 /**
@@ -1560,13 +1560,13 @@
                   <!-- Here goes the balance sheet -->
                 </div>
               </div>
+              <div class="{css material-drop-shadow}"></div>
             </div>
           </div>
         </div>
     </div>
     <!-- the list of signals for a particular seller -->
-    <div is class="{css longa-app-page}">
-    </div>
+    {call .SellerSignalList /}
     <div is class="{css material-fab} {css material-button-tactile} {css material-fab-raised} {css material-fab-transition} {css longa-app-feed-pages-button}" icon="back-arrow" use-pointer ink>
       {call pstj.material.template.Shadow /}
       {call pstj.material.template.IconContainer}
@@ -1575,6 +1575,62 @@
       {call pstj.material.template.Ripple}
         {param recenter: true /}
       {/call}
+    </div>
+  </div>
+{/template}
+
+/**
+ * Template for the view that shows seller signals to investors.
+ */
+{template .SellerSignalList}
+  <div is class="{css longa-app-seller-signals-page}">
+    <div is class="{css material-header-panel}">
+      <div class="{css material-header-panel-outer-container}">
+        <div is class="{css material-header-panel-header} {css longa-sort-header}">
+          <div is class="{css longa-app-list-header} {css core-tap}">
+            <div class="{css longa-app-list-header-subhead}">
+              <div class="{css longa-app-list-header-item} {css flex-3}">
+                <div is class="{css core-element}" use-pointer>
+                  <div class="{css flex-1}">{msg desc=""}Symbol{/msg}</div>
+                  <div class="{css longa-app-list-header-arrow-icon}">
+                    {call pstj.material.template.IconContainer}
+                      {param type: 'none' /}
+                    {/call}
+                  </div>
+                </div>
+              </div>
+              <div class="{css longa-app-list-header-item} {css flex-1}">
+                <div is class="{css core-element}" use-pointer>
+                  <div class="{css flex-1}">{msg desc=""}P/L{/msg}</div>
+                  <div class="{css longa-app-list-header-arrow-icon}">
+                    {call pstj.material.template.IconContainer}
+                      {param type: 'none' /}
+                    {/call}
+                  </div>
+                </div>
+              </div>
+              <div class="{css longa-app-list-header-item} {css flex-2}">
+                <div is class="{css core-element}" use-pointer>
+                  <div class="{css flex-1}">{msg desc=""}Price{/msg}</div>
+                  <div class="{css longa-app-list-header-arrow-icon}">
+                    {call pstj.material.template.IconContainer}
+                      {param type: 'none' /}
+                    {/call}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div is class="{css material-header-panel-main}" use-scroll>
+          <div class="{css material-header-panel-main-container}">
+            <div class="{css material-header-panel-main-content}">
+              {call .SignalList /}
+            </div>
+          </div>
+          <div class="{css material-drop-shadow}"></div>
+        </div>
+      </div>
     </div>
   </div>
 {/template}

@@ -9,6 +9,7 @@ goog.require('longa.template');
 goog.require('longa.ui.Pages');
 goog.require('longa.ui.PagesRenderer');
 goog.require('longa.ui.ProviderBalance');
+goog.require('longa.ui.SSL');
 goog.require('longa.ui.SignalFeed');
 goog.require('pstj.control.Control');
 goog.require('pstj.material.Fab');
@@ -46,8 +47,10 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
           // simply animate out the pages and after that remove
           // down class (button goes up without animation) and
           // apply scale down class (button is animated to 0px).
-          goog.dom.classlist.remove(this.button_.getElement(), 'up');
-          goog.dom.classlist.remove(this.button_.getElement(), 'down');
+          goog.dom.classlist.remove(this.button_.getElement(),
+              goog.getCssName('up'));
+          goog.dom.classlist.remove(this.button_.getElement(),
+              goog.getCssName('down'));
         }
         this.setSelectedIndex(0);
       } else if (s == longa.ds.Screen.FEED_DETAILS) {
@@ -62,9 +65,11 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
         if (this.selectedIndex == 1) {
           // animate the button down together with page transition and
           // when button transition ends apply down class.
-          goog.dom.classlist.swap(this.button_.getElement(), 'up', 'down');
+          goog.dom.classlist.swap(this.button_.getElement(),
+              goog.getCssName('up'), goog.getCssName('down'));
           goog.style.getClientPosition(this.button_.getElement());
-          goog.dom.classlist.swap(this.button_.getElement(), 'down', 'up');
+          goog.dom.classlist.swap(this.button_.getElement(),
+              goog.getCssName('down'), goog.getCssName('up'));
         }
         this.setSelectedIndex(2);
       }
@@ -76,7 +81,7 @@ longa.ui.Feeds = goog.defineClass(longa.ui.Pages, {
   onTransitionEnd: function(e) {
     goog.base(this, 'onTransitionEnd', e);
     if (this.selectedIndex == 1) {
-      goog.dom.classlist.add(this.button_.getElement(), 'up');
+      goog.dom.classlist.add(this.button_.getElement(), goog.getCssName('up'));
     }
   },
 

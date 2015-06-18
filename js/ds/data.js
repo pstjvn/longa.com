@@ -64,3 +64,13 @@ longa.data.sellers = new longa.gen.dto.Sellers();
  * @type {!longa.gen.dto.Signals}
  */
 longa.data.mysignals = new longa.gen.dto.Signals();
+
+
+/**
+ * Globally accessible list of signals for a specific account.
+ * Note that this is only data storage and it does not care about
+ * which user has access to it, you should manage this in your controller
+ * code.
+ * @type {!longa.gen.dto.Signals}
+ */
+longa.data.currentSellerList = new longa.gen.dto.Signals();

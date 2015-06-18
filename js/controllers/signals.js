@@ -41,7 +41,26 @@ longa.control.Signals = goog.defineClass(pstj.control.Control, {
    * @return {!goog.Promise<!longa.gen.dto.Signals>}
    */
   getForAccount: function(acctid) {
-    return longa.rpc.getSignals(acctid);
+    // Clear original DTO.
+    longa.data.currentSellerList.fromJSON(/** @type {Object<string, *>} */(
+        (new longa.gen.dto.Signals()).toJSON()));
+    return longa.rpc.getSignals(acctid).then(this.handleSellerSignals,
+        null, this);
+  },
+
+  /**
+   * Handles the receiving of signals for specific account.
+   * This will override the currently stored remote account signal data.
+   *
+   * @protected
+   * @param {!longa.gen.dto.Signals} signals
+   * @return {!longa.gen.dto.Signals}
+   */
+  handleSellerSignals: function(signals) {
+    console.log('Update seller signals', signals.signals.length);
+    longa.data.currentSellerList.fromJSON(/** @type {Object<string, *>} */(
+        signals.toJSON()));
+    return signals;
   },
 
   /**

@@ -1,10 +1,13 @@
 goog.provide('longa.ui.ProviderBalance');
+goog.provide('longa.ui.ProviderBalanceRenderer');
 
+goog.require('goog.async.Delay');
 goog.require('goog.log');
 goog.require('goog.ui.registry');
 goog.require('longa.ds.Screen');
 goog.require('longa.ds.Topic');
 goog.require('longa.gen.dto.SellerBalance');
+goog.require('longa.signals');
 goog.require('longa.template');
 goog.require('longa.ui.UserBalance');
 goog.require('longa.ui.UserBalanceRenderer');
@@ -22,6 +25,15 @@ longa.ui.ProviderBalance = goog.defineClass(longa.ui.UserBalance, {
    */
   constructor: function(opt_content, opt_renderer, opt_domHelper) {
     longa.ui.UserBalance.call(this, opt_content, opt_renderer, opt_domHelper);
+    /**
+     * @final
+     * @type {!goog.async.Delay}
+     * @private
+     */
+    this.delay_ = new goog.async.Delay(function() {
+      this.getController().push(longa.ds.Topic.SHOW_SCREEN,
+          longa.ds.Screen.FEED_SIGNALS);
+    }, 100, this);
   },
 
   /** @override */
@@ -45,8 +57,9 @@ longa.ui.ProviderBalance = goog.defineClass(longa.ui.UserBalance, {
     var button = goog.asserts.assertInstanceof(e.target, pstj.material.Button);
     switch (button.getAction()) {
       case 'signals':
-        this.getController().push(longa.ds.Topic.SHOW_SCREEN,
-            longa.ds.Screen.FEED_SIGNALS);
+        longa.signals.getForAccount(this.getAccountID()).then(function() {
+          this.delay_.start();
+        }, null, this);
         break;
       default: throw new Error('Unknown action:' + button.getAction());
     }

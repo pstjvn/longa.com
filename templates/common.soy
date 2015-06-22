@@ -1114,6 +1114,7 @@
   {@param profitableSignalCount: number}
   {@param signalCount: number}
   {@param username: string}
+  {@param isSubscribed: bool}
   <div is class="{css longa-app-provider-balance} {css longa-app-balance}">
     <div class="{css longa-app-balance-charts}">
       {call .Chart /}
@@ -1177,7 +1178,11 @@
       <label class="{css longa-app-balance-flex}"></label>
       {call pstj.material.template.Button}
         {param content kind="text"}
-          {msg desc="Widthraw button label"}subscribe{/msg}
+          {if $isSubscribed == true}
+            {msg desc="Widthraw button label"}unsubscribe{/msg}
+          {else}
+            {msg desc="Widthraw button label"}subscribe{/msg}
+          {/if}
         {/param}
         {param icon: 'none' /}
         {param ink: true /}

@@ -96,8 +96,17 @@ longa.ui.ProviderRecord = goog.defineClass(pstj.material.Element, {
    * @override
    */
   setModel: function(model) {
+    if (!goog.isNull(this.getModel())) {
+      this.getHandler().unlisten(/** @type {!pstj.ds.DtoBase} */(
+          this.getModel()),
+          pstj.ds.DtoBase.EventType.CHANGE, this.applyModel);
+    }
     goog.base(this, 'setModel', model);
-    this.applyModel();
+    this.applyModel(null);
+    if (!goog.isNull(this.getModel())) {
+      this.getHandler().listen(/** @type {!pstj.ds.DtoBase} */(this.getModel()),
+          pstj.ds.DtoBase.EventType.CHANGE, this.applyModel);
+    }
   },
 
   /** @override */
@@ -118,14 +127,15 @@ longa.ui.ProviderRecord = goog.defineClass(pstj.material.Element, {
   /**
    * Applies the model on the DOM.
    * @protected
+   * @param {goog.events.Event} e Possibly the event for the change of a model.
    */
-  applyModel: function() {
+  applyModel: function(e) {
     if (this.isInDocument() && !goog.isNull(this.getModel())) {
       var model = goog.asserts.assertInstanceof(this.getModel(),
           longa.gen.dto.SellerBalance);
       /** @type {!longa.ui.Trend} */(
           this.getChildAt(0)).setValue(model.profitLossRatio);
-      goog.style.setElementShown(this.icon_, true); //model.isSubscribed);
+      goog.style.setElementShown(this.icon_, model.isSubscribed);
       goog.dom.setTextContent(this.username_, model.username);
       goog.dom.setTextContent(this.activesince_, model.firstSignalDate);
       goog.dom.setTextContent(this.total_, model.signalCount);
@@ -138,7 +148,7 @@ longa.ui.ProviderRecord = goog.defineClass(pstj.material.Element, {
   /** @override */
   enterDocument: function() {
     goog.base(this, 'enterDocument');
-    this.applyModel();
+    this.applyModel(null);
   }
 });
 

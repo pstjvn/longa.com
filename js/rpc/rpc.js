@@ -126,6 +126,50 @@ longa.rpc_.Main = goog.defineClass(null, {
   },
 
   /**
+   * RPC: /subscribe?s_acctid=
+   * @param {!number} to_accountid The account ID to subscribe to.
+   * @return {!goog.Promise<!boolean>}
+   */
+  subscribe: function(to_accountid) {
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': 'subscribe',
+        's_acctid': to_accountid
+      }, goog.bind(function(err, result) {
+        try {
+          this.handleRawResponse_(err, result);
+        } catch (e) {
+          goog.log.error(this.logger_, 'Cannot subscribe: ' + e.message);
+          reject(e);
+        }
+        resolve(true);
+      }, this));
+    }, this);
+  },
+
+  /**
+   * RPC: /unsubscribe?s_acctid=
+   * @param {!number} to_accountid The account to unsubscribe from.
+   * @return {!goog.Promise<!boolean>}
+   */
+  unsubscribe: function(to_accountid) {
+    return new goog.Promise(function(resolve, reject) {
+      this.resource_.get({
+        'run': 'unsubscribe',
+        's_acctid': to_accountid
+      }, goog.bind(function(err, result) {
+        try {
+          this.handleRawResponse_(err, result);
+        } catch (e) {
+          goog.log.error(this.logger_, 'Cannot unsubscribe: ' + e.message);
+          reject(e);
+        }
+        resolve(true);
+      }, this));
+    }, this);
+  },
+
+  /**
    * PRC call: /bal
    * @return {!goog.Promise<!longa.gen.dto.UserBalance>}
    */

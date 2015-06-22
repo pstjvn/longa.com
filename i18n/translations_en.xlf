@@ -7,6 +7,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="35944838171926867" datatype="html">
+        <source>unsubscribe</source>
+        <target/>
+        <note priority="1" from="description">Widthraw button label</note>
+      </trans-unit>
       <trans-unit id="43190493453313100" datatype="html">
         <source>Botswana</source>
         <target/>

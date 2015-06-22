@@ -3,6 +3,7 @@ goog.provide('longa.control.Exchange');
 goog.require('goog.Uri');
 goog.require('longa.control.Auth');
 goog.require('longa.rpc');
+goog.require('longa.signals');
 goog.require('longa.strings');
 goog.require('pstj.control.Control');
 
@@ -121,6 +122,26 @@ longa.control.Exchange = goog.defineClass(pstj.control.Control, {
    */
   withdrawCredit: function(amount) {
     return longa.rpc.withdrawCredit(amount);
+  },
+
+  /**
+   * Manage subscribption for an account.
+   * @param {!boolean} sub If true, subscribe, else unsubscribe.
+   * @param {!number} acctid The account id to subscribe to.
+   * @return {!goog.Promise<!boolean>}
+   */
+  subscribe: function(sub, acctid) {
+    if (sub) {
+      return longa.rpc.subscribe(acctid).then(function() {
+        longa.signals.get();
+        return true;
+      });
+    } else {
+      return longa.rpc.unsubscribe(acctid).then(function() {
+        longa.signals.get();
+        return true;
+      });
+    }
   }
 });
 goog.addSingletonGetter(longa.control.Exchange);

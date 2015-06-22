@@ -61,6 +61,26 @@ longa.ui.ProviderBalance = goog.defineClass(longa.ui.UserBalance, {
           this.delay_.start();
         }, null, this);
         break;
+      case 'subscribe':
+        if (!goog.isNull(this.getModel())) {
+          var acctid = this.getAccountID();
+          var isSubscribed = this.getModel().isSubscribed;
+          button.setEnabled(false);
+          longa.control.Exchange.getInstance().subscribe(!isSubscribed, acctid)
+              .then(function() {
+                this.getModel().isSubscribed = !isSubscribed;
+                button.setContent(
+                    this.getModel().isSubscribed ?
+                    longa.strings.LabelUnsubscribe(null).toString() :
+                    longa.strings.LabelSubscribe(null).toString());
+                // Force the update on the model so the viewes that bind to
+                // it can update.
+                this.getModel().handleChange();
+              }, null, this).thenAlways(function() {
+                button.setEnabled(true);
+              });
+        }
+        break;
       default: throw new Error('Unknown action:' + button.getAction());
     }
   }

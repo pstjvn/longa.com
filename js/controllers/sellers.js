@@ -22,7 +22,7 @@ longa.control.Sellers_ = goog.defineClass(pstj.control.Control, {
    */
   get: function() {
     return longa.rpc.getSellerRecords()
-      .then(this.onGet_, this.onGetFail_, this);
+        .then(this.onGet_, this.onGetFail_, this);
   },
 
   /**

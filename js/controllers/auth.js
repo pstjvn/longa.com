@@ -80,8 +80,8 @@ longa.control.Auth = goog.defineClass(pstj.control.Control, {
     goog.log.info(this.logger_, login_details.username + ':' +
         login_details.password);
     rpc.login(login_details)
-      .then(this.onLogin_, this.onLoginFail_, this)
-      .thenAlways(this.onLoginComplete_, this);
+        .then(this.onLogin_, this.onLoginFail_, this)
+        .thenAlways(this.onLoginComplete_, this);
   },
 
   /**

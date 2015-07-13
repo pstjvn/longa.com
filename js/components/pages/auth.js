@@ -70,9 +70,9 @@ longa.ui.Auth = goog.defineClass(longa.ui.Control, {
   enterDocument: function() {
     goog.base(this, 'enterDocument');
     this.getHandler()
-      .listen(this, pstj.agent.Pointer.EventType.TAP, this.handleTaps_)
-      .listen(this.getLoginForm_(), goog.ui.Component.EventType.ACTION,
-        this.handleLoginFormSubmit_);
+        .listen(this, pstj.agent.Pointer.EventType.TAP, this.handleTaps_)
+        .listen(this.getLoginForm_(), goog.ui.Component.EventType.ACTION,
+            this.handleLoginFormSubmit_);
   },
 
   /**

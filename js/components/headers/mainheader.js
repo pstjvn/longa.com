@@ -45,7 +45,7 @@ longa.ui.MainHeader = goog.defineClass(longa.ui.Control, {
   enterDocument: function() {
     goog.base(this, 'enterDocument');
     this.getHandler()
-      .listen(this, goog.ui.Component.EventType.ACTION, function(e) {
+        .listen(this, goog.ui.Component.EventType.ACTION, function(e) {
           this.getController().push(longa.ds.Topic.SHOW_MENU);
         });
   }

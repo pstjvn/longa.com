@@ -1,4 +1,5 @@
 goog.provide('longa.ui.RegistrationForm');
+goog.provide('longa.ui.RegistrationFormRenderer');
 
 goog.require('goog.events.EventType');
 goog.require('goog.ui.registry');

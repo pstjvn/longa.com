@@ -4,6 +4,7 @@
  */
 
 goog.provide('longa.ui.ProviderRecordList');
+goog.provide('longa.ui.ProviderRecordListRenderer');
 
 goog.require('goog.array');
 goog.require('goog.ui.Component.State');

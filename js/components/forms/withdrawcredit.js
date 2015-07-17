@@ -1,4 +1,5 @@
 goog.provide('longa.ui.WithdrawCredit');
+goog.provide('longa.ui.WithdrawCreditRenderer');
 
 goog.require('goog.ui.registry');
 goog.require('longa.control.Toaster');

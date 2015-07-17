@@ -1,4 +1,5 @@
 goog.provide('longa.ui.ProviderRecord');
+goog.provide('longa.ui.ProviderRecordRenderer');
 
 goog.require('goog.dom');
 goog.require('goog.style');

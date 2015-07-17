@@ -1,4 +1,5 @@
 goog.provide('longa.ui.ErrorMessage');
+goog.provide('longa.ui.ErrorMessageRenderer');
 
 goog.require('goog.async.Delay');
 goog.require('goog.ui.Component.State');

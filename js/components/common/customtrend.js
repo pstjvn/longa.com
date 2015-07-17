@@ -1,4 +1,5 @@
 goog.provide('longa.ui.CustomTrend');
+goog.provide('longa.ui.CustomTrendRenderer');
 
 goog.require('goog.ui.registry');
 goog.require('longa.template');

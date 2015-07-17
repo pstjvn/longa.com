@@ -1,4 +1,5 @@
 goog.provide('longa.ui.StartScreen');
+goog.provide('longa.ui.StartScreenRenderer');
 
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.registry');

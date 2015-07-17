@@ -1,4 +1,5 @@
 goog.provide('longa.ui.RecoverForm');
+goog.provide('longa.ui.RecoverFormRenderer');
 
 goog.require('goog.ui.registry');
 goog.require('longa.template');

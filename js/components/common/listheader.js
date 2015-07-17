@@ -10,6 +10,7 @@
  * so we are always reflecting the actual sorting.
  */
 goog.provide('longa.ui.ListHeader');
+goog.provide('longa.ui.ListHeaderRenderer');
 
 goog.require('goog.asserts');
 goog.require('goog.ui.registry');

@@ -1,4 +1,5 @@
 goog.provide('longa.ui.Alerts');
+goog.provide('longa.ui.AlertsRenderer');
 
 goog.require('goog.array');
 goog.require('goog.asserts');

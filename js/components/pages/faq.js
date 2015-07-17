@@ -1,4 +1,5 @@
 goog.provide('longa.ui.Faq');
+goog.provide('longa.ui.FaqRenderer');
 
 goog.require('goog.asserts');
 goog.require('goog.async.Delay');

@@ -1,4 +1,5 @@
 goog.provide('longa.ui.MySignals');
+goog.provide('longa.ui.MySignalsRenderer');
 
 goog.require('goog.ui.registry');
 goog.require('longa.ds.mysignals');

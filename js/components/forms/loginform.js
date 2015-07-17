@@ -1,4 +1,6 @@
 goog.provide('longa.ui.LoginForm');
+goog.provide('longa.ui.LoginFormRenderer');
+
 
 goog.require('goog.style');
 goog.require('goog.ui.registry');

@@ -5,6 +5,7 @@
  */
 
 goog.provide('longa.ui.Activities');
+goog.provide('longa.ui.ActivitiesRenderer');
 
 goog.require('goog.ui.registry');
 goog.require('longa.ds.Topic');

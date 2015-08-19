@@ -52,6 +52,8 @@ build: all $(build_dir)/$(ns).build.js
 
 debug: $(build_dir)/$(ns).debug.js
 
+simple: all $(build_dir)/$(ns).simple.js
+
 $(autogen_dir)/*.js: $(schema_dir)/*.json
 	echo "Generating DTO from JSONSchema"
 	node $(pstj_lib_dir)/nodejs/dtogen.js $(dto_prefix).gen.dto $(schema_dir)/ $(autogen_dir)/
@@ -221,6 +223,19 @@ $(build_dir)/$(ns)-cssmap.debug.js
 	$(namespace_specific_flags) \
 	--debug \
 	--formatting=PRETTY_PRINT \
+	--js_output_file=$@ \
+	$(shell cat $(build_dir)/$(ns).filelist.txt | tr '\n' ' ')
+
+$(build_dir)/$(ns).simple.js: \
+$(public_deps_file) \
+$(build_dir)/$(ns).filelist.txt \
+$(build_dir)/$(ns)-cssmap.build.js
+	$(java) $(js_compiler) \
+	$(build_js_compiler_option) \
+	--compilation_level=SIMPLE \
+	--flagfile=options/compile.ini \
+	--js=build/$(ns)-cssmap.build.js \
+	$(namespace_specific_flags) \
 	--js_output_file=$@ \
 	$(shell cat $(build_dir)/$(ns).filelist.txt | tr '\n' ' ')
 

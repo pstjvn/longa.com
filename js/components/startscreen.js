@@ -65,7 +65,10 @@ longa.ui.StartScreen = goog.defineClass(pstj.material.Element, {
         this.swiper_.getSelectedIndex()).setChecked(true);
   },
 
-  /** @override */
+  /**
+   * @override
+   * @return {longa.ui.StartScreenRenderer}
+   */
   getRenderer: function() {
     return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
         longa.ui.StartScreenRenderer);

@@ -74,7 +74,10 @@ longa.ui.MenuItem = goog.defineClass(pstj.material.MenuItem, {
     this.getRenderer().setBadge(this);
   },
 
-  /** @inheritDoc */
+  /**
+   * @override
+   * @return {longa.ui.MenuItemRenderer}
+   */
   getRenderer: function() {
     return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
         longa.ui.MenuItemRenderer);

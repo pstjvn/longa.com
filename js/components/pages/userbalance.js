@@ -149,7 +149,10 @@ longa.ui.UserBalance = goog.defineClass(pstj.material.Element, {
         longa.ui.Chart);
   },
 
-  /** @override */
+  /**
+   * @override
+   * @return {longa.ui.UserBalanceRenderer}
+   */
   getRenderer: function() {
     return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
         longa.ui.UserBalanceRenderer);

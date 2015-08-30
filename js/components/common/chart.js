@@ -189,6 +189,15 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
     this.updateChart_();
   },
 
+  /**
+   * @override
+   * @return {longa.ui.ChartRenderer}
+   */
+  getRenderer: function() {
+    return goog.asserts.assertInstanceof(goog.base(this, 'getRenderer'),
+        longa.ui.ChartRenderer);
+  },
+
   /** @override */
   enterDocument: function() {
     goog.base(this, 'enterDocument');

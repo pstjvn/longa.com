@@ -92,7 +92,7 @@ longa.ui.ListHeader = goog.defineClass(pstj.material.Element, {
   /**
    * Sets / updates the sorting view.
    * @protected
-   * @param {!number} index The index of the sorting child
+   * @param {!number} index The index of the sorting child.
    * @param {boolean} asc If the sorting is ascending.
    */
   setSorting: function(index, asc) {

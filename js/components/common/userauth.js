@@ -1,5 +1,5 @@
 /**
- * @fileoverview Provides
+ * @fileoverview Provides.
  */
 
 goog.provide('longa.ui.UserAuth');

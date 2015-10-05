@@ -232,6 +232,7 @@ longa.ui.Chart = goog.defineClass(pstj.material.Element, {
           }
         }
       },
+
       'pointSize': 3,
       'titleTextStyle': {
         'color': '#00796b',

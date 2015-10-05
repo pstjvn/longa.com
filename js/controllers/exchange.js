@@ -107,7 +107,7 @@ longa.control.Exchange = goog.defineClass(pstj.control.Control, {
 
   /**
    * @private
-   * @param {?} err [description]
+   * @param {?} err OPtional error.
    */
   handleBuyFail_: function(err) {
     longa.control.Toaster.getInstance().addToast(

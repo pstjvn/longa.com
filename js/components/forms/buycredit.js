@@ -119,7 +119,7 @@ longa.ui.BuyCredit = goog.defineClass(longa.ui.Form, {
 
   /**
    * @protected
-   * @param {goog.events.Event} e The CHANGE event from the input
+   * @param {goog.events.Event} e The CHANGE event from the input.
    */
   handleInputChange: function(e) {
     var input = goog.asserts.assertInstanceof(e.target, pstj.material.Input);

@@ -89,7 +89,7 @@ longa.ui.ProviderRecordList = goog.defineClass(pstj.material.List, {
 
   /**
    * Overrides the model so we are sure its a sellers list.
-   * @return {?pstj.ds.Sortable} [description]
+   * @return {?pstj.ds.Sortable}
    */
   getModel: function() {
     var model = goog.base(this, 'getModel');

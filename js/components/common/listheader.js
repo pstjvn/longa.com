@@ -65,7 +65,7 @@ longa.ui.ListHeader = goog.defineClass(pstj.material.Element, {
     goog.base(this, 'setModel', goog.asserts.assertInstanceof(model,
         pstj.ds.Sortable));
     this.getHandler().listen(model, pstj.ds.DtoBase.EventType.CHANGE,
-        this.handleModelChange_);
+        this.onModelChangeHandler_);
   },
 
   /**
@@ -83,7 +83,7 @@ longa.ui.ListHeader = goog.defineClass(pstj.material.Element, {
    * @param {goog.events.Event} e
    * @private
    */
-  handleModelChange_: function(e) {
+  onModelChangeHandler_: function(e) {
     if (this.isInDocument()) {
       this.setSorting(this.getModel().getKey(), this.getModel().getAsc());
     }

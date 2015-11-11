@@ -78,13 +78,13 @@ longa.ui.ProviderRecordList = goog.defineClass(pstj.material.List, {
   /** @override */
   addModelListeneres: function() {
     this.getHandler().listen(this.getModel(),
-        pstj.ds.DtoBase.EventType.CHANGE, this.handleModelChange_);
+        pstj.ds.DtoBase.EventType.CHANGE, this.onModelChangeHandler_);
   },
 
   /** @override */
   removeModelListeners: function() {
     this.getHandler().unlisten(this.getModel(),
-        pstj.ds.DtoBase.EventType.CHANGE, this.handleModelChange_);
+        pstj.ds.DtoBase.EventType.CHANGE, this.onModelChangeHandler_);
   },
 
   /**
@@ -103,7 +103,7 @@ longa.ui.ProviderRecordList = goog.defineClass(pstj.material.List, {
    * @param {goog.events.Event} e
    * @private
    */
-  handleModelChange_: function(e) {
+  onModelChangeHandler_: function(e) {
     this.updateModelLength();
     this.initialize();
   },

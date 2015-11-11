@@ -32,7 +32,7 @@ longa.ui.Service = goog.defineClass(longa.ui.Form, {
     goog.base(this, 'enterDocument');
     this.getHandler().listen(longa.data.service,
         pstj.ds.DtoBase.EventType.CHANGE,
-        this.handleModelChange_);
+        this.onModelChangeHandler_);
 
     this.getHandler().listen(this.getChildAt(2),
         [
@@ -83,7 +83,7 @@ longa.ui.Service = goog.defineClass(longa.ui.Form, {
    * @param {!goog.events.Event} e
    * @private
    */
-  handleModelChange_: function(e) {
+  onModelChangeHandler_: function(e) {
     var map = /** @type {!Object<string, *>} */(
         longa.data.service.toJSON());
     this.forEachChild(function(child) {

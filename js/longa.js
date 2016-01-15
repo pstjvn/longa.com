@@ -341,7 +341,7 @@ longa.App = goog.defineClass(pstj.control.Control, {
 
     goog.Promise.all(promises).then(function(data) {
       goog.log.info(this.logger_, 'Update all finished');
-      this.push(longa.ds.Topic.USER_BALANCE_CHANGE);
+      this.push(longa.ds.Topic.USER_BALANCE_CHANGE, undefined);
     }, null, this);
   },
 
@@ -368,10 +368,10 @@ longa.App = goog.defineClass(pstj.control.Control, {
   /**
    * Handles the error from retrieving the current user's balance.
    * @protected
-   * @param {*} e The error produced from the retrieval.
+   * @param {*=} opt_e The error produced from the retrieval.
    */
-  onBalanaceFailed: function(e) {
-    this.handleError(e);
+  onBalanaceFailed: function(opt_e) {
+    this.handleError(/** @type {?Error} */(opt_e));
   },
 
   /**
@@ -381,6 +381,8 @@ longa.App = goog.defineClass(pstj.control.Control, {
    *
    * A more robust implementation should use pstj.error.Throw instead in
    * order to allow the aplpication logic to handle different types of errors.
+   *
+   * @param {?Error} e
    */
   handleError: function(e) {
     goog.log.error(this.logger_, 'Error perfoming login: ' +

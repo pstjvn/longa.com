@@ -1,6 +1,7 @@
 goog.provide('longa.ds.Alerts');
 
 goog.require('goog.array');
+goog.require('goog.log');
 goog.require('longa.gen.dto.Alerts');
 
 
@@ -15,13 +16,14 @@ longa.ds.Alerts = goog.defineClass(longa.gen.dto.Alerts, {
      * @private
      */
     this.unreadCount_ = 0;
-    /**
-     * @final
-     * @private
-     * @type {goog.debug.Logger}
-     */
-    this.logger_ = goog.log.getLogger('longa.ds.Alerts');
+
   },
+
+  /**
+   * @protected
+   * @type {goog.debug.Logger}
+   */
+  logger: goog.log.getLogger('longa.ds.Alerts'),
 
   /**
    * Retrieves the current alerts cound
@@ -47,7 +49,7 @@ longa.ds.Alerts = goog.defineClass(longa.gen.dto.Alerts, {
     if (collection.alerts.length > 0) {
       if (this.getCount() > 0) {
         if (this.alerts[0].id >= goog.array.peek(collection.alerts).id) {
-          goog.log.error(this.logger_,
+          goog.log.error(this.logger,
               'Alerts returned overlap with existing ones');
           throw new Error('Alerts returned overlap with existing ones');
         }

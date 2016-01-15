@@ -46,7 +46,7 @@ longa.ui.MainHeader = goog.defineClass(longa.ui.Control, {
     goog.base(this, 'enterDocument');
     this.getHandler()
         .listen(this, goog.ui.Component.EventType.ACTION, function(e) {
-          this.getController().push(longa.ds.Topic.SHOW_MENU);
+          this.getController().push(longa.ds.Topic.SHOW_MENU, undefined);
         });
   }
 });

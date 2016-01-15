@@ -90,7 +90,7 @@ longa.ui.UserAuth = goog.defineClass(longa.ui.Control, {
             longa.ds.Topic.SHOW_SCREEN, longa.ds.Screen.LOGIN);
         break;
       case 'logout':
-        this.getController().push(longa.ds.Topic.USER_AUTH_FORGET);
+        this.getController().push(longa.ds.Topic.USER_AUTH_FORGET, undefined);
         break;
       default: throw new Error('Unknown action name: ' + button.getAction());
     }

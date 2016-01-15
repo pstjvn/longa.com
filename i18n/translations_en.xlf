@@ -805,6 +805,10 @@
         <source>Profit Charge (LC/1%)</source>
         <target/>
       </trans-unit>
+      <trans-unit id="2775505798796712686" datatype="html">
+        <source>Log in using your social media account</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="2799975203487923263" datatype="html">
         <source>Profit(%)</source>
         <target/>
@@ -996,6 +1000,11 @@
         <source>Last name</source>
         <target/>
         <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
+      <trans-unit id="3590805807378700861" datatype="html">
+        <source>Google</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
       </trans-unit>
       <trans-unit id="3591085113786124083" datatype="html">
         <source>New Zealand</source>
@@ -2230,6 +2239,11 @@
         <source>Symbol</source>
         <target/>
       </trans-unit>
+      <trans-unit id="8121141462865337916" datatype="html">
+        <source>Phone number</source>
+        <target/>
+        <note priority="1" from="description">input hint/placeholder</note>
+      </trans-unit>
       <trans-unit id="8147072510678737075" datatype="html">
         <source>Mexico</source>
         <target/>
@@ -2309,6 +2323,11 @@
         <target/>
         <note priority="1" from="description">country name</note>
       </trans-unit>
+      <trans-unit id="8520134266293328706" datatype="html">
+        <source>Valid phone number is require</source>
+        <target/>
+        <note priority="1" from="description">Error on input</note>
+      </trans-unit>
       <trans-unit id="8521991040120836142" datatype="html">
         <source>Mississippi</source>
         <target/>
@@ -2351,6 +2370,11 @@
         <source>Hawaii</source>
         <target/>
         <note priority="1" from="description">state</note>
+      </trans-unit>
+      <trans-unit id="8790918354594417962" datatype="html">
+        <source>Facebook</source>
+        <target/>
+        <note priority="1" from="description">button label</note>
       </trans-unit>
       <trans-unit id="8795047040687500838" datatype="html">
         <source>Error occured</source>

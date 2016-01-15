@@ -70,11 +70,13 @@ longa.ui.ListHeader = goog.defineClass(pstj.material.Element, {
 
   /**
    * Aserts that the model is indeed a sortable.
-   * @return {!pstj.ds.Sortable}
+   * @return {pstj.ds.Sortable}
    */
   getModel: function() {
-    return goog.asserts.assertInstanceof(goog.base(this, 'getModel'),
+    var model = goog.base(this, 'getModel');
+    if (!goog.isNull(model)) return goog.asserts.assertInstanceof(model,
         pstj.ds.Sortable);
+    return null;
   },
 
   /**

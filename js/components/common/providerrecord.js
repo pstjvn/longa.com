@@ -80,7 +80,9 @@ longa.ui.ProviderRecord = goog.defineClass(pstj.material.Element, {
   /** @override */
   onTap: function(e) {
     this.getRipple().onTap(e);
-    longa.sellers.push(longa.ds.Topic.FEED_SELECTED, this.getModel());
+    longa.sellers.push(longa.ds.Topic.FEED_SELECTED,
+        goog.asserts.assertInstanceof(this.getModel(),
+            longa.gen.dto.SellerBalance));
   },
 
   /**

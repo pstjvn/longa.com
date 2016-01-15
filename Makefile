@@ -31,7 +31,6 @@ soy_compiler_options = \
 	--messageFilePathFormat "$(i18n_dir)/translations_$(locale).xlf" \
 	--shouldProvideRequireSoyNamespaces \
 	--shouldGenerateJsdoc \
-	--codeStyle concat \
 	--outputPathFormat '$(template_build_dir)/$(locale)/{INPUT_FILE_NAME_NO_EXT}.soy.js'
 
 # Redefine the variables for a project (from one for a library)
